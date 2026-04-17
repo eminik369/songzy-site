@@ -2,9 +2,9 @@
 // Verifies Stripe webhook signature and updates orders.
 // Requires STRIPE_WEBHOOK_SECRET. Needs the raw body — hence `config.api.bodyParser=false`.
 
-import { getStripe } from '../_lib/stripe.js';
-import { sql, hasDb } from '../_lib/db.js';
-import { send, wrap } from '../_lib/email.js';
+import { getStripe } from '../../lib/stripe.js';
+import { sql, hasDb } from '../../lib/db.js';
+import { send, wrap } from '../../lib/email.js';
 
 export const config = { api: { bodyParser: false } };
 

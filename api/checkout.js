@@ -4,10 +4,10 @@
 // Returns: { url } — front-end redirects the browser there.
 
 import { z } from 'zod';
-import { getStripe } from './_lib/stripe.js';
-import { sql, hasDb } from './_lib/db.js';
-import { json, readJson, requireMethod } from './_lib/http.js';
-import { TIERS, ADDONS, tierPrice, addonPrice } from './_lib/pricing.js';
+import { getStripe } from '../lib/stripe.js';
+import { sql, hasDb } from '../lib/db.js';
+import { json, readJson, requireMethod } from '../lib/http.js';
+import { TIERS, ADDONS, tierPrice, addonPrice } from '../lib/pricing.js';
 
 const Body = z.object({
   tier: z.enum(TIERS),

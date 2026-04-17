@@ -2,8 +2,8 @@
 // `id` can be either an order UUID or a delivery share_slug. Only returns
 // 200 when an associated delivery exists (i.e. the song is ready to stream).
 
-import { sql, hasDb } from '../_lib/db.js';
-import { json, requireMethod } from '../_lib/http.js';
+import { sql, hasDb } from '../../lib/db.js';
+import { json, requireMethod } from '../../lib/http.js';
 
 export default async function handler(req, res) {
   if (!requireMethod(req, res, 'GET')) return;

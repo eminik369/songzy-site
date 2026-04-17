@@ -1,6 +1,6 @@
 // GET /api/admin/orders — recent orders + brief + delivery. Basic auth via ADMIN_PASSWORD.
-import { sql, hasDb } from '../_lib/db.js';
-import { json, requireAdmin, requireMethod } from '../_lib/http.js';
+import { sql, hasDb } from '../../lib/db.js';
+import { json, requireAdmin, requireMethod } from '../../lib/http.js';
 
 export default async function handler(req, res) {
   if (!requireMethod(req, res, 'GET')) return;

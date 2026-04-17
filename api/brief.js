@@ -5,10 +5,10 @@
 //         story3, voiceSlug, genre, mood[], tempo, isSurprise, giftMessage }
 
 import { z } from 'zod';
-import { getStripe } from './_lib/stripe.js';
-import { sql, hasDb } from './_lib/db.js';
-import { json, readJson, requireMethod } from './_lib/http.js';
-import { send, wrap } from './_lib/email.js';
+import { getStripe } from '../lib/stripe.js';
+import { sql, hasDb } from '../lib/db.js';
+import { json, readJson, requireMethod } from '../lib/http.js';
+import { send, wrap } from '../lib/email.js';
 
 const Body = z.object({
   session_id:    z.string().min(5),

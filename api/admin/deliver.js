@@ -2,9 +2,9 @@
 // multipart/form-data: orderId, lyrics?, coverUrl?, mp3 file OR mp3Url.
 // Basic auth via ADMIN_PASSWORD.
 import { put } from '@vercel/blob';
-import { sql, hasDb } from '../_lib/db.js';
-import { json, requireAdmin, requireMethod, shortSlug } from '../_lib/http.js';
-import { send, wrap } from '../_lib/email.js';
+import { sql, hasDb } from '../../lib/db.js';
+import { json, requireAdmin, requireMethod, shortSlug } from '../../lib/http.js';
+import { send, wrap } from '../../lib/email.js';
 
 export const config = { api: { bodyParser: false } };
 
