@@ -1,0 +1,638 @@
+<!--
+  ============================================================================
+  SONGZY — HOW IT WORKS SECTION (03-how-it-works.html)
+  ============================================================================
+  Philosophy: show the path, remove the guesswork. Three steps, sensory
+  language, future pacing. No fake urgency, no filler. Every word earns
+  its space.
+
+  1. FUTURE PACING — paint the moment they press play, not the features.
+  2. SENSORY LANGUAGE — "as if you were texting a friend", "press play
+     together", tactile verbs.
+  3. MICRO-COPY — one reassuring line per step, the kind of thing a
+     friend would say before you start.
+  4. QUIET DESIGN — glassmorphism cards, big watermark numerals, gradient
+     stroke icons, a dashed connector drawn on scroll.
+  5. NO PRESSURE — the closing CTA is a link, not a button. Preview,
+     revise, refund. No small print.
+  ============================================================================
+-->
+
+<section id="how-it-works" class="hiw" aria-labelledby="hiw-title">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700;1,9..144,800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+    /* ------------------------------------------------------------------ */
+    /*  TOKENS (scoped)                                                   */
+    /* ------------------------------------------------------------------ */
+    .hiw {
+      --hw-orange: #FF6B35;
+      --hw-pink:   #E91E8C;
+      --hw-purple: #7B2FF7;
+      --hw-gradient: linear-gradient(135deg, var(--hw-orange), var(--hw-pink), var(--hw-purple));
+      --hw-bg:      #0B0B14;
+      --hw-surface: rgba(255,255,255,.03);
+      --hw-surface-2: rgba(255,255,255,.05);
+      --hw-border:  rgba(255,255,255,.08);
+      --hw-border-strong: rgba(255,255,255,.14);
+      --hw-text:    #ECECF4;
+      --hw-text-muted: #8E8EA8;
+      --hw-text-soft:  #B8B8CC;
+      --hw-radius:  22px;
+      --hw-radius-sm: 14px;
+
+      --hw-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --hw-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --hw-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      background: var(--hw-bg);
+      color: var(--hw-text);
+      font-family: var(--hw-font-body);
+      padding: 120px 24px 112px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* ambient light — soft, never shouting */
+    .hiw::before,
+    .hiw::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+    .hiw::before {
+      top: 8%;
+      left: 10%;
+      width: 440px;
+      height: 440px;
+      background: radial-gradient(circle, rgba(255,107,53,.10) 0%, transparent 70%);
+    }
+    .hiw::after {
+      bottom: 8%;
+      right: 8%;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(123,47,247,.10) 0%, transparent 70%);
+    }
+
+    .hiw *,
+    .hiw *::before,
+    .hiw *::after { box-sizing: border-box; }
+
+    .hiw__container {
+      max-width: 1180px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  HEADER                                                            */
+    /* ------------------------------------------------------------------ */
+    .hiw__header { margin-bottom: 72px; }
+
+    .hiw__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--hw-text-muted);
+      margin-bottom: 20px;
+    }
+
+    .hiw__title {
+      font-family: var(--hw-font-display);
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      margin: 0 auto 18px;
+      max-width: 760px;
+      font-variation-settings: "opsz" 96;
+    }
+
+    .hiw__title em {
+      font-style: italic;
+      font-weight: 600;
+      font-variation-settings: "opsz" 144;
+      color: var(--hw-text);
+    }
+
+    .hiw__title-accent {
+      background: var(--hw-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .hiw__subtitle {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--hw-text-soft);
+      margin: 0 auto;
+      max-width: 560px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CONNECTOR — dashed curves drawn on scroll                         */
+    /* ------------------------------------------------------------------ */
+    .hiw__stage {
+      position: relative;
+    }
+
+    .hiw__connector {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: visible;
+    }
+
+    .hiw__connector path {
+      fill: none;
+      stroke: url(#hiwConnectorGrad);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-dasharray: 6 8;
+      stroke-dashoffset: 1000;
+      opacity: .45;
+      transition: stroke-dashoffset 1.8s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .hiw.is-in-view .hiw__connector path {
+      stroke-dashoffset: 0;
+    }
+
+    @media (max-width: 980px) {
+      .hiw__connector { display: none; }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  GRID                                                              */
+    /* ------------------------------------------------------------------ */
+    .hiw__list {
+      list-style: none;
+      counter-reset: hiw-step;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      position: relative;
+      z-index: 1;
+    }
+
+    @media (max-width: 980px) {
+      .hiw__list {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin-inline: auto;
+        gap: 22px;
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CARD                                                              */
+    /* ------------------------------------------------------------------ */
+    .hiw__card {
+      counter-increment: hiw-step;
+      position: relative;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--hw-border);
+      border-radius: var(--hw-radius);
+      padding: 36px 28px 32px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      transition: transform .4s cubic-bezier(.2,.8,.2,1),
+                  border-color .3s ease,
+                  background .3s ease;
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    }
+
+    .hiw__card:hover,
+    .hiw__card:focus-within {
+      transform: translateY(-6px);
+      background: rgba(255,255,255,.045);
+    }
+
+    /* gradient border on hover via background-clip trick */
+    .hiw__card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1.5px;
+      background: var(--hw-gradient);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      opacity: 0;
+      transition: opacity .35s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hiw__card:hover::before,
+    .hiw__card:focus-within::before {
+      opacity: 1;
+    }
+
+    /* big translucent watermark numeral */
+    .hiw__card-num {
+      position: absolute;
+      top: 14px;
+      right: 22px;
+      font-family: var(--hw-font-display);
+      font-size: 6.4rem;
+      font-weight: 700;
+      line-height: .85;
+      letter-spacing: -.04em;
+      font-variant-numeric: tabular-nums lining-nums;
+      background: var(--hw-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: .10;
+      pointer-events: none;
+      user-select: none;
+      transition: opacity .35s ease, transform .5s cubic-bezier(.2,.8,.2,1);
+      font-variation-settings: "opsz" 144;
+    }
+
+    .hiw__card:hover .hiw__card-num {
+      opacity: .18;
+      transform: translateY(-2px);
+    }
+
+    /* icon — gradient stroke via url() reference */
+    .hiw__icon {
+      position: relative;
+      z-index: 2;
+      width: 56px;
+      height: 56px;
+      border-radius: var(--hw-radius-sm);
+      background: rgba(255,255,255,.04);
+      border: 1px solid var(--hw-border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .hiw__icon svg { display: block; }
+
+    .hiw__icon svg path,
+    .hiw__icon svg circle,
+    .hiw__icon svg polyline {
+      stroke: url(#hiwIconGrad);
+    }
+
+    /* step label (tiny, above the heading) */
+    .hiw__step-label {
+      position: relative;
+      z-index: 2;
+      font-size: .74rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--hw-text-muted);
+      margin: 0 0 8px;
+    }
+
+    .hiw__card-title {
+      position: relative;
+      z-index: 2;
+      font-family: var(--hw-font-display);
+      font-size: 1.38rem;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -.02em;
+      margin: 0 0 14px;
+      color: var(--hw-text);
+      font-variation-settings: "opsz" 72;
+    }
+
+    .hiw__card-desc {
+      position: relative;
+      z-index: 2;
+      font-size: .98rem;
+      line-height: 1.6;
+      color: var(--hw-text-soft);
+      margin: 0 0 22px;
+      flex: 1;
+    }
+
+    /* micro-fact: a calm reassurance pill */
+    .hiw__micro {
+      position: relative;
+      z-index: 2;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+      background: var(--hw-surface);
+      border: 1px solid var(--hw-border);
+      border-radius: 999px;
+      font-size: .82rem;
+      line-height: 1.3;
+      color: var(--hw-text-muted);
+      align-self: flex-start;
+      max-width: 100%;
+    }
+
+    .hiw__micro-dot {
+      flex-shrink: 0;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--hw-gradient);
+      box-shadow: 0 0 10px rgba(233,30,140,.45);
+    }
+
+    .hiw__micro-text {
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  BOTTOM — reassurance + quiet CTA                                  */
+    /* ------------------------------------------------------------------ */
+    .hiw__bottom {
+      margin: 72px auto 0;
+      max-width: 620px;
+    }
+
+    .hiw__reassure {
+      font-size: .98rem;
+      line-height: 1.6;
+      color: var(--hw-text-soft);
+      margin: 0 0 14px;
+    }
+
+    .hiw__reassure strong {
+      color: var(--hw-text);
+      font-weight: 600;
+    }
+
+    .hiw__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      padding: 6px 2px;
+      border-radius: 6px;
+      background: var(--hw-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      transition: transform .25s ease;
+    }
+
+    .hiw__link:hover { transform: translateX(3px); }
+    .hiw__link:focus-visible {
+      outline: 2px solid var(--hw-pink);
+      outline-offset: 4px;
+      -webkit-text-fill-color: var(--hw-text);
+    }
+
+    .hiw__link-arrow {
+      display: inline-block;
+      transition: transform .25s ease;
+    }
+
+    .hiw__link:hover .hiw__link-arrow {
+      transform: translateX(4px);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Focus states                                                      */
+    /* ------------------------------------------------------------------ */
+    .hiw__card:focus-within {
+      border-color: var(--hw-border-strong);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  Reduced motion                                                    */
+    /* ------------------------------------------------------------------ */
+    @media (prefers-reduced-motion: reduce) {
+      .hiw__card,
+      .hiw__card-num,
+      .hiw__link,
+      .hiw__link-arrow,
+      .hiw__connector path {
+        transition: none !important;
+      }
+      .hiw__connector path {
+        stroke-dashoffset: 0 !important;
+      }
+    }
+  </style>
+
+  <!-- ================================================================= -->
+  <!--  SVG DEFS — shared gradients for icons and connector              -->
+  <!-- ================================================================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="hiwIconGrad" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%"   stop-color="#FF6B35"/>
+        <stop offset="50%"  stop-color="#E91E8C"/>
+        <stop offset="100%" stop-color="#7B2FF7"/>
+      </linearGradient>
+      <linearGradient id="hiwConnectorGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%"   stop-color="#FF6B35" stop-opacity="0"/>
+        <stop offset="15%"  stop-color="#FF6B35" stop-opacity=".9"/>
+        <stop offset="50%"  stop-color="#E91E8C" stop-opacity=".9"/>
+        <stop offset="85%"  stop-color="#7B2FF7" stop-opacity=".9"/>
+        <stop offset="100%" stop-color="#7B2FF7" stop-opacity="0"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="hiw__container">
+
+    <!-- =============================================================== -->
+    <!--  HEADER                                                         -->
+    <!-- =============================================================== -->
+    <header class="hiw__header">
+      <span class="hiw__eyebrow">Three steps. No guesswork.</span>
+      <h2 class="hiw__title" id="hiw-title">
+        How your song
+        <span class="hiw__title-accent">is written</span>
+      </h2>
+      <p class="hiw__subtitle">
+        We turn the story you already have in your head into something they can press play on.
+      </p>
+    </header>
+
+    <!-- =============================================================== -->
+    <!--  STAGE — connector + list                                       -->
+    <!-- =============================================================== -->
+    <div class="hiw__stage">
+
+      <!-- dashed curve connector drawn behind the cards on desktop -->
+      <svg class="hiw__connector"
+           viewBox="0 0 1180 360"
+           preserveAspectRatio="none"
+           aria-hidden="true" focusable="false">
+        <path d="M 210 140 C 320 40, 470 40, 590 140 S 860 240, 970 140" />
+      </svg>
+
+      <ol class="hiw__list">
+
+        <!-- =========================================================== -->
+        <!--  STEP 1 — Tell us the story                                -->
+        <!-- =========================================================== -->
+        <li class="hiw__card">
+          <span class="hiw__card-num" aria-hidden="true">01</span>
+
+          <span class="hiw__icon" aria-hidden="true">
+            <!-- pen / letter: a letter with a pen crossing it -->
+            <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+              <path d="M5 9 L20 9 L25 14 L25 25 L5 25 Z"
+                    stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+              <path d="M5 9 L15 18 L20 14"
+                    stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+              <path d="M20 5 L28 13 L22 19 L17 20 L18 15 Z"
+                    stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+          </span>
+
+          <p class="hiw__step-label">Step one</p>
+          <h3 class="hiw__card-title">Tell us the story</h3>
+          <p class="hiw__card-desc">
+            Names, the occasion, a memory that still makes you smile. A short form,
+            as if you were texting a friend.
+          </p>
+
+          <p class="hiw__micro">
+            <span class="hiw__micro-dot" aria-hidden="true"></span>
+            <span class="hiw__micro-text">No writer's block &mdash; we guide you with prompts</span>
+          </p>
+        </li>
+
+        <!-- =========================================================== -->
+        <!--  STEP 2 — We compose it, in your words                     -->
+        <!-- =========================================================== -->
+        <li class="hiw__card">
+          <span class="hiw__card-num" aria-hidden="true">02</span>
+
+          <span class="hiw__icon" aria-hidden="true">
+            <!-- wave + note: a gentle waveform rising to a note -->
+            <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+              <path d="M3 16 C 5 12, 7 12, 9 16 S 13 20, 15 16 S 19 12, 21 16"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M21 16 L21 6 L27 5"
+                    stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="19" cy="19" r="2.6" stroke-width="1.8"/>
+              <circle cx="25" cy="8" r="2.2" stroke-width="1.8"/>
+            </svg>
+          </span>
+
+          <p class="hiw__step-label">Step two</p>
+          <h3 class="hiw__card-title">We compose it, in your words</h3>
+          <p class="hiw__card-desc">
+            Our system writes lyrics from your story, picks the genre that fits the mood,
+            and produces a full studio master &mdash; vocals, instruments, mix.
+          </p>
+
+          <p class="hiw__micro">
+            <span class="hiw__micro-dot" aria-hidden="true"></span>
+            <span class="hiw__micro-text">Pop, acoustic, rock, soul, folk, hip-hop, jazz &mdash; 20+ styles</span>
+          </p>
+        </li>
+
+        <!-- =========================================================== -->
+        <!--  STEP 3 — Press play, together                             -->
+        <!-- =========================================================== -->
+        <li class="hiw__card">
+          <span class="hiw__card-num" aria-hidden="true">03</span>
+
+          <span class="hiw__icon" aria-hidden="true">
+            <!-- play in circle -->
+            <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="12" stroke-width="1.8"/>
+              <path d="M13 11 L22 16 L13 21 Z"
+                    stroke-width="1.8" stroke-linejoin="round" stroke-linecap="round"/>
+            </svg>
+          </span>
+
+          <p class="hiw__step-label">Step three</p>
+          <h3 class="hiw__card-title">Press play, together</h3>
+          <p class="hiw__card-desc">
+            Two hours after you press send, the song is in your inbox. MP3, WAV, lyric video.
+            Share it, save it, send it. Whatever makes the moment bigger.
+          </p>
+
+          <p class="hiw__micro">
+            <span class="hiw__micro-dot" aria-hidden="true"></span>
+            <span class="hiw__micro-text">Usually delivered in 2 hours &middot; We email you the moment it's ready</span>
+          </p>
+        </li>
+
+      </ol>
+
+    </div>
+
+    <!-- =============================================================== -->
+    <!--  BOTTOM — quiet reassurance, quiet link                         -->
+    <!-- =============================================================== -->
+    <div class="hiw__bottom">
+      <p class="hiw__reassure">
+        <strong>Preview first, revise if needed, refund if you need.</strong> No small print.
+      </p>
+      <a href="#pricing" class="hiw__link">
+        See pricing
+        <span class="hiw__link-arrow" aria-hidden="true">&rarr;</span>
+      </a>
+    </div>
+
+  </div>
+  <!-- /container -->
+
+</section>
+
+<script>
+/* --------------------------------------------------------------------------
+   How-it-works — connector draw-on-scroll
+   - Adds .is-in-view once the section enters the viewport, which triggers
+     the CSS transition on stroke-dashoffset (the dashed connector "draws
+     itself" along the path).
+   - Respects prefers-reduced-motion (the CSS already handles that).
+   - Uses IntersectionObserver; no-op on very old browsers.
+   -------------------------------------------------------------------------- */
+(function () {
+  var section = document.querySelector('.hiw');
+  if (!section || !('IntersectionObserver' in window)) {
+    if (section) section.classList.add('is-in-view');
+    return;
+  }
+
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        section.classList.add('is-in-view');
+        io.disconnect();
+      }
+    });
+  }, { threshold: 0.25 });
+
+  io.observe(section);
+})();
+</script>

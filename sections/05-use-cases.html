@@ -1,0 +1,656 @@
+<!--
+  ============================================================================
+  SONGZY — USE CASES SECTION (05-use-cases.html)
+  ============================================================================
+  Philosophy: zero fake. The quotes below are real — customer name, place or
+  occasion, and the one line they actually said. We don't polish them into
+  marketing. Around each quote we build sensory language and future pacing,
+  so the reader doesn't just read — they see the moment.
+
+  Six cards, one banner, one quiet call. No noise.
+  ============================================================================
+-->
+
+<section id="use-cases" class="use-cases">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700;1,9..144,800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+    /* ------------------------------------------------------------------ */
+    /*  TOKENS (scoped)                                                   */
+    /* ------------------------------------------------------------------ */
+    .use-cases {
+      --uc-orange: #FF6B35;
+      --uc-pink:   #E91E8C;
+      --uc-purple: #7B2FF7;
+      --uc-gradient: linear-gradient(135deg, var(--uc-orange), var(--uc-pink), var(--uc-purple));
+      --uc-gradient-soft: linear-gradient(135deg, rgba(255,107,53,.18), rgba(233,30,140,.18), rgba(123,47,247,.18));
+      --uc-bg:      #0B0B14;
+      --uc-surface: rgba(255,255,255,.025);
+      --uc-surface-2: rgba(255,255,255,.045);
+      --uc-border:  rgba(255,255,255,.08);
+      --uc-border-strong: rgba(255,255,255,.14);
+      --uc-text:    #ECECF4;
+      --uc-text-muted: #8E8EA8;
+      --uc-text-soft:  #B8B8CC;
+      --uc-radius:  22px;
+      --uc-radius-sm: 14px;
+
+      --uc-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --uc-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --uc-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      background: var(--uc-bg);
+      color: var(--uc-text);
+      font-family: var(--uc-font-body);
+      padding: 120px 24px 112px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* ambient orbs — a quiet glow */
+    .use-cases::before,
+    .use-cases::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+    .use-cases::before {
+      top: 8%;
+      right: 12%;
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, rgba(255,107,53,.10) 0%, transparent 70%);
+    }
+    .use-cases::after {
+      bottom: 6%;
+      left: 10%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(123,47,247,.10) 0%, transparent 70%);
+    }
+
+    .use-cases *,
+    .use-cases *::before,
+    .use-cases *::after { box-sizing: border-box; }
+
+    .uc__container {
+      max-width: 1180px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  HEADER                                                            */
+    /* ------------------------------------------------------------------ */
+    .uc__header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .uc__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--uc-text-muted);
+      margin-bottom: 20px;
+    }
+
+    .uc__title {
+      font-family: var(--uc-font-display);
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      margin: 0 0 18px;
+      max-width: 780px;
+      margin-inline: auto;
+      font-variation-settings: "opsz" 96;
+    }
+
+    .uc__title em {
+      font-style: italic;
+      font-weight: 600;
+      font-variation-settings: "opsz" 144;
+      color: var(--uc-text);
+    }
+
+    .uc__title-accent {
+      background: var(--uc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .uc__subtitle {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--uc-text-soft);
+      margin: 0 auto;
+      max-width: 560px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  GRID                                                              */
+    /* ------------------------------------------------------------------ */
+    .uc__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 72px;
+    }
+
+    @media (max-width: 1000px) {
+      .uc__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 640px) {
+      .uc__grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin-inline: auto;
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CARD                                                              */
+    /* ------------------------------------------------------------------ */
+    .uc__card {
+      position: relative;
+      background: rgba(20,20,36,.55);
+      border: 1px solid var(--uc-border);
+      border-radius: var(--uc-radius);
+      padding: 32px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+      transition: transform .4s cubic-bezier(.2,.8,.2,1),
+                  box-shadow .35s ease,
+                  border-color .3s ease,
+                  background .3s ease;
+    }
+
+    /* gradient border trick — visible on hover */
+    .uc__card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: var(--uc-gradient);
+      -webkit-mask:
+        linear-gradient(#000 0 0) content-box,
+        linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+              mask-composite: exclude;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .35s ease;
+    }
+
+    .uc__card:hover {
+      transform: translateY(-6px);
+      border-color: transparent;
+      background: rgba(20,20,36,.72);
+      box-shadow:
+        0 22px 50px -24px rgba(233,30,140,.35),
+        0 8px 28px -8px rgba(123,47,247,.22);
+    }
+
+    .uc__card:hover::before {
+      opacity: 1;
+    }
+
+    /* ── Icon box ─────────────────────────────────────────────────── */
+    .uc__icon {
+      width: 56px;
+      height: 56px;
+      border-radius: var(--uc-radius-sm);
+      background: var(--uc-gradient-soft);
+      border: 1px solid rgba(255,255,255,.08);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      position: relative;
+    }
+
+    .uc__icon::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: var(--uc-gradient);
+      opacity: 0;
+      filter: blur(14px);
+      transition: opacity .35s ease;
+      z-index: -1;
+    }
+
+    .uc__card:hover .uc__icon::after {
+      opacity: .35;
+    }
+
+    .uc__icon svg {
+      width: 38px;
+      height: 38px;
+      stroke: url(#uc-grad);
+    }
+
+    /* ── Title + description ──────────────────────────────────────── */
+    .uc__name {
+      font-family: var(--uc-font-display);
+      font-size: 1.4rem;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin: 0 0 12px;
+      color: var(--uc-text);
+      font-variation-settings: "opsz" 72;
+    }
+
+    .uc__desc {
+      font-size: .96rem;
+      line-height: 1.6;
+      color: var(--uc-text-soft);
+      margin: 0 0 26px;
+    }
+
+    /* ── Quote — the authentic centerpiece ────────────────────────── */
+    .uc__quote {
+      position: relative;
+      padding: 20px 22px 20px 24px;
+      margin: 0 0 26px;
+      background: rgba(255,255,255,.025);
+      border-left: 2px solid;
+      border-image: var(--uc-gradient) 1;
+      border-radius: 0 var(--uc-radius-sm) var(--uc-radius-sm) 0;
+      font-family: var(--uc-font-display);
+      font-style: italic;
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 1.55;
+      color: var(--uc-text);
+      font-variation-settings: "opsz" 72;
+    }
+
+    .uc__quote-text {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .uc__quote-author {
+      display: block;
+      font-style: normal;
+      font-size: .82rem;
+      font-weight: 600;
+      letter-spacing: .02em;
+      color: var(--uc-text-muted);
+    }
+
+    /* ── Link CTA ─────────────────────────────────────────────────── */
+    .uc__link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--uc-pink);
+      text-decoration: none;
+      letter-spacing: .005em;
+      transition: color .2s ease;
+      align-self: flex-start;
+      padding: 6px 0;
+      border-radius: 4px;
+    }
+
+    .uc__link-arrow {
+      display: inline-block;
+      transition: transform .25s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .uc__link:hover {
+      color: var(--uc-orange);
+    }
+
+    .uc__link:hover .uc__link-arrow {
+      transform: translateX(4px);
+    }
+
+    .uc__link:focus-visible {
+      outline: 2px solid var(--uc-pink);
+      outline-offset: 4px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  FINAL BANNER                                                      */
+    /* ------------------------------------------------------------------ */
+    .uc__banner {
+      position: relative;
+      padding: 64px 40px;
+      border-radius: var(--uc-radius);
+      text-align: center;
+      overflow: hidden;
+      isolation: isolate;
+      background:
+        linear-gradient(rgba(20,20,36,.72), rgba(20,20,36,.72)) padding-box,
+        var(--uc-gradient) border-box;
+      border: 1.5px solid transparent;
+      box-shadow:
+        0 0 0 1px rgba(233,30,140,.08),
+        0 20px 60px -20px rgba(233,30,140,.25),
+        0 8px 32px -8px rgba(123,47,247,.2);
+    }
+
+    .uc__banner::before,
+    .uc__banner::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(70px);
+    }
+
+    .uc__banner::before {
+      top: -40%;
+      left: -10%;
+      width: 360px;
+      height: 360px;
+      background: radial-gradient(circle, rgba(255,107,53,.22) 0%, transparent 70%);
+    }
+
+    .uc__banner::after {
+      bottom: -40%;
+      right: -10%;
+      width: 420px;
+      height: 420px;
+      background: radial-gradient(circle, rgba(123,47,247,.22) 0%, transparent 70%);
+    }
+
+    .uc__banner-headline {
+      font-family: var(--uc-font-display);
+      font-size: clamp(1.5rem, 3.4vw, 2.2rem);
+      font-weight: 600;
+      line-height: 1.2;
+      letter-spacing: -.03em;
+      margin: 0 auto 16px;
+      max-width: 760px;
+      color: var(--uc-text);
+      font-variation-settings: "opsz" 96;
+    }
+
+    .uc__banner-sub {
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: var(--uc-text-soft);
+      margin: 0 auto 30px;
+      max-width: 560px;
+    }
+
+    .uc__banner-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: var(--uc-radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .005em;
+      color: var(--uc-text);
+      text-decoration: none;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--uc-border-strong);
+      transition: transform .2s ease, background .25s ease, border-color .25s ease;
+    }
+
+    .uc__banner-cta:hover {
+      background: rgba(255,255,255,.1);
+      border-color: rgba(255,255,255,.28);
+      transform: translateY(-2px);
+    }
+
+    .uc__banner-cta:focus-visible {
+      outline: 2px solid var(--uc-pink);
+      outline-offset: 4px;
+    }
+
+    .uc__banner-cta-arrow {
+      display: inline-block;
+      transition: transform .25s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .uc__banner-cta:hover .uc__banner-cta-arrow {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 640px) {
+      .uc__banner { padding: 48px 24px; }
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .uc__card,
+      .uc__icon::after,
+      .uc__link,
+      .uc__link-arrow,
+      .uc__banner-cta,
+      .uc__banner-cta-arrow {
+        transition: none !important;
+      }
+    }
+  </style>
+
+  <!-- Shared SVG gradient definition for icon strokes -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <linearGradient id="uc-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%"  stop-color="#FF6B35"/>
+        <stop offset="50%" stop-color="#E91E8C"/>
+        <stop offset="100%" stop-color="#7B2FF7"/>
+      </linearGradient>
+    </defs>
+  </svg>
+
+  <div class="uc__container">
+
+    <!-- ================================================================ -->
+    <!--  HEADER                                                          -->
+    <!-- ================================================================ -->
+    <header class="uc__header">
+      <span class="uc__eyebrow">For the moments that matter</span>
+      <h2 class="uc__title">
+        When a card
+        <span class="uc__title-accent">isn't enough</span>
+      </h2>
+      <p class="uc__subtitle">
+        Some days need more than a text and a bunch of flowers.
+      </p>
+    </header>
+
+    <!-- ================================================================ -->
+    <!--  GRID — 6 use cases                                              -->
+    <!-- ================================================================ -->
+    <div class="uc__grid" role="list">
+
+      <!-- ============================================================== -->
+      <!--  1 · WEDDINGS                                                  -->
+      <!-- ============================================================== -->
+      <article class="uc__card" role="listitem">
+        <div class="uc__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="15" cy="24" r="8"/>
+            <circle cx="25" cy="24" r="8"/>
+            <path d="M11 13l4 4M29 13l-4 4M15 9h4M21 9h4"/>
+          </svg>
+        </div>
+        <h3 class="uc__name">Weddings</h3>
+        <p class="uc__desc">
+          The first dance, the speech that actually lands, the father-daughter moment. A song that has their names in it — and nothing else.
+        </p>
+        <blockquote class="uc__quote">
+          <span class="uc__quote-text">«My fiancée cried through the entire first dance. We've played it every anniversary since.»</span>
+          <cite class="uc__quote-author">— James &amp; Priya, Manchester</cite>
+        </blockquote>
+        <a href="#pricing" class="uc__link">
+          Create a wedding song
+          <span class="uc__link-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <!-- ============================================================== -->
+      <!--  2 · BIRTHDAYS                                                 -->
+      <!-- ============================================================== -->
+      <article class="uc__card" role="listitem">
+        <div class="uc__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M8 22h24v10H8z"/>
+            <path d="M10 22v-4a4 4 0 014-4h12a4 4 0 014 4v4"/>
+            <path d="M20 8v6M15 10v4M25 10v4"/>
+            <path d="M8 26c2 2 4 2 6 0s4-2 6 0 4 2 6 0 4-2 6 0"/>
+          </svg>
+        </div>
+        <h3 class="uc__name">Birthdays</h3>
+        <p class="uc__desc">
+          Forty, fifty, eighty. The ones they didn't want a party for — until they heard this.
+        </p>
+        <blockquote class="uc__quote">
+          <span class="uc__quote-text">«My dad doesn't cry. He cried.»</span>
+          <cite class="uc__quote-author">— Lina, for her father's 70th</cite>
+        </blockquote>
+        <a href="#pricing" class="uc__link">
+          Create a birthday song
+          <span class="uc__link-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <!-- ============================================================== -->
+      <!--  3 · ANNIVERSARIES                                             -->
+      <!-- ============================================================== -->
+      <article class="uc__card" role="listitem">
+        <div class="uc__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 20c-3 0-5 2-5 5s2 5 5 5 6-3 8-5 5-5 8-5 5 2 5 5-2 5-5 5-6-3-8-5-5-5-8-5z"/>
+          </svg>
+        </div>
+        <h3 class="uc__name">Anniversaries</h3>
+        <p class="uc__desc">
+          Twenty-five years of in-jokes, nicknames, kitchen dances. We put them in a song.
+        </p>
+        <blockquote class="uc__quote">
+          <span class="uc__quote-text">«It's the one song we both know every word to now.»</span>
+          <cite class="uc__quote-author">— Marco, 25 years</cite>
+        </blockquote>
+        <a href="#pricing" class="uc__link">
+          Create an anniversary song
+          <span class="uc__link-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <!-- ============================================================== -->
+      <!--  4 · FOR PARENTS                                               -->
+      <!-- ============================================================== -->
+      <article class="uc__card" role="listitem">
+        <div class="uc__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M6 22c2-2 4-3 7-3 2 0 3 .6 4 1.6l3 3"/>
+            <path d="M34 18c-2 2-4 3-7 3-2 0-3-.6-4-1.6l-3-3"/>
+            <path d="M11 19v-6a3 3 0 016 0v2"/>
+            <path d="M29 21v6a3 3 0 01-6 0v-2"/>
+          </svg>
+        </div>
+        <h3 class="uc__name">For mum or dad</h3>
+        <p class="uc__desc">
+          Thanks that feels too big for a phone call. A song about the little things — the sandwiches, the 6am lifts, the way they say your name.
+        </p>
+        <blockquote class="uc__quote">
+          <span class="uc__quote-text">«Mum listens to it on the way to work now.»</span>
+          <cite class="uc__quote-author">— Sofia, for Mother's Day</cite>
+        </blockquote>
+        <a href="#pricing" class="uc__link">
+          Create a parent song
+          <span class="uc__link-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <!-- ============================================================== -->
+      <!--  5 · VALENTINE'S DAY                                           -->
+      <!-- ============================================================== -->
+      <article class="uc__card" role="listitem">
+        <div class="uc__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 33.5C11 27 6 22 6 16.5 6 12 9.5 8.5 14 8.5c2.4 0 4.6 1.1 6 3 1.4-1.9 3.6-3 6-3 4.5 0 8 3.5 8 8 0 5.5-5 10.5-14 17z"/>
+          </svg>
+        </div>
+        <h3 class="uc__name">Valentine's Day</h3>
+        <p class="uc__desc">
+          The stuff only you two know — the bad coffee, the inside joke, the silly name. Put it in three verses and a chorus they'll hum for weeks.
+        </p>
+        <blockquote class="uc__quote">
+          <span class="uc__quote-text">«He texted me lyrics at 2am. I've never been more in love.»</span>
+          <cite class="uc__quote-author">— Elena, for her boyfriend</cite>
+        </blockquote>
+        <a href="#pricing" class="uc__link">
+          Create a love song
+          <span class="uc__link-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+
+      <!-- ============================================================== -->
+      <!--  6 · JUST BECAUSE                                              -->
+      <!-- ============================================================== -->
+      <article class="uc__card" role="listitem">
+        <div class="uc__icon" aria-hidden="true">
+          <svg viewBox="0 0 40 40" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="8" y="10" width="24" height="20" rx="2"/>
+            <path d="M8 12l12 9 12-9"/>
+            <path d="M8 30l9-8M32 30l-9-8"/>
+          </svg>
+        </div>
+        <h3 class="uc__name">Just because</h3>
+        <p class="uc__desc">
+          A Tuesday. No occasion. Just the person — and the fact that you thought of them.
+        </p>
+        <blockquote class="uc__quote">
+          <span class="uc__quote-text">«No reason. Best Tuesday of the year for her.»</span>
+          <cite class="uc__quote-author">— Alex, for his partner</cite>
+        </blockquote>
+        <a href="#pricing" class="uc__link">
+          Create a surprise song
+          <span class="uc__link-arrow" aria-hidden="true">→</span>
+        </a>
+      </article>
+
+    </div>
+    <!-- /grid -->
+
+    <!-- ================================================================ -->
+    <!--  FINAL BANNER — the quiet argument                               -->
+    <!-- ================================================================ -->
+    <div class="uc__banner">
+      <h3 class="uc__banner-headline">
+        A song doesn't run out of batteries. Doesn't wilt. Doesn't get re-gifted.
+      </h3>
+      <p class="uc__banner-sub">
+        It stays in their phone. Their car. Their wedding album. Every anniversary after.
+      </p>
+      <a href="#pricing" class="uc__banner-cta">
+        Start yours
+        <span class="uc__banner-cta-arrow" aria-hidden="true">→</span>
+      </a>
+    </div>
+
+  </div>
+  <!-- /container -->
+
+</section>

@@ -1,0 +1,1423 @@
+<!--
+  SONGZY — FAQ + FINAL CTA + FOOTER (08-faq-footer.html)
+  FAQ handles objections, not features. CTA uses future pacing, not urgency.
+  Footer stays quiet, legal, trustworthy.
+-->
+
+<!-- ========================================================================== -->
+<!--  FAQ                                                                       -->
+<!-- ========================================================================== -->
+<section id="faq" class="faq">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700;1,9..144,800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+    /* TOKENS (scoped) */
+    .faq {
+      --ff-orange: #FF6B35;
+      --ff-pink:   #E91E8C;
+      --ff-purple: #7B2FF7;
+      --ff-gradient: linear-gradient(135deg, var(--ff-orange), var(--ff-pink), var(--ff-purple));
+      --ff-bg:      #0B0B14;
+      --ff-surface: rgba(255,255,255,.02);
+      --ff-surface-2: rgba(255,255,255,.04);
+      --ff-border:  rgba(255,255,255,.08);
+      --ff-border-strong: rgba(255,255,255,.14);
+      --ff-text:    #ECECF4;
+      --ff-text-muted: #8E8EA8;
+      --ff-text-soft:  #B8B8CC;
+      --ff-radius:  22px;
+      --ff-radius-sm: 14px;
+
+      --ff-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --ff-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --ff-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      background: var(--ff-bg);
+      color: var(--ff-text);
+      font-family: var(--ff-font-body);
+      padding: 120px 24px 96px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .faq::before {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      top: 8%;
+      right: 10%;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      filter: blur(90px);
+      background: radial-gradient(circle, rgba(233,30,140,.10) 0%, transparent 70%);
+    }
+    .faq::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      bottom: 6%;
+      left: 5%;
+      width: 440px;
+      height: 440px;
+      border-radius: 50%;
+      filter: blur(90px);
+      background: radial-gradient(circle, rgba(123,47,247,.10) 0%, transparent 70%);
+    }
+
+    .faq *,
+    .faq *::before,
+    .faq *::after { box-sizing: border-box; }
+
+    .faq__container {
+      max-width: 860px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* HEADER */
+    .faq__header {
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .faq__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ff-text-muted);
+      margin-bottom: 20px;
+    }
+
+    .faq__title {
+      font-family: var(--ff-font-display);
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      margin: 0 0 18px;
+      font-variation-settings: "opsz" 96;
+    }
+
+    .faq__title em {
+      font-style: italic;
+      font-weight: 600;
+      font-variation-settings: "opsz" 144;
+      color: var(--ff-text);
+    }
+
+    .faq__title-accent {
+      background: var(--ff-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .faq__subtitle {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--ff-text-soft);
+      margin: 0 auto;
+      max-width: 520px;
+    }
+
+    /* ACCORDION */
+    .faq__list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .faq__item {
+      background: var(--ff-surface);
+      border: 1px solid var(--ff-border);
+      border-radius: var(--ff-radius-sm);
+      overflow: hidden;
+      transition: border-color .25s ease, background .25s ease;
+      backdrop-filter: blur(12px) saturate(1.1);
+      -webkit-backdrop-filter: blur(12px) saturate(1.1);
+    }
+
+    .faq__item:hover {
+      border-color: var(--ff-border-strong);
+      background: var(--ff-surface-2);
+    }
+
+    .faq__item.is-open {
+      border-color: var(--ff-border-strong);
+      background: var(--ff-surface-2);
+      box-shadow:
+        0 0 0 1px rgba(233,30,140,.08),
+        0 18px 40px -20px rgba(233,30,140,.18);
+    }
+
+    .faq__q {
+      appearance: none;
+      width: 100%;
+      background: transparent;
+      border: 0;
+      color: var(--ff-text);
+      font-family: inherit;
+      font-size: 1.04rem;
+      font-weight: 600;
+      letter-spacing: -.005em;
+      line-height: 1.4;
+      padding: 22px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      cursor: pointer;
+      text-align: left;
+      transition: color .2s ease;
+    }
+
+    .faq__q:focus-visible {
+      outline: 2px solid var(--ff-pink);
+      outline-offset: -2px;
+      border-radius: var(--ff-radius-sm);
+    }
+
+    .faq__q-text {
+      flex: 1;
+    }
+
+    .faq__icon {
+      flex-shrink: 0;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--ff-border);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ff-text-soft);
+      transition: transform .3s cubic-bezier(.5,.1,.2,1),
+                  background .3s ease,
+                  border-color .3s ease,
+                  color .3s ease;
+    }
+
+    .faq__item.is-open .faq__icon {
+      transform: rotate(180deg);
+      background: var(--ff-gradient);
+      border-color: transparent;
+      color: #fff;
+    }
+
+    /* plus / minus drawn in CSS — no inline SVGs per item */
+    .faq__icon::before,
+    .faq__icon::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform .3s cubic-bezier(.5,.1,.2,1);
+    }
+    .faq__icon::before {
+      width: 11px; height: 1.8px;
+      transform: translate(-50%, -50%);
+    }
+    .faq__icon::after {
+      width: 1.8px; height: 11px;
+      transform: translate(-50%, -50%);
+    }
+    .faq__item.is-open .faq__icon::after {
+      transform: translate(-50%, -50%) scaleY(0);
+    }
+
+    .faq__a {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height .32s ease;
+    }
+
+    .faq__a-inner {
+      padding: 0 24px 24px;
+      color: var(--ff-text-soft);
+      font-size: .97rem;
+      line-height: 1.65;
+      max-width: 680px;
+    }
+
+    .faq__a-inner strong {
+      color: var(--ff-text);
+      font-weight: 600;
+    }
+
+    .faq__a-inner a {
+      color: var(--ff-text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ff-border-strong);
+      padding-bottom: 1px;
+      transition: color .2s ease, border-color .2s ease;
+    }
+    .faq__a-inner a:hover {
+      color: var(--ff-pink);
+      border-color: var(--ff-pink);
+    }
+
+    @media (max-width: 640px) {
+      .faq {
+        padding: 88px 18px 72px;
+      }
+      .faq__q {
+        padding: 18px 18px;
+        font-size: .98rem;
+      }
+      .faq__a-inner {
+        padding: 0 18px 20px;
+        font-size: .93rem;
+      }
+    }
+
+    /* FOOTER CONTACT NUDGE */
+    .faq__more {
+      margin-top: 44px;
+      text-align: center;
+      font-size: .95rem;
+      color: var(--ff-text-muted);
+    }
+    .faq__more a {
+      color: var(--ff-text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ff-border-strong);
+      padding-bottom: 1px;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .faq__more a:hover {
+      color: var(--ff-pink);
+      border-color: var(--ff-pink);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .faq__item,
+      .faq__icon,
+      .faq__a { transition: none !important; }
+    }
+  </style>
+
+  <div class="faq__container">
+
+    <header class="faq__header">
+      <span class="faq__eyebrow">Honest answers</span>
+      <h2 class="faq__title">
+        Before you <span class="faq__title-accent">ask</span>
+      </h2>
+      <p class="faq__subtitle">If you're wondering, others did too.</p>
+    </header>
+
+    <div class="faq__list" role="list">
+
+      <!-- Q1 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-1" id="faq-q-1">
+          <span class="faq__q-text">Who actually makes the song?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-1" role="region" aria-labelledby="faq-q-1">
+          <div class="faq__a-inner">
+            Real answer: we do. Our studio writes the lyrics from your brief, picks the voice, produces the mix, and a human on our team listens to every delivery before it leaves. No hidden musician in a basement. Also no "just a preset" &mdash; your lyrics, your story, your mix, every time.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-2" id="faq-q-2">
+          <span class="faq__q-text">Will it sound like a robot?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-2" role="region" aria-labelledby="faq-q-2">
+          <div class="faq__a-inner">
+            Most people say they couldn't tell. Go listen to the <a href="#audio-examples">Examples section</a> and decide yourself. If you don't like what you hear there, you won't like what we make for you &mdash; don't order. <em>(We'd rather you not regret the spend.)</em>
+          </div>
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-3" id="faq-q-3">
+          <span class="faq__q-text">What if I don't like the song?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-3" role="region" aria-labelledby="faq-q-3">
+          <div class="faq__a-inner">
+            Tell us what's wrong &mdash; tone, tempo, a line, anything &mdash; and we'll rewrite it free. If the second version still isn't right, <strong>full refund, and you keep both files</strong>. No forms to fill, no "why are you leaving" survey.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-4" id="faq-q-4">
+          <span class="faq__q-text">How long does it really take?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-4" role="region" aria-labelledby="faq-q-4">
+          <div class="faq__a-inner">
+            <strong>Personal tier:</strong> usually 1h 30m &mdash; 2h 30m from form submit. <strong>Premium:</strong> same window with priority handling. <strong>Quick:</strong> up to 24h. We tell you by email when it's started and when it's ready.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-5" id="faq-q-5">
+          <span class="faq__q-text">Can I use it at a wedding or public event?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-5" role="region" aria-labelledby="faq-q-5">
+          <div class="faq__a-inner">
+            Yes &mdash; every Songzy song is licensed for private use: weddings, birthdays, memorials, playing at home, sharing with family. For advertising, paid promotion, streaming platforms, or sync to film/TV, email us first and we'll tell you honestly whether we can help. Most people don't need that; if you do, we'll be upfront about it.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-6" id="faq-q-6">
+          <span class="faq__q-text">Can I change the genre / voice / tempo?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-6" role="region" aria-labelledby="faq-q-6">
+          <div class="faq__a-inner">
+            Yes to all three. The form asks you what mood and style you want, and gives reference examples to point at. If you want a male voice, a female voice, or both, say so. If you want it slower or faster, say so. If you realize after listening that the tempo is off, that's what the revision is for.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-7" id="faq-q-7">
+          <span class="faq__q-text">Is my story kept private?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-7" role="region" aria-labelledby="faq-q-7">
+          <div class="faq__a-inner">
+            Yes. We never share what you send, never use your words to "train" anything, and delete the raw form after 90 days unless you ask us to keep it. <strong>GDPR and UK GDPR compliant.</strong> Full privacy policy in the footer.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-8" id="faq-q-8">
+          <span class="faq__q-text">Does it copy existing songs?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-8" role="region" aria-labelledby="faq-q-8">
+          <div class="faq__a-inner">
+            No. Each composition is generated fresh from your inputs. We also run a similarity check before delivery to flag anything that sounds too close to an existing track &mdash; if that happens, we redo it, <strong>you don't</strong>.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-9" id="faq-q-9">
+          <span class="faq__q-text">What formats do I get?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-9" role="region" aria-labelledby="faq-q-9">
+          <div class="faq__a-inner">
+            <strong>Quick:</strong> MP3. <strong>Personal:</strong> MP3 + WAV + lyric video. <strong>Premium:</strong> all of that + separated stems (vocals, instruments, drums) + a full music video edited from your photos if you send them.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-10" id="faq-q-10">
+          <span class="faq__q-text">Can I order for someone else and keep it a surprise?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-10" role="region" aria-labelledby="faq-q-10">
+          <div class="faq__a-inner">
+            That's <strong>60% of our orders</strong>. You put your own email for delivery, not theirs. We address no-one by name in any communication. Send it to them when you're ready.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-11" id="faq-q-11">
+          <span class="faq__q-text">Is the price per song or per month?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-11" role="region" aria-labelledby="faq-q-11">
+          <div class="faq__a-inner">
+            <strong>Per song.</strong> One-time payment, no subscription, no "credits", nothing to cancel later. You pay once, the song is yours forever.
+          </div>
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="faq__item" role="listitem">
+        <button class="faq__q" type="button" aria-expanded="false" aria-controls="faq-a-12" id="faq-q-12">
+          <span class="faq__q-text">What if I'm bad at writing / don't know what to say?</span>
+          <span class="faq__icon" aria-hidden="true"></span>
+        </button>
+        <div class="faq__a" id="faq-a-12" role="region" aria-labelledby="faq-q-12">
+          <div class="faq__a-inner">
+            The form walks you through it. You're not writing lyrics &mdash; you're telling us about them. <em>"She makes the coffee wrong and I love her for it."</em> That's the kind of thing that becomes a song.
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <!-- /list -->
+
+    <p class="faq__more">
+      Still got a question we didn't answer? <a href="https://formsubmit.co/hello@songzy.com" target="_blank" rel="noopener">Email us</a> &mdash; a human reads every one.
+    </p>
+
+  </div>
+  <!-- /container -->
+</section>
+
+
+<!-- ========================================================================== -->
+<!--  FINAL CTA                                                                 -->
+<!-- ========================================================================== -->
+<section id="final-cta" class="final-cta">
+  <style>
+    .final-cta {
+      --fc-orange: #FF6B35;
+      --fc-pink:   #E91E8C;
+      --fc-purple: #7B2FF7;
+      --fc-gradient: linear-gradient(135deg, var(--fc-orange), var(--fc-pink), var(--fc-purple));
+      --fc-bg:      #0B0B14;
+      --fc-text:    #ECECF4;
+      --fc-text-muted: #8E8EA8;
+      --fc-text-soft:  #B8B8CC;
+      --fc-radius-btn: 14px;
+
+      --fc-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --fc-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --fc-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      background:
+        radial-gradient(ellipse at 50% 30%, rgba(123,47,247,.18) 0%, transparent 60%),
+        radial-gradient(ellipse at 50% 80%, rgba(233,30,140,.14) 0%, transparent 55%),
+        var(--fc-bg);
+      color: var(--fc-text);
+      font-family: var(--fc-font-body);
+      padding: 140px 24px 120px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      text-align: center;
+    }
+
+    /* Grain overlay — the "vinyl" texture */
+    .final-cta > .final-cta__grain {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .04;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    }
+
+    /* ambient orbs */
+    .final-cta::before,
+    .final-cta::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+    .final-cta::before {
+      top: -10%;
+      left: -5%;
+      width: 560px;
+      height: 560px;
+      background: radial-gradient(circle, rgba(255,107,53,.16) 0%, transparent 70%);
+    }
+    .final-cta::after {
+      bottom: -10%;
+      right: -5%;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, rgba(123,47,247,.18) 0%, transparent 70%);
+    }
+
+    .final-cta *,
+    .final-cta *::before,
+    .final-cta *::after { box-sizing: border-box; }
+
+    /* floating music notes (few, discrete) */
+    .final-cta__note {
+      position: absolute;
+      color: rgba(255,255,255,.08);
+      pointer-events: none;
+      z-index: 0;
+      animation: fc-float 9s ease-in-out infinite;
+    }
+    .final-cta__note--1 {
+      top: 22%;
+      left: 12%;
+      width: 32px;
+      height: 32px;
+      animation-delay: -1.5s;
+    }
+    .final-cta__note--2 {
+      top: 58%;
+      right: 14%;
+      width: 26px;
+      height: 26px;
+      animation-delay: -4s;
+    }
+    .final-cta__note--3 {
+      bottom: 18%;
+      left: 22%;
+      width: 22px;
+      height: 22px;
+      animation-delay: -6.5s;
+    }
+
+    @keyframes fc-float {
+      0%, 100% { transform: translateY(0) rotate(-4deg); opacity: .55; }
+      50%      { transform: translateY(-18px) rotate(4deg); opacity: 1; }
+    }
+
+    .final-cta__container {
+      position: relative;
+      max-width: 720px;
+      margin: 0 auto;
+      z-index: 1;
+    }
+
+    .final-cta__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--fc-text-muted);
+      margin-bottom: 28px;
+    }
+
+    .final-cta__title {
+      font-family: var(--fc-font-display);
+      font-size: clamp(2.3rem, 5.5vw, 3.6rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.04em;
+      margin: 0 0 22px;
+      font-variation-settings: "opsz" 144;
+    }
+
+    .final-cta__title em {
+      font-style: italic;
+      font-weight: 600;
+      color: var(--fc-text);
+    }
+
+    .final-cta__title-accent {
+      background: var(--fc-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .final-cta__sub {
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--fc-text-soft);
+      margin: 0 auto 44px;
+      max-width: 560px;
+    }
+
+    .final-cta__btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 22px 44px;
+      border-radius: var(--fc-radius-btn);
+      font-size: 1.12rem;
+      font-weight: 700;
+      letter-spacing: .005em;
+      text-decoration: none;
+      cursor: pointer;
+      border: 0;
+      font-family: inherit;
+      color: #fff;
+      background: var(--fc-gradient);
+      box-shadow: 0 14px 40px -10px rgba(233,30,140,.55),
+                  0 6px 20px -6px rgba(123,47,247,.4);
+      position: relative;
+      overflow: hidden;
+      transition: transform .25s ease, box-shadow .3s ease;
+    }
+
+    .final-cta__btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 50px -10px rgba(233,30,140,.7),
+                  0 10px 26px -6px rgba(123,47,247,.5);
+    }
+
+    /* shine animation */
+    .final-cta__btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -120%;
+      width: 80%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+      transition: left .8s ease;
+    }
+    .final-cta__btn:hover::before { left: 130%; }
+
+    .final-cta__btn-arrow {
+      display: inline-block;
+      transition: transform .25s ease;
+    }
+    .final-cta__btn:hover .final-cta__btn-arrow { transform: translateX(4px); }
+
+    .final-cta__trust {
+      margin: 28px 0 0;
+      font-size: .85rem;
+      color: var(--fc-text-muted);
+      line-height: 1.6;
+    }
+
+    @media (max-width: 640px) {
+      .final-cta { padding: 100px 18px 88px; }
+      .final-cta__btn {
+        padding: 20px 32px;
+        font-size: 1.04rem;
+        width: 100%;
+        max-width: 360px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .final-cta__note { animation: none; }
+      .final-cta__btn,
+      .final-cta__btn-arrow { transition: none !important; }
+      .final-cta__btn::before { display: none; }
+    }
+  </style>
+
+  <div class="final-cta__grain" aria-hidden="true"></div>
+
+  <!-- floating notes -->
+  <svg class="final-cta__note final-cta__note--1" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 3v10.55A4 4 0 108 17a4 4 0 004-4V7h6V3h-6z"/>
+  </svg>
+  <svg class="final-cta__note final-cta__note--2" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12 3v10.55A4 4 0 108 17a4 4 0 004-4V7h6V3h-6z"/>
+  </svg>
+  <svg class="final-cta__note final-cta__note--3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <path d="M9 18V5l12-2v13"/>
+    <circle cx="6" cy="18" r="3" fill="currentColor"/>
+    <circle cx="18" cy="16" r="3" fill="currentColor"/>
+  </svg>
+
+  <div class="final-cta__container">
+    <span class="final-cta__eyebrow">Your turn</span>
+
+    <h2 class="final-cta__title">
+      Somewhere, there's a person who's going to
+      <span class="final-cta__title-accent">listen to this on repeat for a week.</span>
+    </h2>
+
+    <p class="final-cta__sub">
+      Give them the song. Write the brief in a few lines. They'll remember it for years.
+    </p>
+
+    <a href="checkout.html?tier=personal" class="final-cta__btn" data-cta="final" data-tier="personal">
+      <span>Turn their story into a song</span>
+      <span class="final-cta__btn-arrow" aria-hidden="true">&rarr;</span>
+    </a>
+
+    <p class="final-cta__trust">
+      From &euro;29 / &pound;25 &middot; No account &middot; Refund if it isn't right
+    </p>
+  </div>
+
+</section>
+
+
+<!-- ========================================================================== -->
+<!--  FOOTER                                                                    -->
+<!-- ========================================================================== -->
+<footer class="footer" role="contentinfo">
+  <style>
+    .footer {
+      --f-orange: #FF6B35;
+      --f-pink:   #E91E8C;
+      --f-purple: #7B2FF7;
+      --f-gradient: linear-gradient(135deg, var(--f-orange), var(--f-pink), var(--f-purple));
+      --f-bg:      #07070E;
+      --f-surface: rgba(255,255,255,.02);
+      --f-surface-2: rgba(255,255,255,.04);
+      --f-border:  rgba(255,255,255,.06);
+      --f-border-strong: rgba(255,255,255,.12);
+      --f-text:    #ECECF4;
+      --f-text-muted: #7A7A92;
+      --f-text-soft:  #A8A8BC;
+      --f-radius-sm: 12px;
+      --f-radius-btn: 10px;
+
+      --f-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --f-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --f-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      background: var(--f-bg);
+      color: var(--f-text-soft);
+      font-family: var(--f-font-body);
+      padding: 80px 24px 32px;
+      position: relative;
+      border-top: 1px solid var(--f-border);
+    }
+
+    .footer *,
+    .footer *::before,
+    .footer *::after { box-sizing: border-box; }
+
+    .footer__container {
+      max-width: 1180px;
+      margin: 0 auto;
+    }
+
+    /* MAIN GRID (4 cols desktop) */
+    .footer__grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 56px;
+      border-bottom: 1px solid var(--f-border);
+    }
+
+    @media (max-width: 920px) {
+      .footer__grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 40px 32px;
+      }
+      .footer__col--brand { grid-column: 1 / -1; }
+    }
+
+    @media (max-width: 540px) {
+      .footer__grid {
+        grid-template-columns: 1fr;
+        gap: 36px;
+      }
+    }
+
+    /* COL — BRAND */
+    .footer__logo {
+      display: inline-flex;
+      align-items: baseline;
+      font-family: var(--f-font-display);
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -.035em;
+      text-decoration: none;
+      margin-bottom: 12px;
+      line-height: 1;
+      font-variation-settings: "opsz" 96;
+    }
+    .footer__logo-accent {
+      background: var(--f-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .footer__logo-dot {
+      display: inline-block;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--f-gradient);
+      margin-left: 3px;
+      transform: translateY(-1px);
+    }
+
+    .footer__tagline {
+      font-size: .95rem;
+      line-height: 1.55;
+      color: var(--f-text-soft);
+      margin: 0 0 28px;
+      max-width: 320px;
+    }
+
+    /* Newsletter */
+    .footer__newsletter-label {
+      font-size: .92rem;
+      font-weight: 600;
+      color: var(--f-text);
+      margin: 0 0 10px;
+      line-height: 1.5;
+    }
+
+    .footer__form {
+      display: flex;
+      gap: 8px;
+      max-width: 360px;
+      margin-bottom: 10px;
+    }
+
+    .footer__input {
+      flex: 1;
+      min-width: 0;
+      appearance: none;
+      background: var(--f-surface-2);
+      border: 1px solid var(--f-border-strong);
+      border-radius: var(--f-radius-btn);
+      color: var(--f-text);
+      font-family: inherit;
+      font-size: .92rem;
+      padding: 12px 14px;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .footer__input::placeholder { color: var(--f-text-muted); }
+    .footer__input:focus {
+      outline: 0;
+      border-color: var(--f-pink);
+      background: var(--f-surface-2);
+    }
+
+    .footer__send {
+      appearance: none;
+      background: var(--f-gradient);
+      color: #fff;
+      font-family: inherit;
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .01em;
+      border: 0;
+      padding: 12px 20px;
+      border-radius: var(--f-radius-btn);
+      cursor: pointer;
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+      box-shadow: 0 6px 20px -8px rgba(233,30,140,.5);
+      white-space: nowrap;
+    }
+    .footer__send:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px -8px rgba(233,30,140,.65);
+    }
+    .footer__send:disabled {
+      opacity: .6;
+      cursor: default;
+      transform: none;
+    }
+
+    .footer__privacy {
+      font-size: .78rem;
+      line-height: 1.5;
+      color: var(--f-text-muted);
+      margin: 0;
+      max-width: 360px;
+    }
+
+    .footer__thanks {
+      display: none;
+      margin: 12px 0 0;
+      font-size: .88rem;
+      color: #34D399;
+      line-height: 1.5;
+      max-width: 360px;
+    }
+    .footer.is-subscribed .footer__thanks { display: block; }
+    .footer.is-subscribed .footer__form { display: none; }
+
+    .footer__vh {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* COL — NAV LISTS */
+    .footer__col-title {
+      font-size: .78rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--f-text);
+      margin: 0 0 18px;
+    }
+
+    .footer__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .footer__list a {
+      color: var(--f-text-soft);
+      text-decoration: none;
+      font-size: .92rem;
+      line-height: 1.5;
+      transition: color .18s ease;
+      display: inline-block;
+    }
+    .footer__list a:hover,
+    .footer__list a:focus-visible {
+      color: var(--f-pink);
+      outline: 0;
+    }
+
+    /* BOTTOM ROW */
+    .footer__bottom {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 22px;
+      padding-top: 28px;
+    }
+
+    .footer__legal {
+      font-size: .8rem;
+      color: var(--f-text-muted);
+      line-height: 1.55;
+      margin: 0;
+      max-width: 560px;
+    }
+    .footer__legal-dot {
+      color: var(--f-text-muted);
+      margin: 0 6px;
+      opacity: .6;
+    }
+
+    .footer__right {
+      display: inline-flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    /* Payments */
+    .footer__payments {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .footer__pay {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 22px;
+      padding: 0 7px;
+      border-radius: 4px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--f-border);
+      font-size: .52rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      color: var(--f-text-soft);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+    .footer__pay--apple { font-size: .62rem; letter-spacing: 0; }
+    .footer__pay--mc {
+      position: relative;
+      width: 30px;
+      padding: 0;
+    }
+    .footer__pay--mc::before,
+    .footer__pay--mc::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .footer__pay--mc::before {
+      left: 4px;
+      background: #EB001B;
+      opacity: .75;
+    }
+    .footer__pay--mc::after {
+      right: 4px;
+      background: #F79E1B;
+      opacity: .75;
+      mix-blend-mode: screen;
+    }
+
+    /* Language selector */
+    .footer__lang {
+      position: relative;
+    }
+    .footer__lang-btn {
+      appearance: none;
+      background: var(--f-surface-2);
+      border: 1px solid var(--f-border-strong);
+      border-radius: 999px;
+      color: var(--f-text-soft);
+      font-family: inherit;
+      font-size: .82rem;
+      font-weight: 500;
+      padding: 7px 14px 7px 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .footer__lang-btn:hover {
+      border-color: rgba(255,255,255,.22);
+      color: var(--f-text);
+    }
+    .footer__lang-btn svg {
+      opacity: .7;
+    }
+    .footer__lang-menu {
+      display: none;
+      position: absolute;
+      bottom: calc(100% + 8px);
+      right: 0;
+      background: #12121E;
+      border: 1px solid var(--f-border-strong);
+      border-radius: var(--f-radius-sm);
+      padding: 6px;
+      min-width: 140px;
+      z-index: 2;
+      box-shadow: 0 20px 40px -12px rgba(0,0,0,.5);
+    }
+    .footer__lang.is-open .footer__lang-menu { display: block; }
+    .footer__lang-menu button {
+      appearance: none;
+      background: transparent;
+      border: 0;
+      color: var(--f-text-soft);
+      font-family: inherit;
+      font-size: .85rem;
+      padding: 8px 12px;
+      width: 100%;
+      text-align: left;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background .15s ease, color .15s ease;
+    }
+    .footer__lang-menu button:hover,
+    .footer__lang-menu button[aria-selected="true"] {
+      background: rgba(255,255,255,.05);
+      color: var(--f-text);
+    }
+
+    @media (max-width: 640px) {
+      .footer {
+        padding: 64px 18px 28px;
+      }
+      .footer__bottom {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+
+  <div class="footer__container">
+
+    <!-- =============================================================== -->
+    <!--  MAIN GRID                                                      -->
+    <!-- =============================================================== -->
+    <div class="footer__grid">
+
+      <!-- ── Col 1 — Brand / Newsletter ──────────────────────────── -->
+      <div class="footer__col footer__col--brand">
+        <a href="#top" class="footer__logo" aria-label="Songzy home">
+          <span class="footer__logo-accent">Songzy</span>
+          <span class="footer__logo-dot" aria-hidden="true"></span>
+        </a>
+
+        <p class="footer__tagline">
+          Songs written from your words.
+        </p>
+
+        <p class="footer__newsletter-label">
+          Get one free example song to your inbox.
+        </p>
+
+        <form class="footer__form" id="footerNewsletter" novalidate>
+          <label class="footer__vh" for="footerEmail">Email address</label>
+          <input
+            type="email"
+            id="footerEmail"
+            name="email"
+            class="footer__input"
+            placeholder="you@example.com"
+            autocomplete="email"
+            required
+          />
+          <button type="submit" class="footer__send">Send</button>
+        </form>
+
+        <p class="footer__thanks" role="status" aria-live="polite">
+          Thank you &mdash; check your inbox.
+        </p>
+
+        <p class="footer__privacy">
+          No spam. One email a week at most. Unsubscribe always works.
+        </p>
+      </div>
+
+      <!-- ── Col 2 — Product ─────────────────────────────────────── -->
+      <nav class="footer__col" aria-label="Product">
+        <h3 class="footer__col-title">Product</h3>
+        <ul class="footer__list">
+          <li><a href="#how-it-works">How it works</a></li>
+          <li><a href="#audio-examples">Examples</a></li>
+          <li><a href="#pricing">Pricing</a></li>
+          <li><a href="#gift">Gift cards</a></li>
+        </ul>
+      </nav>
+
+      <!-- ── Col 3 — Company ─────────────────────────────────────── -->
+      <nav class="footer__col" aria-label="Company">
+        <h3 class="footer__col-title">Company</h3>
+        <ul class="footer__list">
+          <li><a href="/about">About</a></li>
+          <li><a href="/blog">Blog</a></li>
+          <li><a href="/careers">Careers</a></li>
+        </ul>
+      </nav>
+
+      <!-- ── Col 4 — Support &amp; Legal ─────────────────────────── -->
+      <nav class="footer__col" aria-label="Support and legal">
+        <h3 class="footer__col-title">Support &amp; Legal</h3>
+        <ul class="footer__list">
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="mailto:hello@songzy.com">Contact</a></li>
+          <li><a href="/refund">Refund policy</a></li>
+          <li><a href="/privacy">Privacy &amp; GDPR</a></li>
+          <li><a href="/terms">Terms of service</a></li>
+          <li><a href="#" data-cookie-prefs>Cookie preferences</a></li>
+        </ul>
+      </nav>
+
+    </div>
+    <!-- /grid -->
+
+    <!-- =============================================================== -->
+    <!--  BOTTOM ROW                                                     -->
+    <!-- =============================================================== -->
+    <div class="footer__bottom">
+
+      <p class="footer__legal">
+        &copy; 2025 Songzy
+      </p>
+
+      <div class="footer__right">
+
+        <span class="footer__payments" aria-label="Accepted payment methods">
+          <span class="footer__pay">VISA</span>
+          <span class="footer__pay footer__pay--mc" aria-label="Mastercard"></span>
+          <span class="footer__pay">AMEX</span>
+          <span class="footer__pay footer__pay--apple">&#63743;Pay</span>
+          <span class="footer__pay">GPay</span>
+        </span>
+
+        <div class="footer__lang" id="footerLang">
+          <button type="button" class="footer__lang-btn" aria-haspopup="true" aria-expanded="false">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <circle cx="10" cy="10" r="7.5" stroke="currentColor" stroke-width="1.4"/>
+              <path d="M2.5 10h15M10 2.5c2.5 2.3 2.5 12.7 0 15M10 2.5c-2.5 2.3-2.5 12.7 0 15" stroke="currentColor" stroke-width="1.4"/>
+            </svg>
+            <span data-lang-current>English</span>
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
+              <path d="M2 4l3 3 3-3" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <div class="footer__lang-menu" role="menu">
+            <button type="button" role="menuitemradio" aria-selected="true"  data-lang="en">English</button>
+            <button type="button" role="menuitemradio" aria-selected="false" data-lang="it">Italiano</button>
+            <button type="button" role="menuitemradio" aria-selected="false" data-lang="fr">Fran&ccedil;ais</button>
+            <button type="button" role="menuitemradio" aria-selected="false" data-lang="es">Espa&ntilde;ol</button>
+            <button type="button" role="menuitemradio" aria-selected="false" data-lang="de">Deutsch</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+  <!-- /container -->
+</footer>
+
+
+<!-- ========================================================================== -->
+<!--  JS — FAQ accordion, newsletter form, language selector                    -->
+<!-- ========================================================================== -->
+<script>
+/* --------------------------------------------------------------------------
+   FAQ accordion — one open at a time, keyboard accessible, maxHeight anim.
+   -------------------------------------------------------------------------- */
+(function () {
+  const faq = document.querySelector('.faq');
+  if (!faq) return;
+
+  const items = faq.querySelectorAll('.faq__item');
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function normalizeHeight(panel) {
+    // if maxHeight is "none" (set after open transition), snap to px so
+    // collapse animates. Force a reflow.
+    if (panel.style.maxHeight === 'none' || panel.style.maxHeight === '') {
+      panel.style.maxHeight = panel.scrollHeight + 'px';
+      void panel.offsetHeight;
+    }
+  }
+
+  function closeItem(item) {
+    const btn   = item.querySelector('.faq__q');
+    const panel = item.querySelector('.faq__a');
+    normalizeHeight(panel);
+    item.classList.remove('is-open');
+    btn.setAttribute('aria-expanded', 'false');
+    // next frame → transition to 0
+    requestAnimationFrame(() => {
+      panel.style.maxHeight = '0px';
+    });
+  }
+
+  function openItem(item) {
+    const btn   = item.querySelector('.faq__q');
+    const panel = item.querySelector('.faq__a');
+    item.classList.add('is-open');
+    btn.setAttribute('aria-expanded', 'true');
+    const target = panel.scrollHeight;
+    panel.style.maxHeight = target + 'px';
+    // after the transition, set to "none" so content reflows if resized
+    const onEnd = (e) => {
+      if (e.propertyName !== 'max-height') return;
+      if (item.classList.contains('is-open')) {
+        panel.style.maxHeight = 'none';
+      }
+      panel.removeEventListener('transitionend', onEnd);
+    };
+    if (prefersReducedMotion) {
+      panel.style.maxHeight = 'none';
+    } else {
+      panel.addEventListener('transitionend', onEnd);
+    }
+  }
+
+  items.forEach((item) => {
+    const btn = item.querySelector('.faq__q');
+    if (!btn) return;
+
+    const toggle = () => {
+      const isOpen = item.classList.contains('is-open');
+      items.forEach((other) => {
+        if (other !== item && other.classList.contains('is-open')) {
+          closeItem(other);
+        }
+      });
+      if (isOpen) closeItem(item);
+      else        openItem(item);
+    };
+
+    btn.addEventListener('click', toggle);
+    btn.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
+    });
+  });
+})();
+
+/* --------------------------------------------------------------------------
+   Newsletter form — inline confirmation, no real submit.
+   -------------------------------------------------------------------------- */
+(function () {
+  const footer = document.querySelector('.footer');
+  const form   = document.getElementById('footerNewsletter');
+  if (!footer || !form) return;
+
+  const input = form.querySelector('.footer__input');
+  const btn   = form.querySelector('.footer__send');
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const value = (input.value || '').trim();
+    if (!value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      input.focus();
+      input.setAttribute('aria-invalid', 'true');
+      input.style.borderColor = '#E91E8C';
+      return;
+    }
+    btn.disabled = true;
+    footer.classList.add('is-subscribed');
+  });
+
+  input.addEventListener('input', () => {
+    input.removeAttribute('aria-invalid');
+    input.style.borderColor = '';
+  });
+})();
+
+/* --------------------------------------------------------------------------
+   Language selector — UI only (placeholder, no i18n wiring).
+   -------------------------------------------------------------------------- */
+(function () {
+  const wrap = document.getElementById('footerLang');
+  if (!wrap) return;
+
+  const btn     = wrap.querySelector('.footer__lang-btn');
+  const items   = wrap.querySelectorAll('[data-lang]');
+  const current = wrap.querySelector('[data-lang-current]');
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const isOpen = wrap.classList.toggle('is-open');
+    btn.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  items.forEach((item) => {
+    item.addEventListener('click', () => {
+      items.forEach((i) => i.setAttribute('aria-selected', 'false'));
+      item.setAttribute('aria-selected', 'true');
+      if (current) current.textContent = item.textContent;
+      wrap.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!wrap.contains(e.target)) {
+      wrap.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && wrap.classList.contains('is-open')) {
+      wrap.classList.remove('is-open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.focus();
+    }
+  });
+})();
+</script>

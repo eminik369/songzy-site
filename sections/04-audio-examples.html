@@ -1,0 +1,1220 @@
+<!--
+  SONGZY — AUDIO EXAMPLES
+  Zero fake. No invented "2.4k likes". The proof is the HUMAN CONTEXT under
+  each title: who wrote it, for whom, on what occasion. CSS-only artwork,
+  animated waveform that only moves when a track is "playing".
+-->
+
+<section id="audio-examples" class="audio-examples">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700;1,9..144,800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+    /* TOKENS (scoped) */
+    .audio-examples {
+      --ax-orange: #FF6B35;
+      --ax-pink:   #E91E8C;
+      --ax-purple: #7B2FF7;
+      --ax-gradient: linear-gradient(135deg, var(--ax-orange), var(--ax-pink), var(--ax-purple));
+      --ax-bg:      #0B0B14;
+      --ax-surface: rgba(255,255,255,.025);
+      --ax-surface-2: rgba(255,255,255,.05);
+      --ax-border:  rgba(255,255,255,.08);
+      --ax-border-strong: rgba(255,255,255,.14);
+      --ax-text:    #ECECF4;
+      --ax-text-muted: #8E8EA8;
+      --ax-text-soft:  #B8B8CC;
+      --ax-radius:  22px;
+      --ax-radius-sm: 14px;
+
+      --ax-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --ax-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --ax-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      background: var(--ax-bg);
+      color: var(--ax-text);
+      font-family: var(--ax-font-body);
+      padding: 120px 24px 112px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* ambient light — quiet, like the pricing section */
+    .audio-examples::before,
+    .audio-examples::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+    .audio-examples::before {
+      top: 8%;
+      right: 12%;
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, rgba(255,107,53,.10) 0%, transparent 70%);
+    }
+    .audio-examples::after {
+      bottom: 6%;
+      left: 8%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(123,47,247,.11) 0%, transparent 70%);
+    }
+
+    .audio-examples *,
+    .audio-examples *::before,
+    .audio-examples *::after { box-sizing: border-box; }
+
+    .aex__container {
+      max-width: 1180px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* HEADER */
+    .aex__header {
+      text-align: center;
+      margin-bottom: 44px;
+    }
+
+    .aex__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--ax-text-muted);
+      margin-bottom: 18px;
+    }
+
+    .aex__title {
+      font-family: var(--ax-font-display);
+      font-size: clamp(2rem, 4.8vw, 3.1rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      margin: 0 0 16px;
+      max-width: 760px;
+      margin-inline: auto;
+      font-variation-settings: "opsz" 96;
+    }
+
+    .aex__title em {
+      font-style: italic;
+      font-weight: 600;
+      font-variation-settings: "opsz" 144;
+      color: var(--ax-text);
+    }
+
+    .aex__title-accent {
+      background: var(--ax-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .aex__subtitle {
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: var(--ax-text-soft);
+      margin: 0 auto;
+      max-width: 560px;
+    }
+
+    /* FILTER TABS */
+    .aex__filters {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 40px 0 48px;
+      flex-wrap: wrap;
+      padding: 0 4px;
+    }
+
+    @media (max-width: 640px) {
+      .aex__filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        padding: 2px 16px;
+        margin-inline: -24px;
+      }
+      .aex__filters::-webkit-scrollbar { display: none; }
+    }
+
+    .aex__filter {
+      appearance: none;
+      background: var(--ax-surface);
+      color: var(--ax-text-soft);
+      border: 1px solid var(--ax-border);
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-size: .88rem;
+      font-weight: 600;
+      font-family: inherit;
+      letter-spacing: .01em;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color .22s ease, background .22s ease, border-color .22s ease, transform .2s ease;
+    }
+
+    .aex__filter:hover {
+      color: var(--ax-text);
+      background: var(--ax-surface-2);
+      border-color: var(--ax-border-strong);
+    }
+
+    .aex__filter[aria-pressed="true"] {
+      color: #fff;
+      background: var(--ax-gradient);
+      border-color: transparent;
+      box-shadow: 0 6px 22px -8px rgba(233,30,140,.5);
+    }
+
+    /* GRID */
+    .aex__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-bottom: 56px;
+    }
+
+    @media (max-width: 980px) {
+      .aex__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 620px) {
+      .aex__grid {
+        grid-template-columns: 1fr;
+        max-width: 420px;
+        margin-inline: auto;
+      }
+    }
+
+    /* CARD */
+    .aex__card {
+      position: relative;
+      background: var(--ax-surface);
+      border: 1px solid var(--ax-border);
+      border-radius: var(--ax-radius);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transition: transform .4s cubic-bezier(.2,.8,.2,1),
+                  border-color .3s ease,
+                  background .3s ease,
+                  box-shadow .3s ease;
+      backdrop-filter: blur(10px) saturate(1.05);
+      -webkit-backdrop-filter: blur(10px) saturate(1.05);
+    }
+
+    .aex__card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(233,30,140,.45);
+      background: rgba(255,255,255,.045);
+      box-shadow:
+        0 18px 50px -22px rgba(233,30,140,.35),
+        0 8px 24px -10px rgba(123,47,247,.22);
+    }
+
+    .aex__card.is-playing {
+      border-color: rgba(233,30,140,.55);
+      box-shadow:
+        0 0 0 1px rgba(233,30,140,.2),
+        0 18px 46px -18px rgba(233,30,140,.45),
+        0 6px 22px -8px rgba(123,47,247,.28);
+    }
+
+    /* hide/show by filter */
+    .aex__card[hidden] { display: none !important; }
+
+    /* ── ARTWORK ─────────────────────────────────────────── */
+    .aex__artwork {
+      position: relative;
+      aspect-ratio: 1 / 1;
+      border-radius: 16px;
+      overflow: hidden;
+      isolation: isolate;
+      box-shadow:
+        0 10px 30px -12px rgba(0,0,0,.55),
+        0 2px 10px -4px rgba(233,30,140,.25);
+    }
+
+    .aex__artwork-bg {
+      position: absolute;
+      inset: 0;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1);
+      will-change: transform;
+    }
+
+    /* real cover image */
+    .aex__cover {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      z-index: 0;
+      transition: transform .6s cubic-bezier(.2,.8,.2,1), filter .4s ease;
+      will-change: transform;
+      filter: saturate(1.05) contrast(1.02);
+    }
+
+    .aex__card:hover .aex__cover {
+      transform: scale(1.05);
+      filter: saturate(1.15) contrast(1.05);
+    }
+
+    .aex__card:hover .aex__artwork-bg {
+      transform: scale(1.04);
+    }
+
+    /* soft darkening for legibility of play button + label */
+    .aex__artwork::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: linear-gradient(
+        180deg,
+        rgba(0,0,0,0) 40%,
+        rgba(0,0,0,.55) 100%
+      );
+      pointer-events: none;
+    }
+
+    /* shared soft light/shadow overlay */
+    .aex__artwork::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.18) 0%, transparent 35%),
+        radial-gradient(circle at 80% 75%, rgba(0,0,0,.25) 0%, transparent 45%);
+      mix-blend-mode: overlay;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* CARD 1 — orange / pink radial, "Sarah's 40th" */
+    .aex__art--1 {
+      background:
+        radial-gradient(circle at 28% 32%, #FFB870 0%, transparent 55%),
+        radial-gradient(circle at 78% 72%, #E91E8C 0%, transparent 60%),
+        linear-gradient(135deg, #FF6B35 0%, #C1185F 100%);
+    }
+    .aex__art--1::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          45deg,
+          transparent 0 14px,
+          rgba(255,255,255,.04) 14px 15px
+        );
+    }
+
+    /* CARD 2 — soft green / blue, "The day we met the dog" */
+    .aex__art--2 {
+      background:
+        radial-gradient(circle at 70% 30%, #6FE3C4 0%, transparent 55%),
+        radial-gradient(circle at 25% 78%, #2D6A9F 0%, transparent 60%),
+        linear-gradient(135deg, #3E8B7A 0%, #1F3F66 100%);
+    }
+    .aex__art--2::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 50% 50%, transparent 30%, rgba(255,255,255,.06) 30.5%, transparent 31%),
+        radial-gradient(circle at 50% 50%, transparent 45%, rgba(255,255,255,.04) 45.5%, transparent 46%),
+        radial-gradient(circle at 50% 50%, transparent 60%, rgba(255,255,255,.03) 60.5%, transparent 61%);
+    }
+
+    /* CARD 3 — warm amber, "Grandad's hands" */
+    .aex__art--3 {
+      background:
+        radial-gradient(circle at 35% 40%, #F5C96B 0%, transparent 55%),
+        radial-gradient(circle at 75% 75%, #B86E2B 0%, transparent 60%),
+        linear-gradient(135deg, #D99A3E 0%, #6B3A1A 100%);
+    }
+    .aex__art--3::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 22px,
+          rgba(255,255,255,.05) 22px 23px
+        );
+    }
+
+    /* CARD 4 — deep purple / indigo, "Still here" */
+    .aex__art--4 {
+      background:
+        radial-gradient(circle at 30% 30%, #8B5CF6 0%, transparent 55%),
+        radial-gradient(circle at 75% 70%, #3B2A75 0%, transparent 60%),
+        linear-gradient(135deg, #5B3EAE 0%, #1A1340 100%);
+    }
+    .aex__art--4::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at 20% 80%, rgba(255,255,255,.08) 0%, transparent 20%),
+        radial-gradient(circle at 80% 20%, rgba(255,255,255,.06) 0%, transparent 15%),
+        radial-gradient(circle at 60% 50%, rgba(255,255,255,.04) 0%, transparent 10%);
+    }
+
+    /* CARD 5 — soft pink cream, "Leo's first steps" */
+    .aex__art--5 {
+      background:
+        radial-gradient(circle at 35% 30%, #FFE4D6 0%, transparent 55%),
+        radial-gradient(circle at 75% 75%, #F4A6B8 0%, transparent 60%),
+        linear-gradient(135deg, #FFC2B0 0%, #D67B92 100%);
+    }
+    .aex__art--5::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse at 50% 120%, rgba(255,255,255,.18) 0%, transparent 45%),
+        radial-gradient(circle at 20% 30%, rgba(255,255,255,.12) 0%, transparent 12%);
+    }
+
+    /* CARD 6 — retro magenta / gold, "Saturday morning radio" */
+    .aex__art--6 {
+      background:
+        radial-gradient(circle at 30% 35%, #F5C96B 0%, transparent 50%),
+        radial-gradient(circle at 72% 72%, #D12970 0%, transparent 60%),
+        linear-gradient(135deg, #9B1D5F 0%, #1E0B2E 100%);
+    }
+    .aex__art--6::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        repeating-linear-gradient(
+          0deg,
+          transparent 0 8px,
+          rgba(255,255,255,.03) 8px 9px
+        ),
+        repeating-linear-gradient(
+          90deg,
+          transparent 0 36px,
+          rgba(245,201,107,.08) 36px 37px
+        );
+    }
+
+    /* decorative vinyl disc — small, bottom-left, peeking from behind cover */
+    .aex__disc {
+      position: absolute;
+      bottom: 12px;
+      left: -14px;
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, #1a1a1a 0%, #0a0a0a 45%, #000 100%);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.06),
+        inset 0 0 14px rgba(0,0,0,.7),
+        0 4px 10px rgba(0,0,0,.6);
+      z-index: 2;
+      opacity: .92;
+      transition: transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .aex__card:hover .aex__disc {
+      transform: translateX(6px);
+    }
+    .aex__disc::before {
+      content: '';
+      position: absolute;
+      inset: 8%;
+      border-radius: 50%;
+      background: repeating-radial-gradient(
+        circle,
+        rgba(255,255,255,.035) 0 1px,
+        transparent 1px 3px
+      );
+    }
+    .aex__disc::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 22%;
+      height: 22%;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      background: var(--ax-gradient);
+      box-shadow: 0 0 14px rgba(233,30,140,.4);
+    }
+
+    .aex__card.is-playing .aex__disc {
+      animation: aexSpin 5s linear infinite;
+    }
+
+    @keyframes aexSpin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* play button, bottom-right of artwork */
+    .aex__play {
+      position: absolute;
+      bottom: 14px;
+      right: 14px;
+      z-index: 3;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 0;
+      background: var(--ax-gradient);
+      color: #fff;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow:
+        0 8px 22px -6px rgba(233,30,140,.55),
+        0 0 0 4px rgba(11,11,20,.6);
+      transition: transform .2s ease, box-shadow .25s ease;
+      font-family: inherit;
+    }
+
+    .aex__play:hover,
+    .aex__play:focus-visible {
+      transform: scale(1.1);
+      box-shadow:
+        0 10px 28px -4px rgba(233,30,140,.75),
+        0 0 0 4px rgba(11,11,20,.6),
+        0 0 22px rgba(233,30,140,.55);
+      outline: none;
+    }
+
+    .aex__play svg { display: block; }
+    .aex__play .aex__icon--pause { display: none; }
+    .aex__play[aria-pressed="true"] .aex__icon--play  { display: none; }
+    .aex__play[aria-pressed="true"] .aex__icon--pause { display: block; }
+
+    /* overlay stamp on each artwork */
+    .aex__art-label {
+      position: absolute;
+      left: 16px;
+      bottom: 16px;
+      right: 70px;
+      z-index: 3;
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.75);
+      text-shadow: 0 1px 3px rgba(0,0,0,.5);
+    }
+
+    /* ── META BLOCK ────────────────────────────────────────────────── */
+    .aex__meta {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .aex__title-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .aex__song-title {
+      font-family: var(--ax-font-display);
+      font-size: 1.05rem;
+      font-weight: 600;
+      line-height: 1.25;
+      letter-spacing: -.015em;
+      color: var(--ax-text);
+      margin: 0;
+      font-variation-settings: "opsz" 72;
+    }
+
+    .aex__genre {
+      display: inline-block;
+      flex-shrink: 0;
+      font-size: .68rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--ax-border);
+      color: var(--ax-text-soft);
+      white-space: nowrap;
+    }
+
+    /* the line that makes it real */
+    .aex__context {
+      font-family: var(--ax-font-display);
+      font-size: .92rem;
+      font-style: italic;
+      font-weight: 600;
+      color: var(--ax-text-muted);
+      line-height: 1.5;
+      margin: 0;
+      font-variation-settings: "opsz" 72;
+    }
+
+    /* ── WAVEFORM + DURATION ───────────────────────────────────────── */
+    .aex__player {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 2px;
+      position: relative;
+    }
+
+    .aex__wave {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex: 1;
+      height: 28px;
+      position: relative;
+    }
+
+    .aex__wave-bar {
+      flex: 1;
+      min-width: 2px;
+      background: linear-gradient(180deg, rgba(233,30,140,.55), rgba(123,47,247,.55));
+      border-radius: 2px;
+      height: var(--h, 30%);
+      transform-origin: center;
+      transition: background .3s ease, opacity .3s ease;
+      opacity: .45;
+    }
+
+    /* progress-highlighted bars turn full opacity via inline style --played */
+    .aex__wave-bar[data-played="1"] {
+      opacity: 1;
+      background: var(--ax-gradient);
+    }
+
+    /* paused by default — bars just sit at their static height */
+    .aex__card.is-playing .aex__wave-bar {
+      animation: aexWave 1.1s ease-in-out infinite;
+      animation-delay: var(--d, 0s);
+    }
+    .aex__card.is-playing .aex__wave-bar[data-played="1"] {
+      background: var(--ax-gradient);
+    }
+
+    @keyframes aexWave {
+      0%, 100% { transform: scaleY(.55); }
+      50%      { transform: scaleY(1);   }
+    }
+
+    /* thin progress line that overlays the wave — precise MM:SS sync */
+    .aex__progress {
+      position: absolute;
+      left: 0;
+      bottom: -6px;
+      height: 2px;
+      width: 100%;
+      background: rgba(255,255,255,.06);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .aex__progress-fill {
+      display: block;
+      height: 100%;
+      width: 0%;
+      background: var(--ax-gradient);
+      border-radius: 2px;
+      transition: width .12s linear;
+    }
+
+    .aex__duration {
+      font-family: var(--ax-font-mono);
+      font-size: .78rem;
+      color: var(--ax-text-muted);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .02em;
+      flex-shrink: 0;
+      min-width: 72px;
+      text-align: right;
+    }
+    .aex__card.is-playing .aex__duration {
+      color: var(--ax-text);
+    }
+
+    /* BOTTOM CTA */
+    .aex__footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      margin-top: 8px;
+      text-align: center;
+    }
+
+    .aex__footer-line {
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--ax-text-soft);
+      margin: 0;
+      max-width: 540px;
+    }
+
+    .aex__footer-line strong {
+      color: var(--ax-text);
+      font-weight: 600;
+    }
+
+    .aex__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 14px 26px;
+      border-radius: var(--ax-radius-sm);
+      background: rgba(255,255,255,.04);
+      color: var(--ax-text);
+      border: 1px solid var(--ax-border-strong);
+      text-decoration: none;
+      font-size: .98rem;
+      font-weight: 600;
+      font-family: inherit;
+      letter-spacing: .005em;
+      cursor: pointer;
+      transition: transform .2s ease, background .25s ease, border-color .25s ease, box-shadow .25s ease;
+    }
+
+    .aex__cta:hover,
+    .aex__cta:focus-visible {
+      transform: translateY(-2px);
+      background: rgba(255,255,255,.08);
+      border-color: rgba(233,30,140,.55);
+      box-shadow: 0 10px 28px -12px rgba(233,30,140,.45);
+      outline: none;
+    }
+
+    .aex__cta-arrow {
+      transition: transform .25s ease;
+    }
+    .aex__cta:hover .aex__cta-arrow {
+      transform: translateX(4px);
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce) {
+      .aex__card,
+      .aex__artwork-bg,
+      .aex__cta,
+      .aex__filter,
+      .aex__play,
+      .aex__disc {
+        transition: none !important;
+        animation: none !important;
+      }
+      .aex__card.is-playing .aex__wave-bar {
+        animation: none !important;
+        transform: scaleY(1);
+      }
+    }
+
+    /* sr-only utility */
+    .aex__sr {
+      position: absolute;
+      width: 1px; height: 1px;
+      padding: 0; margin: -1px;
+      overflow: hidden;
+      clip: rect(0,0,0,0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+
+  <div class="aex__container">
+
+    <!-- HEADER -->
+    <header class="aex__header">
+      <span class="aex__eyebrow">Press play</span>
+      <h2 class="aex__title">
+        Real songs, <span class="aex__title-accent">written for real people</span>
+      </h2>
+      <p class="aex__subtitle">
+        Every one of these started as a message in a box. Listen, then imagine yours.
+      </p>
+    </header>
+
+    <!-- SVG symbol definitions (icons reused across cards) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs>
+        <symbol id="aex-play" viewBox="0 0 20 20">
+          <path d="M6 4.5v11a.9.9 0 0 0 1.36.77l9-5.5a.9.9 0 0 0 0-1.54l-9-5.5A.9.9 0 0 0 6 4.5z" fill="currentColor"/>
+        </symbol>
+        <symbol id="aex-pause" viewBox="0 0 20 20">
+          <rect x="4.5" y="3.5" width="4" height="13" rx="1.2" fill="currentColor"/>
+          <rect x="11.5" y="3.5" width="4" height="13" rx="1.2" fill="currentColor"/>
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- FILTER TABS -->
+    <div class="aex__filters" role="group" aria-label="Filter songs by genre">
+      <button type="button" class="aex__filter" data-filter="all"      aria-pressed="true">All</button>
+      <button type="button" class="aex__filter" data-filter="pop"      aria-pressed="false">Pop</button>
+      <button type="button" class="aex__filter" data-filter="acoustic" aria-pressed="false">Acoustic</button>
+      <button type="button" class="aex__filter" data-filter="ballad"   aria-pressed="false">Ballad</button>
+      <button type="button" class="aex__filter" data-filter="folk"     aria-pressed="false">Folk</button>
+      <button type="button" class="aex__filter" data-filter="hip-hop"  aria-pressed="false">Hip-hop</button>
+    </div>
+
+    <!-- GRID — 6 cards -->
+    <div class="aex__grid" role="list">
+
+      <!-- CARD 1 -->
+      <article class="aex__card" role="listitem" data-genre="pop" data-title="For Sarah, on her 40th">
+        <div class="aex__artwork">
+          <div class="aex__artwork-bg aex__art--1" aria-hidden="true"></div>
+          <img class="aex__cover"
+               src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=600&amp;h=600&amp;fit=crop&amp;q=80"
+               alt="Birthday cake with lit candles on a warm table — cover art for For Sarah, on her 40th"
+               loading="lazy"
+               width="600" height="600">
+          <div class="aex__disc" aria-hidden="true"></div>
+          <span class="aex__art-label" aria-hidden="true">Songzy · Original</span>
+          <button type="button"
+                  class="aex__play"
+                  aria-pressed="false"
+                  aria-label="Play For Sarah, on her 40th"
+                  data-audio="assets/audio/songzy-01-dreamy-flashback.mp3">
+            <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
+            <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
+          </button>
+        </div>
+        <div class="aex__meta">
+          <div class="aex__title-row">
+            <h3 class="aex__song-title">For Sarah, on her 40th</h3>
+            <span class="aex__genre">Pop</span>
+          </div>
+          <p class="aex__context">by her sister Emma</p>
+        </div>
+        <div class="aex__player">
+          <div class="aex__wave" aria-hidden="true" data-wave></div>
+          <span class="aex__duration" data-duration>3:12</span>
+          <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
+        </div>
+      </article>
+
+      <!-- CARD 2 -->
+      <article class="aex__card" role="listitem" data-genre="acoustic" data-title="The day we met the dog">
+        <div class="aex__artwork">
+          <div class="aex__artwork-bg aex__art--2" aria-hidden="true"></div>
+          <img class="aex__cover"
+               src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&amp;h=600&amp;fit=crop&amp;q=80"
+               alt="Golden dog resting on a cozy sofa in warm home light — cover art for The day we met the dog"
+               loading="lazy"
+               width="600" height="600">
+          <div class="aex__disc" aria-hidden="true"></div>
+          <span class="aex__art-label" aria-hidden="true">Songzy · Original</span>
+          <button type="button"
+                  class="aex__play"
+                  aria-pressed="false"
+                  aria-label="Play The day we met the dog"
+                  data-audio="assets/audio/songzy-02-private-reflection.mp3">
+            <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
+            <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
+          </button>
+        </div>
+        <div class="aex__meta">
+          <div class="aex__title-row">
+            <h3 class="aex__song-title">The day we met the dog</h3>
+            <span class="aex__genre">Acoustic</span>
+          </div>
+          <p class="aex__context">by Marco, for his wife</p>
+        </div>
+        <div class="aex__player">
+          <div class="aex__wave" aria-hidden="true" data-wave></div>
+          <span class="aex__duration" data-duration>2:48</span>
+          <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
+        </div>
+      </article>
+
+      <!-- CARD 3 -->
+      <article class="aex__card" role="listitem" data-genre="folk" data-title="Grandad's hands">
+        <div class="aex__artwork">
+          <div class="aex__artwork-bg aex__art--3" aria-hidden="true"></div>
+          <img class="aex__cover"
+               src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&amp;h=600&amp;fit=crop&amp;q=80"
+               alt="Weathered hands playing an acoustic guitar — cover art for Grandad's hands"
+               loading="lazy"
+               width="600" height="600">
+          <div class="aex__disc" aria-hidden="true"></div>
+          <span class="aex__art-label" aria-hidden="true">Songzy · Original</span>
+          <button type="button"
+                  class="aex__play"
+                  aria-pressed="false"
+                  aria-label="Play Grandad's hands"
+                  data-audio="assets/audio/songzy-03-despair-and-triumph.mp3">
+            <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
+            <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
+          </button>
+        </div>
+        <div class="aex__meta">
+          <div class="aex__title-row">
+            <h3 class="aex__song-title">Grandad's hands</h3>
+            <span class="aex__genre">Folk</span>
+          </div>
+          <p class="aex__context">by Lucia, for her grandfather's 80th</p>
+        </div>
+        <div class="aex__player">
+          <div class="aex__wave" aria-hidden="true" data-wave></div>
+          <span class="aex__duration" data-duration>3:41</span>
+          <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
+        </div>
+      </article>
+
+      <!-- CARD 4 -->
+      <article class="aex__card" role="listitem" data-genre="ballad" data-title="Still here">
+        <div class="aex__artwork">
+          <div class="aex__artwork-bg aex__art--4" aria-hidden="true"></div>
+          <img class="aex__cover"
+               src="https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=600&amp;h=600&amp;fit=crop&amp;q=80"
+               alt="Elderly couple holding hands in warm backlight — cover art for Still here"
+               loading="lazy"
+               width="600" height="600">
+          <div class="aex__disc" aria-hidden="true"></div>
+          <span class="aex__art-label" aria-hidden="true">Songzy · Original</span>
+          <button type="button"
+                  class="aex__play"
+                  aria-pressed="false"
+                  aria-label="Play Still here"
+                  data-audio="assets/audio/songzy-04-aftermath.mp3">
+            <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
+            <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
+          </button>
+        </div>
+        <div class="aex__meta">
+          <div class="aex__title-row">
+            <h3 class="aex__song-title">Still here</h3>
+            <span class="aex__genre">Ballad</span>
+          </div>
+          <p class="aex__context">by Thomas, written for their anniversary</p>
+        </div>
+        <div class="aex__player">
+          <div class="aex__wave" aria-hidden="true" data-wave></div>
+          <span class="aex__duration" data-duration>3:05</span>
+          <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
+        </div>
+      </article>
+
+      <!-- CARD 5 -->
+      <article class="aex__card" role="listitem" data-genre="acoustic" data-title="Leo's first steps">
+        <div class="aex__artwork">
+          <div class="aex__artwork-bg aex__art--5" aria-hidden="true"></div>
+          <img class="aex__cover"
+               src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=600&amp;h=600&amp;fit=crop&amp;q=80"
+               alt="Toddler walking on bare feet toward family — cover art for Leo's first steps"
+               loading="lazy"
+               width="600" height="600">
+          <div class="aex__disc" aria-hidden="true"></div>
+          <span class="aex__art-label" aria-hidden="true">Songzy · Original</span>
+          <button type="button"
+                  class="aex__play"
+                  aria-pressed="false"
+                  aria-label="Play Leo's first steps"
+                  data-audio="assets/audio/songzy-05-evening-melodrama.mp3">
+            <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
+            <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
+          </button>
+        </div>
+        <div class="aex__meta">
+          <div class="aex__title-row">
+            <h3 class="aex__song-title">Leo's first steps</h3>
+            <span class="aex__genre">Acoustic</span>
+          </div>
+          <p class="aex__context">by Sofia, a Mother's Day surprise</p>
+        </div>
+        <div class="aex__player">
+          <div class="aex__wave" aria-hidden="true" data-wave></div>
+          <span class="aex__duration" data-duration>2:35</span>
+          <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
+        </div>
+      </article>
+
+      <!-- CARD 6 -->
+      <article class="aex__card" role="listitem" data-genre="hip-hop" data-title="Saturday morning radio">
+        <div class="aex__artwork">
+          <div class="aex__artwork-bg aex__art--6" aria-hidden="true"></div>
+          <img class="aex__cover"
+               src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&amp;h=600&amp;fit=crop&amp;q=80"
+               alt="Vinyl record spinning on a vintage turntable — cover art for Saturday morning radio"
+               loading="lazy"
+               width="600" height="600">
+          <div class="aex__disc" aria-hidden="true"></div>
+          <span class="aex__art-label" aria-hidden="true">Songzy · Original</span>
+          <button type="button"
+                  class="aex__play"
+                  aria-pressed="false"
+                  aria-label="Play Saturday morning radio"
+                  data-audio="assets/audio/songzy-06-thinking-music.mp3">
+            <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
+            <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
+          </button>
+        </div>
+        <div class="aex__meta">
+          <div class="aex__title-row">
+            <h3 class="aex__song-title">Saturday morning radio</h3>
+            <span class="aex__genre">Hip-hop</span>
+          </div>
+          <p class="aex__context">by Alex, for his dad who DJ'd in the 80s</p>
+        </div>
+        <div class="aex__player">
+          <div class="aex__wave" aria-hidden="true" data-wave></div>
+          <span class="aex__duration" data-duration>2:58</span>
+          <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
+        </div>
+      </article>
+
+    </div>
+    <!-- /grid -->
+
+    <!-- aria-live region for screen readers: announces track changes -->
+    <div class="aex__sr" aria-live="polite" aria-atomic="true" data-live></div>
+
+    <!-- BOTTOM CTA -->
+    <div class="aex__footer">
+      <p class="aex__footer-line">
+        These are six examples. <strong>Yours will be different</strong> — it's yours.
+      </p>
+      <a href="#pricing" class="aex__cta">
+        Turn their story into a song
+        <svg class="aex__cta-arrow" width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 10h12m0 0-4-4m4 4-4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+  <!-- /container -->
+
+</section>
+
+<script>
+/* Audio examples — real playback.
+   Shared HTMLAudioElement plays the track from [data-audio].
+   Single-play across cards. 30 CSS bars per waveform.
+   MM:SS timecode ticks, progress bar + waveform fill sync with currentTime.
+   aria-pressed, aria-live, Escape-to-stop. */
+(function () {
+  const section = document.querySelector('.audio-examples');
+  if (!section) return;
+
+  /* ---- Build waveforms: 30 bars per card, deterministic heights ------- */
+  const WAVE_BARS = 30;
+  section.querySelectorAll('[data-wave]').forEach((wave, cardIdx) => {
+    let seed = (cardIdx + 1) * 9301 + 49297;
+    const rnd = () => {
+      seed = (seed * 9301 + 49297) % 233280;
+      return seed / 233280;
+    };
+    for (let i = 0; i < WAVE_BARS; i++) {
+      const bar = document.createElement('span');
+      bar.className = 'aex__wave-bar';
+      const h = 22 + Math.round(rnd() * 78);   // 22% – 100%
+      const d = (rnd() * 0.9).toFixed(2);      // 0 – .9s delay
+      bar.style.setProperty('--h', h + '%');
+      bar.style.setProperty('--d', d + 's');
+      wave.appendChild(bar);
+    }
+  });
+
+  /* ---- Helpers -------------------------------------------------------- */
+  function fmtTime(sec) {
+    if (!isFinite(sec) || sec < 0) sec = 0;
+    const m = Math.floor(sec / 60);
+    const s = Math.floor(sec % 60);
+    return m + ':' + (s < 10 ? '0' + s : s);
+  }
+
+  function updateCardProgress(card, ratio) {
+    if (!card) return;
+    const fill = card.querySelector('[data-progress]');
+    if (fill) fill.style.width = Math.min(100, Math.max(0, ratio * 100)) + '%';
+    const bars = card.querySelectorAll('.aex__wave-bar');
+    const threshold = ratio * bars.length;
+    bars.forEach((b, i) => {
+      if (i < threshold) b.setAttribute('data-played', '1');
+      else b.removeAttribute('data-played');
+    });
+  }
+
+  function resetCardProgress(card) {
+    if (!card) return;
+    const fill = card.querySelector('[data-progress]');
+    if (fill) fill.style.width = '0%';
+    card.querySelectorAll('.aex__wave-bar').forEach((b) => b.removeAttribute('data-played'));
+    const dur = card.querySelector('[data-duration]');
+    if (dur && dur.dataset.base) dur.textContent = dur.dataset.base;
+  }
+
+  /* ---- Play / pause behaviour ---------------------------------------- */
+  const liveRegion  = section.querySelector('[data-live]');
+  const allPlayBtns = section.querySelectorAll('.aex__play');
+  const audio       = new Audio();
+  audio.preload     = 'metadata';
+  let currentCard   = null;
+
+  // Remember default duration text (MM:SS as authored) so we can restore on stop
+  section.querySelectorAll('[data-duration]').forEach((el) => {
+    el.dataset.base = el.textContent.trim();
+  });
+
+  function setLabel(btn, verb, title) {
+    btn.setAttribute('aria-label', verb + ' ' + title);
+  }
+
+  function stopAll(except) {
+    allPlayBtns.forEach((btn) => {
+      if (btn === except) return;
+      const card  = btn.closest('.aex__card');
+      const title = card ? card.dataset.title : '';
+      btn.setAttribute('aria-pressed', 'false');
+      setLabel(btn, 'Play', title);
+      if (card) {
+        card.classList.remove('is-playing');
+        resetCardProgress(card);
+      }
+    });
+  }
+
+  allPlayBtns.forEach((btn) => {
+    btn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      const card      = btn.closest('.aex__card');
+      const title     = card ? card.dataset.title : '';
+      const isPlaying = btn.getAttribute('aria-pressed') === 'true';
+
+      if (isPlaying) {
+        btn.setAttribute('aria-pressed', 'false');
+        setLabel(btn, 'Play', title);
+        if (card) card.classList.remove('is-playing');
+        try { audio.pause(); } catch (_) {}
+        if (liveRegion) liveRegion.textContent = 'Paused: ' + title;
+      } else {
+        stopAll(btn);
+        btn.setAttribute('aria-pressed', 'true');
+        setLabel(btn, 'Pause', title);
+        if (card) card.classList.add('is-playing');
+        currentCard = card;
+
+        const src = btn.dataset.audio;
+        if (src) {
+          try {
+            audio.src = src;
+            audio.currentTime = 0;
+            const p = audio.play();
+            if (p && typeof p.catch === 'function') {
+              p.catch(() => { /* autoplay blocked */ });
+            }
+          } catch (_) { /* noop */ }
+        }
+        if (liveRegion) liveRegion.textContent = 'Now playing: ' + title;
+      }
+    });
+  });
+
+  // Time tick — update MM:SS + progress fill + waveform played bars
+  audio.addEventListener('timeupdate', () => {
+    if (!currentCard) return;
+    const dur = isFinite(audio.duration) && audio.duration > 0 ? audio.duration : 0;
+    const cur = audio.currentTime || 0;
+    const ratio = dur > 0 ? cur / dur : 0;
+
+    const durEl = currentCard.querySelector('[data-duration]');
+    if (durEl) {
+      if (dur > 0) durEl.textContent = fmtTime(cur) + ' / ' + fmtTime(dur);
+      else         durEl.textContent = fmtTime(cur);
+    }
+    updateCardProgress(currentCard, ratio);
+  });
+
+  // Once metadata is ready, show the real total
+  audio.addEventListener('loadedmetadata', () => {
+    if (!currentCard) return;
+    const durEl = currentCard.querySelector('[data-duration]');
+    if (durEl && isFinite(audio.duration)) {
+      durEl.textContent = '0:00 / ' + fmtTime(audio.duration);
+    }
+  });
+
+  // Natural end: reset UI
+  audio.addEventListener('ended', () => {
+    stopAll(null);
+    currentCard = null;
+    if (liveRegion) liveRegion.textContent = 'Stopped.';
+  });
+
+  // Error: gracefully restore UI, don't leave a frozen "playing" card
+  audio.addEventListener('error', () => {
+    stopAll(null);
+    currentCard = null;
+  });
+
+  /* ---- Genre filter --------------------------------------------------- */
+  const filters = section.querySelectorAll('.aex__filter');
+  const cards   = section.querySelectorAll('.aex__card');
+
+  filters.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const target = btn.dataset.filter;
+      filters.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+
+      cards.forEach((card) => {
+        const genre = (card.dataset.genre || '').toLowerCase();
+        const show  = target === 'all' || genre === target;
+        if (show) {
+          card.hidden = false;
+        } else {
+          const activeBtn = card.querySelector('.aex__play[aria-pressed="true"]');
+          if (activeBtn) activeBtn.click();
+          card.hidden = true;
+        }
+      });
+
+      if (liveRegion) {
+        liveRegion.textContent = target === 'all'
+          ? 'Showing all songs.'
+          : 'Filtered by ' + btn.textContent.trim() + '.';
+      }
+    });
+  });
+
+  /* ---- Click on cover/card also toggles play ------------------------- */
+  cards.forEach((card) => {
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('a, button, input, textarea, select')) return;
+      const btn = card.querySelector('.aex__play');
+      if (btn) btn.click();
+    });
+  });
+
+  /* ---- Escape = stop playback ---------------------------------------- */
+  section.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const active = section.querySelector('.aex__play[aria-pressed="true"]');
+      if (active) active.click();
+    }
+  });
+})();
+</script>

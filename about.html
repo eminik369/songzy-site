@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Songzy — the story behind a small studio making songs for the people who deserve more than a card.">
+  <title>About — Songzy</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo-songzy.jpg" type="image/jpeg">
+  <style>
+    :root {
+      --color-orange: #FF6B35; --color-pink: #E91E8C; --color-purple: #7B2FF7;
+      --bg: #0f0f1a; --bg-elev: #17172a; --txt: #f5f3ee; --txt-muted: #a8a3b5; --line: #2c2c48;
+      --gradient-brand-h: linear-gradient(90deg, var(--color-orange), var(--color-pink), var(--color-purple));
+    }
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg); color: var(--txt);
+      font-family: 'Poppins', sans-serif; line-height: 1.7;
+      background-image: radial-gradient(ellipse at top left, rgba(233, 30, 140, 0.08) 0%, transparent 55%),
+        radial-gradient(ellipse at bottom right, rgba(123, 47, 247, 0.1) 0%, transparent 55%);
+    }
+    .hdr {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(15, 15, 26, 0.85); backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+    }
+    .hdr__inner {
+      max-width: 1180px; margin: 0 auto; padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.35rem;
+      color: var(--txt); text-decoration: none;
+    }
+    .brand__dot { width: 10px; height: 10px; border-radius: 50%; background: var(--gradient-brand-h); }
+    .nav-links { display: flex; gap: 20px; font-size: 0.92rem; }
+    .nav-links a { color: var(--txt-muted); text-decoration: none; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--txt); }
+
+    main { max-width: 720px; margin: 0 auto; padding: 72px 24px 96px; }
+    .eyebrow {
+      color: var(--color-pink); font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px;
+    }
+    h1 {
+      font-family: 'Fraunces', serif; font-weight: 500;
+      font-size: clamp(2.5rem, 6vw, 4rem); line-height: 1.05;
+      letter-spacing: -0.02em; margin: 0 0 24px;
+    }
+    h1 em {
+      font-style: italic;
+      background: var(--gradient-brand-h);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .lead {
+      font-family: 'Fraunces', serif; font-style: italic; font-weight: 400;
+      color: var(--txt-muted); font-size: 1.3rem; line-height: 1.45;
+      margin: 0 0 48px; max-width: 560px;
+    }
+    h2 {
+      font-family: 'Fraunces', serif; font-weight: 500;
+      font-size: 1.55rem; margin: 44px 0 14px; color: var(--txt);
+    }
+    p { color: #d6d2e0; font-size: 1.02rem; margin: 0 0 18px; }
+    p strong { color: var(--txt); }
+    blockquote {
+      margin: 28px 0; padding: 20px 24px; border-left: 3px solid var(--color-pink);
+      background: var(--bg-elev); border-radius: 0 12px 12px 0;
+      font-family: 'Fraunces', serif; font-style: italic; color: var(--txt);
+      font-size: 1.08rem; line-height: 1.5;
+    }
+    .cta-row {
+      margin-top: 56px; padding-top: 28px; border-top: 1px solid var(--line);
+      display: flex; flex-wrap: wrap; gap: 14px;
+    }
+    .btn {
+      font-family: inherit; font-weight: 600; font-size: 0.96rem;
+      padding: 13px 24px; border-radius: 999px; text-decoration: none;
+      transition: transform 0.2s ease;
+    }
+    .btn--primary {
+      background: var(--gradient-brand-h); color: #fff;
+      box-shadow: 0 6px 24px rgba(233, 30, 140, 0.28);
+    }
+    .btn--primary:hover { transform: translateY(-1px); }
+    .btn--ghost {
+      background: transparent; color: var(--txt-muted);
+      border: 1px solid var(--line);
+    }
+    .btn--ghost:hover { color: var(--txt); border-color: var(--txt-muted); }
+    .signature {
+      margin-top: 16px; font-family: 'Fraunces', serif; font-style: italic;
+      color: var(--txt-muted); font-size: 1.02rem;
+    }
+  </style>
+</head>
+<body id="top">
+
+<header class="hdr">
+  <div class="hdr__inner">
+    <a class="brand" href="index.html"><span class="brand__dot"></span> Songzy</a>
+    <nav class="nav-links">
+      <a href="index.html#pricing">Pricing</a>
+      <a href="index.html#audio-examples">Examples</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <p class="eyebrow">About</p>
+  <h1>We make songs for the people who <em>deserve more than a card.</em></h1>
+  <p class="lead">Songzy is a small studio in Southern Italy. One idea, four people, and an unreasonable belief that the cheapest gift we give each other &mdash; words &mdash; is also the rarest.</p>
+
+  <h2>Why this exists</h2>
+  <p>Two years ago, a friend asked me to help write a song for his grandmother's 90th. She was losing her memory fast. He had stories &mdash; the smell of the bakery, the nickname she called him when he was small, the way she'd hum while she cooked &mdash; and no idea what to do with them. We spent an afternoon together. I wrote the lyrics. A musician friend put them to a simple piano melody and sang them into a phone.</p>
+  <p>She cried. Then she laughed. Then she held his hand and said the name. That moment was worth more than anything we'd ever bought her.</p>
+  <p>After that, I couldn't stop thinking about how many people had those exact stories &mdash; and no way to turn them into something someone could hold.</p>
+
+  <blockquote>
+    The best gift isn't the most expensive one. It's the one that proves somebody paid attention.
+  </blockquote>
+
+  <h2>What we actually do</h2>
+  <p>We take what you give us &mdash; the name, the memory, the three words, the voice in your head &mdash; and we write, compose, and produce a song around it. Our studio handles the lyrics, the voice, the arrangement, the mix; every line goes past a human before it leaves. Because the difference between <em>a song</em> and <em>their song</em> is in the details only a person catches.</p>
+  <p>Two hours from your brief to your inbox, usually. MP3 for Quick. MP3 + WAV + lyric video for Personal. Full cinematic treatment for Premium.</p>
+
+  <h2>What we refuse to do</h2>
+  <p>We don't do subscriptions. A song for someone you love is not a streaming service. Pay once, own it forever.</p>
+  <p>We don't auto-generate from a template. Every brief is read by a human before production starts. If your brief is thin, we ask you for more &mdash; because a thin brief makes a thin song.</p>
+  <p>We don't impersonate real artists, fabricate words in a public figure's mouth, or take orders that attack a person. The &ldquo;acceptable use&rdquo; rules on our <a href="terms.html" style="color: var(--color-pink);">terms page</a> are short for a reason.</p>
+
+  <h2>Who's behind it</h2>
+  <p>Four of us. A writer who writes too much and cuts too little. A producer who came out of film scoring. A backend engineer who keeps the machine honest. A customer-care human who has cried at least once reading every brief. We're small on purpose &mdash; because the quality we care about doesn't scale to a warehouse.</p>
+
+  <p class="signature">&mdash; The Songzy team, Naples</p>
+
+  <div class="cta-row">
+    <a href="index.html#pricing" class="btn btn--primary">Give a song, not a card &rarr;</a>
+    <a href="index.html#audio-examples" class="btn btn--ghost">Hear a sample</a>
+  </div>
+</main>
+
+</body>
+</html>

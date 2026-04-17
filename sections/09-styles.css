@@ -1,0 +1,840 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@1,400;1,600&display=swap');
+
+/* ==========================================================================
+   SONGZY - GLOBAL STYLESHEET
+   Design tokens + reusable utilities. Section-level CSS lives scoped in
+   each section partial. Keep this file complementary, not competitive.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   0. DESIGN TOKENS
+   ========================================================================== */
+
+:root {
+  /* Surfaces & text */
+  --color-bg: #0B0B14;
+  --color-surface: rgba(255, 255, 255, 0.03);
+  --color-surface-2: rgba(255, 255, 255, 0.05);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-border-strong: rgba(255, 255, 255, 0.14);
+  --color-text: #ECECF4;
+  --color-text-soft: #B8B8CC;
+  --color-text-muted: #8E8EA8;
+
+  /* Brand */
+  --color-orange: #FF6B35;
+  --color-pink: #E91E8C;
+  --color-purple: #7B2FF7;
+  --color-success: #34D399;
+
+  /* Gradients */
+  --gradient-brand: linear-gradient(135deg, var(--color-orange), var(--color-pink), var(--color-purple));
+  --gradient-brand-soft: linear-gradient(135deg, rgba(255, 107, 53, 0.15), rgba(233, 30, 140, 0.15), rgba(123, 47, 247, 0.15));
+
+  /* Radius */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+  --radius-pill: 999px;
+
+  /* Shadows / glows */
+  --shadow-glow-pink: 0 20px 60px -20px rgba(233, 30, 140, 0.45);
+  --shadow-glow-purple: 0 20px 60px -20px rgba(123, 47, 247, 0.40);
+  --shadow-glow-orange: 0 20px 60px -20px rgba(255, 107, 53, 0.40);
+
+  /* Easing */
+  --ease-spring: cubic-bezier(.2, .8, .2, 1);
+  --ease-out: cubic-bezier(.4, 0, .2, 1);
+
+  /* Typography scale (used by heading helpers) */
+  --font-sans: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+
+  /* Container */
+  --container-max: 1180px;
+
+  color-scheme: dark;
+}
+
+
+/* ==========================================================================
+   1. BASE / RESET
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+  color: inherit;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+p {
+  margin: 0;
+}
+
+hr {
+  border: 0;
+  height: 1px;
+  background: var(--color-border);
+}
+
+/* Selection & focus */
+::selection {
+  background-color: var(--color-pink);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-pink);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
+
+/* ==========================================================================
+   2. SCROLLBAR (webkit + firefox)
+   ========================================================================== */
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-pink) transparent;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--gradient-brand);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--color-pink), var(--color-purple));
+}
+
+
+/* ==========================================================================
+   3. LAYOUT PRIMITIVES
+   ========================================================================== */
+
+.container {
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: clamp(20px, 4vw, 32px);
+}
+
+.section-padding {
+  padding: 120px 24px 96px;
+}
+
+@media (max-width: 768px) {
+  .section-padding {
+    padding: 80px 20px;
+  }
+}
+
+.visually-hidden {
+  position: absolute !important;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+
+/* ==========================================================================
+   4. TYPOGRAPHY HELPERS
+   ========================================================================== */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-soft);
+  padding: 6px 12px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  background: var(--color-surface);
+}
+
+.heading-1 {
+  font-family: var(--font-sans);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+}
+
+.heading-2 {
+  font-family: var(--font-sans);
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.heading-3 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+}
+
+.text-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+.quote-display {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: 400;
+}
+
+
+/* ==========================================================================
+   5. BUTTONS
+   ========================================================================== */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 26px;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: 0.01em;
+  color: var(--color-text);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: transform 300ms var(--ease-spring),
+              background 300ms var(--ease-out),
+              border-color 300ms var(--ease-out),
+              box-shadow 300ms var(--ease-out),
+              color 300ms var(--ease-out);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-border-strong);
+}
+
+.btn:active {
+  transform: translateY(0);
+}
+
+.btn:disabled,
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.btn--primary {
+  color: #fff;
+  background: var(--gradient-brand);
+  border-color: transparent;
+  box-shadow: var(--shadow-glow-pink);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn--primary:hover {
+  box-shadow: 0 24px 70px -18px rgba(233, 30, 140, 0.6);
+}
+
+.btn--ghost {
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.btn--ghost:hover {
+  background: var(--color-surface-2);
+}
+
+.btn--lg {
+  padding: 18px 34px;
+  font-size: 1.05rem;
+}
+
+.btn--sm {
+  padding: 10px 18px;
+  font-size: 0.85rem;
+}
+
+
+/* ==========================================================================
+   6. GLASS / SURFACES
+   ========================================================================== */
+
+.glass {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-radius: var(--radius-lg);
+}
+
+.glass-strong {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border-strong);
+  backdrop-filter: blur(28px) saturate(160%);
+  -webkit-backdrop-filter: blur(28px) saturate(160%);
+  border-radius: var(--radius-lg);
+}
+
+
+/* ==========================================================================
+   7. GRADIENT BORDER
+   ========================================================================== */
+
+.gradient-border {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: var(--radius-lg);
+  background:
+    linear-gradient(var(--color-bg), var(--color-bg)) padding-box,
+    var(--gradient-brand) border-box;
+}
+
+.gradient-border--surface {
+  background:
+    linear-gradient(rgba(18, 18, 28, 1), rgba(18, 18, 28, 1)) padding-box,
+    var(--gradient-brand) border-box;
+}
+
+
+/* ==========================================================================
+   8. NEON GLOWS
+   ========================================================================== */
+
+.neon-glow-pink {
+  box-shadow:
+    0 0 0 1px rgba(233, 30, 140, 0.35),
+    0 12px 40px -8px rgba(233, 30, 140, 0.45),
+    0 0 60px -20px rgba(233, 30, 140, 0.55);
+}
+
+.neon-glow-purple {
+  box-shadow:
+    0 0 0 1px rgba(123, 47, 247, 0.35),
+    0 12px 40px -8px rgba(123, 47, 247, 0.45),
+    0 0 60px -20px rgba(123, 47, 247, 0.55);
+}
+
+.neon-glow-orange {
+  box-shadow:
+    0 0 0 1px rgba(255, 107, 53, 0.35),
+    0 12px 40px -8px rgba(255, 107, 53, 0.45),
+    0 0 60px -20px rgba(255, 107, 53, 0.55);
+}
+
+
+/* ==========================================================================
+   9. TILT 3D
+   ========================================================================== */
+
+.tilt-3d {
+  transform-style: preserve-3d;
+  perspective: 900px;
+  transition: transform 500ms var(--ease-spring);
+  will-change: transform;
+}
+
+.tilt-3d:hover {
+  transform: perspective(900px) rotateX(4deg) rotateY(-6deg) translateZ(6px);
+}
+
+@media (hover: none) {
+  .tilt-3d:hover {
+    transform: none;
+  }
+}
+
+
+/* ==========================================================================
+   10. SHIMMER (CTA shine sweep)
+   ========================================================================== */
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.28) 50%,
+    transparent 70%
+  );
+  transform: translateX(-120%);
+  animation: shimmer-sweep 2.8s var(--ease-out) infinite;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+}
+
+@keyframes shimmer-sweep {
+  0%   { transform: translateX(-120%); }
+  60%  { transform: translateX(120%); }
+  100% { transform: translateX(120%); }
+}
+
+
+/* ==========================================================================
+   11. FLOAT (subtle infinite bob)
+   ========================================================================== */
+
+.float-y {
+  animation: float-y 6s ease-in-out infinite;
+  will-change: transform;
+}
+
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+
+/* ==========================================================================
+   12. FADE-IN / STAGGER (observer-driven)
+   ========================================================================== */
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms var(--ease-out),
+              transform 700ms var(--ease-spring);
+  will-change: opacity, transform;
+}
+
+.fade-in.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-1 { transition-delay: 80ms; }
+.stagger-2 { transition-delay: 160ms; }
+.stagger-3 { transition-delay: 240ms; }
+.stagger-4 { transition-delay: 320ms; }
+.stagger-5 { transition-delay: 400ms; }
+.stagger-6 { transition-delay: 480ms; }
+
+
+/* ==========================================================================
+   13. SCROLL PROGRESS BAR (real, driven by JS width update)
+   ========================================================================== */
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  width: 0%;
+  background: var(--gradient-brand);
+  z-index: 9999;
+  pointer-events: none;
+  transition: width 80ms linear;
+  box-shadow: 0 0 12px rgba(233, 30, 140, 0.5);
+}
+
+
+/* ==========================================================================
+   14. MARQUEE (generic utility — no fake press logos rely on it)
+   ========================================================================== */
+
+.marquee {
+  display: flex;
+  overflow: hidden;
+  gap: 48px;
+  mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+}
+
+.marquee__track {
+  display: flex;
+  gap: 48px;
+  flex-shrink: 0;
+  animation: marquee-scroll 30s linear infinite;
+  will-change: transform;
+}
+
+@keyframes marquee-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-100%); }
+}
+
+.marquee:hover .marquee__track {
+  animation-play-state: paused;
+}
+
+
+/* ==========================================================================
+   15. GRID / FLEX HELPERS (minimal, complementary)
+   ========================================================================== */
+
+.flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--stack-gap, 16px);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--row-gap, 16px);
+}
+
+
+/* ==========================================================================
+   16. BADGE / CHIP
+   ========================================================================== */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+}
+
+.badge--brand {
+  color: #fff;
+  background: var(--gradient-brand);
+  border-color: transparent;
+}
+
+.badge--success {
+  color: var(--color-success);
+  background: rgba(52, 211, 153, 0.1);
+  border-color: rgba(52, 211, 153, 0.3);
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--color-text-soft);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  transition: all 250ms var(--ease-out);
+}
+
+.chip:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-2);
+}
+
+
+/* ==========================================================================
+   17. FORM CONTROL BASE
+   ========================================================================== */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.field__label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-text-soft);
+  text-transform: uppercase;
+}
+
+.input,
+.textarea,
+.select {
+  width: 100%;
+  padding: 14px 16px;
+  font-family: inherit;
+  font-size: 1rem;
+  color: var(--color-text);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  transition: border-color 200ms var(--ease-out),
+              background 200ms var(--ease-out),
+              box-shadow 200ms var(--ease-out);
+}
+
+.input::placeholder,
+.textarea::placeholder {
+  color: var(--color-text-muted);
+}
+
+.input:hover,
+.textarea:hover,
+.select:hover {
+  border-color: var(--color-border-strong);
+}
+
+.input:focus,
+.textarea:focus,
+.select:focus {
+  outline: none;
+  border-color: var(--color-pink);
+  background: var(--color-surface-2);
+  box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.18);
+}
+
+.textarea {
+  min-height: 120px;
+  resize: vertical;
+}
+
+
+/* ==========================================================================
+   18. DIVIDERS & ASPECT
+   ========================================================================== */
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background: var(--color-border);
+  border: 0;
+}
+
+.divider--gradient {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, var(--color-border-strong), transparent);
+  border: 0;
+}
+
+.aspect-square  { aspect-ratio: 1 / 1; }
+.aspect-video   { aspect-ratio: 16 / 9; }
+.aspect-portrait{ aspect-ratio: 3 / 4; }
+
+
+/* ==========================================================================
+   19. TEXT / COLOR HELPERS
+   ========================================================================== */
+
+.text-soft   { color: var(--color-text-soft); }
+.text-muted  { color: var(--color-text-muted); }
+.text-pink   { color: var(--color-pink); }
+.text-purple { color: var(--color-purple); }
+.text-orange { color: var(--color-orange); }
+.text-success{ color: var(--color-success); }
+
+.text-center { text-align: center; }
+.text-left   { text-align: left; }
+.text-right  { text-align: right; }
+
+.text-balance { text-wrap: balance; }
+.text-pretty  { text-wrap: pretty; }
+
+.lead {
+  font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+  line-height: 1.55;
+  color: var(--color-text-soft);
+}
+
+.caption {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+
+/* ==========================================================================
+   20. SPACING HELPERS (token-driven, sparing use)
+   ========================================================================== */
+
+.mt-0 { margin-top: 0; }
+.mt-2 { margin-top: 8px; }
+.mt-4 { margin-top: 16px; }
+.mt-6 { margin-top: 24px; }
+.mt-8 { margin-top: 32px; }
+.mt-12{ margin-top: 48px; }
+
+.mb-0 { margin-bottom: 0; }
+.mb-2 { margin-bottom: 8px; }
+.mb-4 { margin-bottom: 16px; }
+.mb-6 { margin-bottom: 24px; }
+.mb-8 { margin-bottom: 32px; }
+.mb-12{ margin-bottom: 48px; }
+
+
+/* ==========================================================================
+   21. SKIP LINK (a11y)
+   ========================================================================== */
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 12px;
+  padding: 10px 16px;
+  background: var(--color-bg);
+  color: var(--color-text);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  z-index: 10000;
+  transition: top 200ms var(--ease-out);
+}
+
+.skip-link:focus {
+  top: 12px;
+  outline: 2px solid var(--color-pink);
+  outline-offset: 2px;
+}
+
+
+/* ==========================================================================
+   22. RESPONSIVE VISIBILITY
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .hide-mobile { display: none !important; }
+}
+
+@media (min-width: 769px) {
+  .show-mobile { display: none !important; }
+}
+
+
+/* ==========================================================================
+   23. REDUCED MOTION SAFEGUARD
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .fade-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  .float-y,
+  .shimmer::after,
+  .marquee__track {
+    animation: none !important;
+  }
+
+  .tilt-3d:hover {
+    transform: none;
+  }
+}

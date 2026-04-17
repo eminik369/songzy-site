@@ -1,0 +1,1081 @@
+<!--
+  ============================================================================
+  SONGZY — PRICING SECTION (06-pricing.html)
+  ============================================================================
+  Philosophy: quiet, premium, emotional. No fake scarcity, no resetting
+  countdowns, no "only 23 spots left". Persuasion is built through:
+
+  1. HONEST ANCHORING — a real, checkable reference ("A custom-composed
+     track from a session musician: £800+"). If someone googles it, it
+     holds up.
+  2. DECOY EFFECT (honest version) — Quick, Personal, Premium differ on
+     REAL deliverables (length, revisions, license, stems). No artificial
+     feature-blocking.
+  3. FUTURE PACING in the header — we paint the moment the buyer is
+     actually buying ("…ready before she goes to bed tonight").
+  4. CONTRAST PAIRS in the taglines — "Not a track. A memory."
+  5. RISK REVERSAL — one clear guarantee, shown once with weight, not
+     repeated six times (repetition reads as insecurity).
+  6. CURRENCY TOGGLE — EUR / GBP, remembered across visits. No surprise
+     at checkout.
+  7. VISUAL QUIET — glassmorphism on the recommended card, soft neon
+     glow, generous whitespace. The product speaks; the UI doesn't shout.
+  ============================================================================
+-->
+
+<section id="pricing" class="pricing">
+  <style>
+    /* ------------------------------------------------------------------ */
+    /*  FONTS — Fraunces (display serif, italic) + Geist (body) +         */
+    /*  JetBrains Mono (timecode, price digits tabular feel)              */
+    /* ------------------------------------------------------------------ */
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700;1,9..144,800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+    /* ------------------------------------------------------------------ */
+    /*  TOKENS (scoped)                                                   */
+    /* ------------------------------------------------------------------ */
+    .pricing {
+      --px-orange: #FF6B35;
+      --px-pink:   #E91E8C;
+      --px-purple: #7B2FF7;
+      --px-gradient: linear-gradient(135deg, var(--px-orange), var(--px-pink), var(--px-purple));
+      --px-bg:      #0B0B14;
+      --px-surface: rgba(255,255,255,.02);
+      --px-surface-2: rgba(255,255,255,.04);
+      --px-border:  rgba(255,255,255,.08);
+      --px-border-strong: rgba(255,255,255,.14);
+      --px-text:    #ECECF4;
+      --px-text-muted: #8E8EA8;
+      --px-text-soft:  #B8B8CC;
+      --px-ok:      #34D399;
+      --px-radius:  22px;
+      --px-radius-btn: 14px;
+
+      --px-font-display: 'Fraunces', 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
+      --px-font-body:    'Geist', 'Manrope', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --px-font-mono:    'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+      background: var(--px-bg);
+      color: var(--px-text);
+      font-family: var(--px-font-body);
+      font-feature-settings: 'ss01', 'cv11'; /* Geist stylistic sets */
+      padding: 120px 24px 96px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* Grain overlay — the "vinyl" texture that keeps the glass honest */
+    .pricing > .pricing__grain {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .04;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .7 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+    }
+
+    /* ambient light — a quiet glow, not a disco ball */
+    .pricing::before,
+    .pricing::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+    .pricing::before {
+      top: 10%;
+      left: 15%;
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, rgba(233,30,140,.12) 0%, transparent 70%);
+    }
+    .pricing::after {
+      bottom: 5%;
+      right: 10%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(123,47,247,.10) 0%, transparent 70%);
+    }
+
+    .pricing *,
+    .pricing *::before,
+    .pricing *::after { box-sizing: border-box; }
+
+    .pricing__container {
+      max-width: 1180px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  HEADER                                                            */
+    /* ------------------------------------------------------------------ */
+    .pricing__header { margin-bottom: 56px; }
+
+    .pricing__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--px-text-muted);
+      margin-bottom: 20px;
+    }
+
+    .pricing__title {
+      font-family: var(--px-font-display);
+      font-size: clamp(2.2rem, 5.2vw, 3.4rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      margin: 0 0 20px;
+      max-width: 820px;
+      margin-inline: auto;
+      font-variation-settings: "opsz" 96;
+    }
+
+    .pricing__title em {
+      font-style: italic;
+      font-weight: 600;
+      font-variation-settings: "opsz" 144;
+      color: var(--px-text);
+    }
+
+    .pricing__title-accent {
+      background: var(--px-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .pricing__subtitle {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--px-text-soft);
+      margin: 0 auto 32px;
+      max-width: 560px;
+    }
+
+    /* Honest anchor — a real benchmark, not a fake one */
+    .pricing__anchor {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 22px;
+      background: var(--px-surface);
+      border: 1px solid var(--px-border);
+      border-radius: 999px;
+      font-size: .92rem;
+      color: var(--px-text-muted);
+    }
+    .pricing__anchor-old {
+      color: var(--px-text-soft);
+      text-decoration: line-through;
+      text-decoration-color: rgba(255,255,255,.35);
+    }
+    .pricing__anchor-new {
+      color: var(--px-text);
+      font-weight: 700;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CURRENCY TOGGLE                                                   */
+    /* ------------------------------------------------------------------ */
+    .pricing__currency {
+      display: inline-flex;
+      background: var(--px-surface-2);
+      border: 1px solid var(--px-border);
+      border-radius: 999px;
+      padding: 4px;
+      margin: 28px auto 0;
+      position: relative;
+    }
+
+    .pricing__currency-btn {
+      appearance: none;
+      background: transparent;
+      border: 0;
+      color: var(--px-text-muted);
+      font-family: inherit;
+      font-size: .88rem;
+      font-weight: 600;
+      letter-spacing: .02em;
+      padding: 9px 22px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: color .25s ease;
+      position: relative;
+      z-index: 1;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .pricing__currency-btn[aria-pressed="true"] {
+      color: #fff;
+    }
+
+    /* animated pill behind the active toggle */
+    .pricing__currency-pill {
+      position: absolute;
+      top: 4px;
+      bottom: 4px;
+      width: calc(50% - 4px);
+      border-radius: 999px;
+      background: var(--px-gradient);
+      box-shadow: 0 4px 18px rgba(233,30,140,.28);
+      transition: transform .32s cubic-bezier(.5,.1,.2,1);
+      z-index: 0;
+    }
+    .pricing__currency[data-active="gbp"] .pricing__currency-pill {
+      transform: translateX(100%);
+    }
+
+    .pricing__currency-flag {
+      font-size: 1rem;
+      line-height: 1;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  GRID                                                              */
+    /* ------------------------------------------------------------------ */
+    .pricing__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+      margin: 56px 0 48px;
+    }
+
+    @media (max-width: 980px) {
+      .pricing__grid {
+        grid-template-columns: 1fr;
+        max-width: 440px;
+        margin-inline: auto;
+        gap: 20px;
+      }
+      .pricing__card--featured { order: -1; }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CARD                                                              */
+    /* ------------------------------------------------------------------ */
+    .pricing__card {
+      position: relative;
+      background: rgba(255,255,255,.025);
+      border: 1px solid var(--px-border);
+      border-radius: var(--px-radius);
+      padding: 40px 30px 32px;
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+      transition: transform .4s cubic-bezier(.2,.8,.2,1),
+                  border-color .3s ease,
+                  background .3s ease;
+      backdrop-filter: blur(14px) saturate(1.1);
+      -webkit-backdrop-filter: blur(14px) saturate(1.1);
+    }
+
+    .pricing__card:hover {
+      transform: translateY(-6px);
+      border-color: var(--px-border-strong);
+      background: rgba(255,255,255,.04);
+    }
+
+    /* ── Featured ──────────────────────────────────────────────────── */
+    .pricing__card--featured {
+      background:
+        linear-gradient(rgba(20,20,36,.85), rgba(20,20,36,.85)) padding-box,
+        var(--px-gradient) border-box;
+      border: 1.5px solid transparent;
+      box-shadow:
+        0 0 0 1px rgba(233,30,140,.12),
+        0 24px 60px -20px rgba(233,30,140,.35),
+        0 8px 32px -8px rgba(123,47,247,.28);
+      transform: translateY(-8px);
+    }
+
+    .pricing__card--featured:hover {
+      transform: translateY(-14px);
+    }
+
+    /* subtle neon glow behind featured */
+    .pricing__card--featured::after {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: var(--px-radius);
+      background: var(--px-gradient);
+      filter: blur(22px);
+      opacity: .18;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ── Recommended badge (earned social proof, not fake) ───────── */
+    .pricing__badge {
+      position: absolute;
+      top: -13px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      padding: 6px 16px;
+      border-radius: 999px;
+      white-space: nowrap;
+      color: #fff;
+      background: var(--px-gradient);
+      box-shadow: 0 6px 20px -4px rgba(233,30,140,.5);
+    }
+
+    /* ── Tier header ──────────────────────────────────────────────── */
+    .pricing__tier {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--px-text-muted);
+      margin: 0 0 6px;
+    }
+
+    .pricing__card--featured .pricing__tier {
+      color: var(--px-pink);
+    }
+
+    .pricing__name {
+      font-family: var(--px-font-display);
+      font-size: 1.65rem;
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -.02em;
+      margin: 0 0 10px;
+      color: var(--px-text);
+      font-variation-settings: "opsz" 72;
+    }
+
+    .pricing__tagline {
+      font-size: .96rem;
+      line-height: 1.5;
+      color: var(--px-text-soft);
+      margin: 0 0 28px;
+      min-height: 2.8em;
+    }
+
+    /* ── Price ────────────────────────────────────────────────────── */
+    .pricing__price {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+
+    .pricing__price-symbol {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--px-text);
+      line-height: 1;
+    }
+
+    .pricing__price-amount {
+      font-family: var(--px-font-display);
+      font-size: 3.4rem;
+      font-weight: 700;
+      line-height: 1;
+      letter-spacing: -.04em;
+      color: var(--px-text);
+      font-variant-numeric: tabular-nums lining-nums;
+      font-variation-settings: "opsz" 144;
+    }
+
+    .pricing__card--featured .pricing__price-amount,
+    .pricing__card--featured .pricing__price-symbol {
+      background: var(--px-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .pricing__price-suffix {
+      font-size: .9rem;
+      color: var(--px-text-muted);
+    }
+
+    .pricing__price-note {
+      font-size: .82rem;
+      color: var(--px-text-muted);
+      margin: 0 0 28px;
+    }
+
+    /* price-amount smooth swap */
+    .pricing__price-amount,
+    .pricing__price-symbol {
+      transition: opacity .2s ease;
+    }
+    .pricing.is-swapping .pricing__price-amount,
+    .pricing.is-swapping .pricing__price-symbol {
+      opacity: 0;
+    }
+
+    /* ── Features ─────────────────────────────────────────────────── */
+    .pricing__features {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 32px;
+      flex: 1;
+    }
+
+    .pricing__features li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      font-size: .92rem;
+      line-height: 1.45;
+      color: var(--px-text);
+    }
+
+    .pricing__features li + li {
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+
+    .pricing__features svg {
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--px-ok);
+    }
+
+    .pricing__features strong {
+      color: var(--px-text);
+      font-weight: 700;
+    }
+
+    /* ── CTA ───────────────────────────────────────────────────────── */
+    .pricing__cta {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 16px 22px;
+      border-radius: var(--px-radius-btn);
+      font-size: 1rem;
+      font-weight: 600;
+      letter-spacing: .005em;
+      text-decoration: none;
+      cursor: pointer;
+      border: 0;
+      font-family: inherit;
+      transition: transform .2s ease, box-shadow .25s ease,
+                  background .25s ease, border-color .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* neutral CTA (outer tiers) */
+    .pricing__cta--ghost {
+      background: rgba(255,255,255,.04);
+      color: var(--px-text);
+      border: 1px solid var(--px-border-strong);
+    }
+    .pricing__cta--ghost:hover {
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.25);
+      transform: translateY(-2px);
+    }
+
+    /* featured CTA */
+    .pricing__cta--primary {
+      background: var(--px-gradient);
+      color: #fff;
+      box-shadow: 0 10px 30px -8px rgba(233,30,140,.5);
+    }
+    .pricing__cta--primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 38px -8px rgba(233,30,140,.65);
+    }
+    .pricing__cta--primary::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transition: left .7s ease;
+    }
+    .pricing__cta--primary:hover::before { left: 100%; }
+
+    /* micro-copy under CTA */
+    .pricing__cta-note {
+      margin: 14px 0 0;
+      font-size: .8rem;
+      color: var(--px-text-muted);
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  GUARANTEE STRIP                                                   */
+    /* ------------------------------------------------------------------ */
+    .pricing__guarantee {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      max-width: 760px;
+      margin: 0 auto 56px;
+      padding: 26px 32px;
+      background: var(--px-surface);
+      border: 1px solid var(--px-border);
+      border-radius: 18px;
+      text-align: left;
+    }
+
+    .pricing__guarantee-icon {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 14px;
+      background: rgba(52, 211, 153, .08);
+      border: 1px solid rgba(52, 211, 153, .2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--px-ok);
+    }
+
+    .pricing__guarantee-text {
+      margin: 0;
+      font-size: .95rem;
+      line-height: 1.55;
+      color: var(--px-text-soft);
+    }
+
+    .pricing__guarantee-text strong {
+      color: var(--px-text);
+      font-weight: 700;
+    }
+
+    @media (max-width: 640px) {
+      .pricing__guarantee {
+        flex-direction: column;
+        text-align: center;
+        padding: 24px;
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CHECKOUT STEPS (what happens after "Create my song")              */
+    /* ------------------------------------------------------------------ */
+    .pricing__steps {
+      max-width: 820px;
+      margin: 0 auto 40px;
+    }
+
+    .pricing__steps-label {
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--px-text-muted);
+      margin-bottom: 22px;
+    }
+
+    .pricing__steps-list {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    @media (max-width: 720px) {
+      .pricing__steps-list {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .pricing__steps-list li {
+      position: relative;
+      padding: 18px 14px 16px;
+      background: var(--px-surface);
+      border: 1px solid var(--px-border);
+      border-radius: 14px;
+      font-size: .84rem;
+      color: var(--px-text-soft);
+      line-height: 1.45;
+      text-align: left;
+    }
+
+    .pricing__steps-list li::before {
+      content: counter(step);
+      counter-increment: step;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--px-gradient);
+      color: #fff;
+      font-size: .72rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .pricing__steps-list {
+      counter-reset: step;
+    }
+
+    .pricing__steps-list strong {
+      display: block;
+      color: var(--px-text);
+      font-weight: 600;
+      font-size: .92rem;
+      margin-bottom: 2px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  TRUST BAR                                                         */
+    /* ------------------------------------------------------------------ */
+    .pricing__trust {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: center;
+      gap: 28px 36px;
+      padding-top: 32px;
+      border-top: 1px solid var(--px-border);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .pricing__trust-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: .85rem;
+      color: var(--px-text-muted);
+    }
+
+    .pricing__trust-item svg {
+      flex-shrink: 0;
+      color: var(--px-text-soft);
+    }
+
+    .pricing__trust-item strong {
+      color: var(--px-text-soft);
+      font-weight: 600;
+    }
+
+    .pricing__payments {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .pricing__payment-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 24px;
+      padding: 0 8px;
+      border-radius: 4px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid var(--px-border);
+      font-size: .56rem;
+      font-weight: 800;
+      letter-spacing: .05em;
+      color: var(--px-text-soft);
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+    }
+    .pricing__payment-icon--apple { font-size: .72rem; }
+    .pricing__payment-icon--mastercard {
+      position: relative;
+      width: 34px;
+      padding: 0;
+    }
+    .pricing__payment-icon--mastercard::before,
+    .pricing__payment-icon--mastercard::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      transform: translateY(-50%);
+    }
+    .pricing__payment-icon--mastercard::before {
+      left: 5px;
+      background: #EB001B;
+      opacity: .75;
+    }
+    .pricing__payment-icon--mastercard::after {
+      right: 5px;
+      background: #F79E1B;
+      opacity: .75;
+      mix-blend-mode: screen;
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .pricing__card,
+      .pricing__cta,
+      .pricing__currency-pill,
+      .pricing__price-amount,
+      .pricing__price-symbol {
+        transition: none !important;
+      }
+      .pricing__cta--primary::before { display: none; }
+    }
+  </style>
+
+  <div class="pricing__grain" aria-hidden="true"></div>
+
+  <div class="pricing__container">
+
+    <!-- ================================================================ -->
+    <!--  HEADER — Future pacing opens the section                        -->
+    <!-- ================================================================ -->
+    <header class="pricing__header">
+
+      <span class="pricing__eyebrow">Choose the moment</span>
+
+      <h2 class="pricing__title">
+        A song written from <em>your</em> words.
+        <span class="pricing__title-accent">Ready before they go to bed tonight.</span>
+      </h2>
+
+      <p class="pricing__subtitle">
+        Three ways to turn what you feel into something they can press play on, again and again.
+      </p>
+
+      <!-- Honest anchor: this price is real and checkable -->
+      <div class="pricing__anchor" role="note" aria-label="Reference price">
+        <span>A custom track from a session musician</span>
+        <span class="pricing__anchor-old" data-currency-target data-eur="€800+" data-gbp="£700+">€800+</span>
+        <span aria-hidden="true">·</span>
+        <span>Songzy from</span>
+        <span class="pricing__anchor-new" data-currency-target data-eur="€19" data-gbp="£16">€19</span>
+      </div>
+
+      <!-- Currency toggle -->
+      <div class="pricing__currency" data-active="eur" role="group" aria-label="Select currency">
+        <span class="pricing__currency-pill" aria-hidden="true"></span>
+        <button type="button" class="pricing__currency-btn" data-currency="eur" aria-pressed="true">
+          <span class="pricing__currency-flag" aria-hidden="true">€</span>
+          <span>EUR</span>
+        </button>
+        <button type="button" class="pricing__currency-btn" data-currency="gbp" aria-pressed="false">
+          <span class="pricing__currency-flag" aria-hidden="true">£</span>
+          <span>GBP</span>
+        </button>
+      </div>
+
+    </header>
+
+    <!-- ================================================================ -->
+    <!--  GRID — 3 tiers                                                  -->
+    <!-- ================================================================ -->
+    <div class="pricing__grid" role="list">
+
+      <!-- ============================================================== -->
+      <!--  TIER 1 — QUICK                                                -->
+      <!-- ============================================================== -->
+      <article class="pricing__card" role="listitem">
+
+        <p class="pricing__tier">Quick</p>
+        <h3 class="pricing__name">A small song, exactly right.</h3>
+        <p class="pricing__tagline">For a message you want to say in a way they'll remember.</p>
+
+        <div class="pricing__price">
+          <span class="pricing__price-symbol" data-currency-symbol>€</span>
+          <span class="pricing__price-amount" data-currency-target data-eur="19" data-gbp="16">19</span>
+          <span class="pricing__price-suffix">one-time</span>
+        </div>
+        <p class="pricing__price-note">Less than a bunch of flowers. Yours forever.</p>
+
+        <ul class="pricing__features">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>Up to 2 minutes</strong> — the length of a short, heartfelt note</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Three genres to choose from — Pop, Acoustic, Ballad</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Studio-quality MP3, ready to send</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Delivered in <strong>under 24 hours</strong></span>
+          </li>
+        </ul>
+
+        <a href="checkout.html?tier=quick" class="pricing__cta pricing__cta--ghost" data-tier="quick">
+          Start with Quick
+        </a>
+        <p class="pricing__cta-note">Secure checkout · No account needed</p>
+
+      </article>
+
+      <!-- ============================================================== -->
+      <!--  TIER 2 — PERSONAL (featured)                                  -->
+      <!-- ============================================================== -->
+      <article class="pricing__card pricing__card--featured" role="listitem">
+
+        <span class="pricing__badge">Chosen by most</span>
+
+        <p class="pricing__tier">Personal</p>
+        <h3 class="pricing__name">Not a track. A memory.</h3>
+        <p class="pricing__tagline">The one people play on anniversaries, at weddings, on the drive home.</p>
+
+        <div class="pricing__price">
+          <span class="pricing__price-symbol" data-currency-symbol>€</span>
+          <span class="pricing__price-amount" data-currency-target data-eur="39" data-gbp="33">39</span>
+          <span class="pricing__price-suffix">one-time</span>
+        </div>
+        <p class="pricing__price-note">The price of a takeaway dinner — for something they'll play for years.</p>
+
+        <ul class="pricing__features">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>Up to 3:30 minutes</strong> — a full radio song, verse / chorus / bridge</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>20+ genres</strong> — from folk to indie-pop to piano ballad</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>MP3 <em>and</em> WAV download — studio master quality</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Delivered in <strong>2 hours</strong>, not tomorrow</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>One free revision — because the words have to feel right</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Lyric video, so they can read along the first time</span>
+          </li>
+        </ul>
+
+        <a href="checkout.html?tier=personal" class="pricing__cta pricing__cta--primary" data-tier="personal">
+          Give them the song
+        </a>
+        <p class="pricing__cta-note">No account. No commitment. Refund if it isn't right.</p>
+
+      </article>
+
+      <!-- ============================================================== -->
+      <!--  TIER 3 — PREMIUM                                              -->
+      <!-- ============================================================== -->
+      <article class="pricing__card" role="listitem">
+
+        <p class="pricing__tier">Premium</p>
+        <h3 class="pricing__name">The one they'll frame.</h3>
+        <p class="pricing__tagline">For the moments you don't get twice — weddings, milestone birthdays, the big speeches.</p>
+
+        <div class="pricing__price">
+          <span class="pricing__price-symbol" data-currency-symbol>€</span>
+          <span class="pricing__price-amount" data-currency-target data-eur="69" data-gbp="59">69</span>
+          <span class="pricing__price-suffix">one-time</span>
+        </div>
+        <p class="pricing__price-note">Everything in Personal — plus the extras a once-in-a-lifetime moment needs.</p>
+
+        <ul class="pricing__features">
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>Up to 5 minutes</strong> · any genre, any tempo, any mood</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>MP3 + WAV + <strong>separated stems</strong> for a DJ or a cover</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>Branded share page</strong> — a private link to send them</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Three revisions — until every word lands</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span>Full music video, edited with your photos</span>
+          </li>
+          <li>
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span><strong>Second voice variation</strong> — same song, a different voice</span>
+          </li>
+        </ul>
+
+        <a href="checkout.html?tier=premium" class="pricing__cta pricing__cta--ghost" data-tier="premium">
+          Choose Premium
+        </a>
+        <p class="pricing__cta-note">Priority support, seven days a week</p>
+
+      </article>
+
+    </div>
+    <!-- /grid -->
+
+    <!-- ================================================================ -->
+    <!--  GUARANTEE — said once, said well                                -->
+    <!-- ================================================================ -->
+    <div class="pricing__guarantee">
+      <div class="pricing__guarantee-icon" aria-hidden="true">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2.5 4.5 5.5v5.6c0 4.8 3.2 9 7.5 10.4 4.3-1.4 7.5-5.6 7.5-10.4V5.5L12 2.5z"
+                stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"/>
+          <path d="M8.5 12.2l2.5 2.5 4.5-5"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <p class="pricing__guarantee-text">
+        <strong>If it's not the right song, it's not your song.</strong><br>
+        Tell us what's off — we'll rewrite it, or we'll refund you in full. You keep the first version either way. No forms, no friction, just reply to the email.
+      </p>
+    </div>
+
+    <!-- ================================================================ -->
+    <!--  CHECKOUT STEPS — remove the "what happens next?" anxiety        -->
+    <!-- ================================================================ -->
+    <div class="pricing__steps">
+      <p class="pricing__steps-label">What happens after you press the button</p>
+      <ol class="pricing__steps-list">
+        <li>
+          <strong>Pay securely</strong>
+          Stripe handles your card. We never see it.
+        </li>
+        <li>
+          <strong>Tell the story</strong>
+          A short form — names, occasion, a few words you love.
+        </li>
+        <li>
+          <strong>We write it</strong>
+          You'll get a preview by email in hours.
+        </li>
+        <li>
+          <strong>Press play</strong>
+          Download MP3, WAV, lyric video. Send when ready.
+        </li>
+      </ol>
+    </div>
+
+    <!-- ================================================================ -->
+    <!--  TRUST BAR                                                       -->
+    <!-- ================================================================ -->
+    <div class="pricing__trust">
+
+      <div class="pricing__trust-item">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <rect x="3.5" y="8.5" width="13" height="8.5" rx="1.5" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M6.5 8.5V6a3.5 3.5 0 017 0v2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <span><strong>Secure checkout</strong> · powered by Stripe</span>
+      </div>
+
+      <div class="pricing__trust-item">
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M10 2.5 3 5v5c0 4.4 3 8.2 7 9 4-.8 7-4.6 7-9V5l-7-2.5z"
+                stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/>
+        </svg>
+        <span><strong>GDPR compliant</strong> · your story stays yours</span>
+      </div>
+
+      <div class="pricing__trust-item">
+        <span class="pricing__payments" aria-label="Accepted payment methods">
+          <span class="pricing__payment-icon">VISA</span>
+          <span class="pricing__payment-icon pricing__payment-icon--mastercard" aria-label="Mastercard"></span>
+          <span class="pricing__payment-icon">AMEX</span>
+          <span class="pricing__payment-icon pricing__payment-icon--apple"></span>
+          <span class="pricing__payment-icon">GPay</span>
+        </span>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /container -->
+
+</section>
+
+<script>
+/* --------------------------------------------------------------------------
+   Currency toggle — EUR / GBP
+   - Updates all [data-currency-target] elements with data-eur / data-gbp
+   - Updates [data-currency-symbol]
+   - Persists choice in localStorage under "songzy.currency"
+   - Respects prefers-reduced-motion for the swap animation
+   -------------------------------------------------------------------------- */
+(function () {
+  const section  = document.querySelector('.pricing');
+  if (!section) return;
+
+  const toggle   = section.querySelector('.pricing__currency');
+  const buttons  = section.querySelectorAll('.pricing__currency-btn');
+  // Scope targets/symbols to the whole document so prices outside the pricing
+  // section (hero anchor, final CTA, etc.) also react to the switch.
+  const targets  = document.querySelectorAll('[data-currency-target]');
+  const symbols  = document.querySelectorAll('[data-currency-symbol]');
+  const STORE_KEY = 'songzy.currency';
+  const symbolFor = { eur: '€', gbp: '£' };
+
+  const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function apply(currency) {
+    if (!symbolFor[currency]) currency = 'eur';
+
+    const swap = () => {
+      toggle.setAttribute('data-active', currency);
+      buttons.forEach((b) => {
+        b.setAttribute('aria-pressed', String(b.dataset.currency === currency));
+      });
+      targets.forEach((el) => {
+        const v = el.dataset[currency]; // data-eur / data-gbp
+        if (v != null) el.textContent = v;
+      });
+      symbols.forEach((el) => { el.textContent = symbolFor[currency]; });
+    };
+
+    if (prefersReducedMotion) { swap(); return; }
+
+    section.classList.add('is-swapping');
+    setTimeout(() => {
+      swap();
+      requestAnimationFrame(() => section.classList.remove('is-swapping'));
+    }, 160);
+  }
+
+  // Initial: respect saved preference, else try locale hint
+  let saved = null;
+  try { saved = localStorage.getItem(STORE_KEY); } catch (_) {}
+  if (!saved) {
+    const lang = (navigator.language || '').toLowerCase();
+    saved = lang.startsWith('en-gb') || lang.endsWith('-gb') ? 'gbp' : 'eur';
+  }
+  apply(saved);
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const currency = btn.dataset.currency;
+      apply(currency);
+      try { localStorage.setItem(STORE_KEY, currency); } catch (_) {}
+    });
+  });
+})();
+</script>

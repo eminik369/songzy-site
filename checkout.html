@@ -1,0 +1,1053 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="description" content="Tell us the story. Pay after we write your song.">
+  <title>Songzy — Tell us the story</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
+  <link rel="icon" href="logo-songzy.jpg" type="image/jpeg">
+
+  <style>
+    :root {
+      --color-orange: #FF6B35;
+      --color-pink: #E91E8C;
+      --color-purple: #7B2FF7;
+      --bg-dark: #0f0f1a;
+      --bg-elev: #17172a;
+      --bg-elev2: #1f1f38;
+      --txt: #f5f3ee;
+      --txt-muted: #a8a3b5;
+      --line: #2c2c48;
+      --gradient-brand: linear-gradient(135deg, var(--color-orange), var(--color-pink), var(--color-purple));
+      --gradient-brand-h: linear-gradient(90deg, var(--color-orange), var(--color-pink), var(--color-purple));
+      --radius: 14px;
+      --shadow-lg: 0 24px 60px rgba(0, 0, 0, 0.45);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      background: var(--bg-dark);
+      color: var(--txt);
+      font-family: 'Poppins', sans-serif;
+      line-height: 1.55;
+      min-height: 100vh;
+      background-image:
+        radial-gradient(ellipse 900px 600px at 10% -5%, rgba(255, 107, 53, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 900px 700px at 95% 20%, rgba(233, 30, 140, 0.10) 0%, transparent 60%),
+        radial-gradient(ellipse 1200px 900px at 50% 110%, rgba(123, 47, 247, 0.12) 0%, transparent 65%);
+      position: relative;
+    }
+    /* SVG noise grain overlay — warms the surface, reduces flatness. */
+    body::before {
+      content: "";
+      position: fixed; inset: 0; pointer-events: none; z-index: 0;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
+      opacity: 0.06; mix-blend-mode: overlay;
+    }
+
+    .site-header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(15, 15, 26, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .site-header__inner {
+      max-width: 1180px; margin: 0 auto; padding: 16px 24px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .site-header__brand {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Fraunces', serif; font-weight: 700; font-size: 1.35rem;
+      color: var(--txt); text-decoration: none;
+    }
+    .site-header__dot {
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--gradient-brand-h);
+    }
+    .site-header__back {
+      color: var(--txt-muted); font-size: 0.9rem; text-decoration: none;
+      padding: 8px 14px; border-radius: 999px; border: 1px solid var(--line);
+      transition: all 0.2s ease;
+    }
+    .site-header__back:hover { color: var(--txt); border-color: var(--color-pink); }
+
+    /* Emotional hero image band above the form. */
+    .checkout-banner {
+      position: relative; overflow: hidden;
+      height: clamp(180px, 32vw, 320px);
+      background:
+        linear-gradient(180deg, rgba(15, 15, 26, 0.2) 0%, rgba(15, 15, 26, 0.6) 55%, rgba(15, 15, 26, 1) 100%),
+        url("https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=1800&h=600&fit=crop&q=75") center/cover no-repeat;
+    }
+    .checkout-banner::after {
+      content: ""; position: absolute; inset: 0;
+      background: radial-gradient(ellipse at center, transparent 30%, rgba(15, 15, 26, 0.55) 100%);
+      pointer-events: none;
+    }
+    .checkout-banner__inner {
+      position: relative; z-index: 2;
+      max-width: 760px; margin: 0 auto; padding: 0 24px;
+      height: 100%; display: flex; flex-direction: column; justify-content: flex-end;
+      padding-bottom: 28px;
+    }
+    .checkout-banner__eyebrow {
+      font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.14em;
+      color: #ffd9c7; font-weight: 600; margin: 0 0 8px;
+    }
+    .checkout-banner__title {
+      font-family: 'Fraunces', serif; font-weight: 500;
+      font-size: clamp(1.6rem, 3.8vw, 2.4rem); line-height: 1.12;
+      letter-spacing: -0.02em; margin: 0; color: #fff;
+      text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+    }
+    .checkout-banner__title em {
+      font-style: italic;
+      background: var(--gradient-brand-h);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+
+    main {
+      position: relative; z-index: 1;
+      max-width: 760px; margin: 0 auto; padding: 36px 24px 120px;
+    }
+
+    .checkout-hero { text-align: center; margin-bottom: 32px; }
+    .checkout-hero p { color: var(--txt-muted); font-size: 1.05rem; max-width: 520px; margin: 0 auto; }
+
+    .stepper { display: flex; gap: 6px; margin: 0 auto 24px; max-width: 480px; }
+    .stepper__dot {
+      flex: 1; height: 4px; border-radius: 2px; background: var(--line);
+      transition: background 0.3s ease;
+    }
+    .stepper__dot.active { background: var(--gradient-brand-h); }
+    .stepper__dot.done { background: rgba(233, 30, 140, 0.6); }
+
+    /* Ambient social-proof strip — rotating authentic messages. */
+    .proof-strip {
+      max-width: 640px; margin: 0 auto 20px;
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      background: rgba(31, 31, 56, 0.55);
+      border: 1px solid var(--line); border-radius: 999px;
+      font-size: 0.84rem; color: var(--txt-muted);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    }
+    .proof-strip__dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #30d98a; box-shadow: 0 0 10px rgba(48, 217, 138, 0.5);
+      flex: none; animation: pulse 2.4s infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+    .proof-strip__text {
+      flex: 1; font-style: italic; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+
+    .card {
+      position: relative; z-index: 1;
+      background: var(--bg-elev);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 32px 28px;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .step-label {
+      color: var(--color-pink); font-size: 0.78rem;
+      text-transform: uppercase; letter-spacing: 0.14em;
+      font-weight: 600; margin-bottom: 10px;
+    }
+    .step-title {
+      font-family: 'Fraunces', serif; font-weight: 500;
+      font-size: 1.65rem; line-height: 1.2; margin: 0 0 8px;
+    }
+    .step-desc { color: var(--txt-muted); margin: 0 0 24px; font-size: 0.98rem; }
+
+    /* Ambient image shown inside story / voice steps. */
+    .ambient {
+      display: flex; gap: 14px; align-items: center;
+      padding: 12px; margin: 0 0 20px;
+      background: var(--bg-elev2); border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    .ambient__img {
+      width: 72px; height: 72px; border-radius: 10px; object-fit: cover;
+      flex: none; box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
+    }
+    .ambient__text {
+      font-size: 0.9rem; color: var(--txt-muted); font-style: italic; line-height: 1.4;
+    }
+    .ambient__text strong { color: var(--txt); font-style: normal; font-weight: 600; }
+
+    .chip-grid { display: flex; flex-wrap: wrap; gap: 10px; }
+    .chip {
+      background: var(--bg-elev2); border: 1px solid var(--line);
+      color: var(--txt); padding: 11px 18px; border-radius: 999px;
+      font-size: 0.95rem; cursor: pointer; font-family: inherit;
+      transition: all 0.2s ease;
+    }
+    .chip:hover { border-color: var(--color-pink); transform: translateY(-1px); }
+    .chip.selected {
+      background: linear-gradient(135deg, rgba(233, 30, 140, 0.22), rgba(123, 47, 247, 0.22));
+      border-color: var(--color-pink); color: var(--txt);
+    }
+
+    .field { margin-bottom: 18px; }
+    .field label {
+      display: block; font-size: 0.88rem; color: var(--txt-muted);
+      margin-bottom: 6px; font-weight: 500;
+    }
+    .field input, .field textarea, .field select {
+      width: 100%; background: var(--bg-elev2); border: 1px solid var(--line);
+      color: var(--txt); padding: 12px 14px; border-radius: 10px;
+      font-family: inherit; font-size: 0.98rem; resize: vertical;
+    }
+    .field input:focus, .field textarea:focus, .field select:focus {
+      outline: none; border-color: var(--color-pink);
+      box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.12);
+    }
+    .field textarea { min-height: 88px; }
+
+    .tier-grid {
+      display: grid; grid-template-columns: 1fr; gap: 14px; margin-bottom: 24px;
+    }
+    @media (min-width: 680px) { .tier-grid { grid-template-columns: repeat(3, 1fr); } }
+    .tier-card {
+      background: var(--bg-elev2); border: 2px solid var(--line);
+      border-radius: var(--radius); padding: 0 0 20px;
+      cursor: pointer; transition: all 0.25s ease; position: relative;
+      overflow: hidden;
+    }
+    .tier-card:hover { border-color: rgba(233, 30, 140, 0.5); transform: translateY(-2px); }
+    .tier-card.selected {
+      border-color: var(--color-pink);
+      background: linear-gradient(135deg, rgba(233, 30, 140, 0.1), rgba(123, 47, 247, 0.08));
+    }
+    .tier-card__photo {
+      width: 100%; aspect-ratio: 16 / 9; object-fit: cover;
+      display: block;
+      filter: saturate(1.05) brightness(0.9);
+    }
+    .tier-card__body { padding: 16px 18px 0; }
+    .tier-card__name {
+      font-family: 'Fraunces', serif; font-weight: 500;
+      font-size: 1.2rem; margin-bottom: 4px;
+    }
+    .tier-card__price {
+      font-size: 1.55rem; font-weight: 600; margin-bottom: 8px;
+      background: var(--gradient-brand-h);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .tier-card__meta { font-size: 0.82rem; color: var(--txt-muted); margin-bottom: 12px; }
+    .tier-card__feats { list-style: none; padding: 0; margin: 0; font-size: 0.85rem; color: var(--txt-muted); }
+    .tier-card__feats li { padding: 3px 0 3px 16px; position: relative; }
+    .tier-card__feats li::before {
+      content: ""; position: absolute; left: 0; top: 10px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gradient-brand-h);
+    }
+    .tier-card__badge {
+      position: absolute; top: 12px; right: 14px;
+      background: var(--gradient-brand-h); color: #fff;
+      padding: 3px 10px; border-radius: 999px;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em;
+      z-index: 2;
+    }
+
+    .addon-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 14px 16px; background: var(--bg-elev2);
+      border: 1px solid var(--line); border-radius: 10px; margin-bottom: 10px;
+      cursor: pointer; transition: all 0.2s ease;
+    }
+    .addon-row:hover { border-color: rgba(233, 30, 140, 0.4); }
+    .addon-row input { margin: 0; accent-color: var(--color-pink); }
+    .addon-row__label { flex: 1; font-size: 0.94rem; }
+    .addon-row__price { color: var(--txt-muted); font-size: 0.88rem; }
+
+    .nav-row {
+      display: flex; justify-content: space-between; align-items: center;
+      gap: 12px; margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--line);
+    }
+    .btn {
+      font-family: inherit; font-weight: 600; font-size: 0.98rem;
+      padding: 13px 26px; border-radius: 999px; cursor: pointer;
+      border: none; transition: all 0.25s ease;
+    }
+    .btn--primary {
+      background: var(--gradient-brand-h); color: #fff;
+      box-shadow: 0 6px 24px rgba(233, 30, 140, 0.3);
+    }
+    .btn--primary:hover { transform: translateY(-1px); box-shadow: 0 10px 32px rgba(233, 30, 140, 0.4); }
+    .btn--primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none; box-shadow: none; }
+    .btn--ghost {
+      background: transparent; color: var(--txt-muted);
+      border: 1px solid var(--line);
+    }
+    .btn--ghost:hover { color: var(--txt); border-color: var(--txt-muted); }
+
+    .summary {
+      display: grid; gap: 10px; margin-bottom: 24px;
+      padding: 18px 20px; background: var(--bg-elev2);
+      border-radius: 12px; border: 1px solid var(--line); font-size: 0.94rem;
+    }
+    .summary__row { display: flex; justify-content: space-between; gap: 12px; }
+    .summary__row--total {
+      padding-top: 10px; border-top: 1px dashed var(--line);
+      font-size: 1.08rem; font-weight: 600;
+    }
+    .summary__row--total span:last-child {
+      background: var(--gradient-brand-h);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+    }
+    .summary__label { color: var(--txt-muted); }
+    .summary__value { color: var(--txt); text-align: right; }
+
+    .placeholder-note {
+      margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+      background: rgba(233, 30, 140, 0.08); border: 1px solid rgba(233, 30, 140, 0.3);
+      color: #fce1ef; font-size: 0.9rem;
+    }
+    .trust-row {
+      display: flex; justify-content: center; gap: 18px; flex-wrap: wrap;
+      color: var(--txt-muted); font-size: 0.82rem; margin-top: 20px;
+    }
+    .trust-row span { display: inline-flex; align-items: center; gap: 6px; }
+    .trust-row svg { width: 14px; height: 14px; opacity: 0.7; }
+
+    /* Step 5 — payment trust block */
+    .trust-block {
+      margin: 20px 0 8px;
+      padding: 18px 20px; border-radius: 12px;
+      background: linear-gradient(135deg, rgba(48, 217, 138, 0.06), rgba(123, 47, 247, 0.05));
+      border: 1px solid rgba(48, 217, 138, 0.2);
+    }
+    .trust-block__title {
+      display: flex; align-items: center; gap: 8px;
+      font-weight: 600; font-size: 0.92rem; margin: 0 0 10px; color: var(--txt);
+    }
+    .trust-block__title svg { width: 16px; height: 16px; color: #30d98a; }
+    .trust-block__items {
+      display: grid; grid-template-columns: 1fr; gap: 10px;
+      margin: 0; padding: 0; list-style: none;
+    }
+    @media (min-width: 520px) { .trust-block__items { grid-template-columns: repeat(2, 1fr); } }
+    .trust-block__item {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 0.86rem; color: var(--txt-muted);
+    }
+    .trust-block__item svg { width: 14px; height: 14px; color: var(--color-pink); flex: none; }
+    .trust-block__stripe {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 3px 9px; border-radius: 5px;
+      background: #635bff; color: #fff; font-weight: 700;
+      font-size: 0.75rem; letter-spacing: 0.02em;
+    }
+
+    .step { display: none; }
+    .step.active { display: block; animation: fadeIn 0.3s ease; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 520px) {
+      .card { padding: 24px 20px; }
+      .checkout-banner__title { font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body id="top">
+
+<header class="site-header">
+  <div class="site-header__inner">
+    <a class="site-header__brand" href="index.html">
+      <span class="site-header__dot" aria-hidden="true"></span>
+      Songzy
+    </a>
+    <a class="site-header__back" href="index.html#pricing">&larr; Back to pricing</a>
+  </div>
+</header>
+
+<!-- Emotional banner: honest warmth, not stock polish. -->
+<section class="checkout-banner" aria-hidden="true">
+  <div class="checkout-banner__inner">
+    <p class="checkout-banner__eyebrow">A song, for someone you love</p>
+    <h1 class="checkout-banner__title">Tell us their story. <em>Pay after.</em></h1>
+  </div>
+</section>
+
+<main>
+  <div class="checkout-hero">
+    <p>Five quick steps. No account needed. We write the song, then send you the payment link &mdash; usually within 10 minutes.</p>
+  </div>
+
+  <!-- Ambient social proof, rotates every ~6s; no fake counters, no urgency. -->
+  <div class="proof-strip" id="proofStrip" role="status" aria-live="polite">
+    <span class="proof-strip__dot" aria-hidden="true"></span>
+    <span class="proof-strip__text" id="proofStripText">Just now &mdash; Elena from Milan ordered a Personal song for her grandfather.</span>
+  </div>
+
+  <div class="stepper" aria-hidden="true">
+    <div class="stepper__dot active" data-step-dot="1"></div>
+    <div class="stepper__dot" data-step-dot="2"></div>
+    <div class="stepper__dot" data-step-dot="3"></div>
+    <div class="stepper__dot" data-step-dot="4"></div>
+    <div class="stepper__dot" data-step-dot="5"></div>
+  </div>
+
+  <form class="card" id="orderForm" autocomplete="off" onsubmit="return false;">
+
+    <!-- STEP 1 : Package (first — sets the genre/addon scope of later steps) -->
+    <section class="step active" data-step="1">
+      <div class="step-label">Step 1 of 5</div>
+      <h2 class="step-title">Which package fits?</h2>
+      <p class="step-desc">Pick the one that matches the moment. You can change it before paying.</p>
+
+      <!-- Notice shown when an old bundle URL is reached — we now sell single songs only. -->
+      <div id="bundleBanner" class="placeholder-note" style="display:none; margin: 0 0 20px;">
+        <strong id="bundleBannerTitle">Bundles are no longer sold.</strong>
+        <span id="bundleBannerText">We've switched to single-song pricing &mdash; you're on the Personal tier. Pick the one that fits below.</span>
+      </div>
+
+      <div class="tier-grid" data-field="tier">
+        <div class="tier-card" data-value="quick" data-price="19" data-label="Quick">
+          <img class="tier-card__photo"
+               src="https://images.unsplash.com/photo-1464349095431-e9a21285b5f3?w=640&h=360&fit=crop&q=70"
+               alt="" loading="lazy">
+          <div class="tier-card__body">
+            <div class="tier-card__name">Quick</div>
+            <div class="tier-card__price">&euro;19</div>
+            <div class="tier-card__meta">Delivered under 24h</div>
+            <ul class="tier-card__feats">
+              <li>Up to 2 min &middot; MP3</li>
+              <li>3 core genres</li>
+              <li>1 voice &middot; studio quality</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier-card selected" data-value="personal" data-price="39" data-label="Personal">
+          <div class="tier-card__badge">Popular</div>
+          <img class="tier-card__photo"
+               src="https://images.unsplash.com/photo-1511895426328-dc8714191300?w=640&h=360&fit=crop&q=70"
+               alt="" loading="lazy">
+          <div class="tier-card__body">
+            <div class="tier-card__name">Personal</div>
+            <div class="tier-card__price">&euro;39</div>
+            <div class="tier-card__meta">Delivered in 2 hours</div>
+            <ul class="tier-card__feats">
+              <li>Up to 3:30 min &middot; MP3 + WAV</li>
+              <li>10+ genres &middot; 1 revision</li>
+              <li>Lyric video included</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tier-card" data-value="premium" data-price="69" data-label="Premium">
+          <img class="tier-card__photo"
+               src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=640&h=360&fit=crop&q=70"
+               alt="" loading="lazy">
+          <div class="tier-card__body">
+            <div class="tier-card__name">Premium</div>
+            <div class="tier-card__price">&euro;69</div>
+            <div class="tier-card__meta">Branded share page</div>
+            <ul class="tier-card__feats">
+              <li>Up to 5 min &middot; MP3 + WAV + stems</li>
+              <li>20+ genres &middot; 3 revisions</li>
+              <li>Branded share page &middot; second voice variant</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="nav-row">
+        <span></span>
+        <button type="button" class="btn btn--primary" data-next>Onward &rarr;</button>
+      </div>
+    </section>
+
+    <!-- STEP 2 : Occasion + Recipient (combined — both are about WHO & WHY) -->
+    <section class="step" data-step="2">
+      <div class="step-label">Step 2 of 5</div>
+      <h2 class="step-title">Who is this for, and why now?</h2>
+      <p class="step-desc">Pick the occasion and tell us their first name. That's enough to start.</p>
+
+      <div class="ambient" aria-hidden="true">
+        <img class="ambient__img"
+             src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=160&h=160&fit=crop&q=70"
+             alt="">
+        <p class="ambient__text">
+          <strong>60% of orders are surprises.</strong> Your email for delivery, not theirs. We never reach out to the recipient.
+        </p>
+      </div>
+
+      <div class="field">
+        <label>Occasion</label>
+        <div class="chip-grid" data-field="occasion" role="listbox">
+          <button type="button" class="chip" data-value="Birthday">Birthday</button>
+          <button type="button" class="chip" data-value="Wedding">Wedding</button>
+          <button type="button" class="chip" data-value="Anniversary">Anniversary</button>
+          <button type="button" class="chip" data-value="Memorial">In memory</button>
+          <button type="button" class="chip" data-value="Mother's Day">Mother's Day</button>
+          <button type="button" class="chip" data-value="Father's Day">Father's Day</button>
+          <button type="button" class="chip" data-value="Valentine's">Valentine's</button>
+          <button type="button" class="chip" data-value="New baby">New baby</button>
+          <button type="button" class="chip" data-value="Friendship">Friendship</button>
+          <button type="button" class="chip" data-value="Just because">Just because</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="recipient">Their first name</label>
+        <input type="text" id="recipient" name="recipient" placeholder="e.g. Sarah" maxlength="60" required>
+      </div>
+      <div class="field">
+        <label for="relationship">Your relationship to them</label>
+        <input type="text" id="relationship" name="relationship" placeholder="e.g. my sister, my dad, my wife" maxlength="80">
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn btn--ghost" data-prev>&larr; Back</button>
+        <button type="button" class="btn btn--primary" data-next disabled>Onward &rarr;</button>
+      </div>
+    </section>
+
+    <!-- STEP 3 : Story -->
+    <section class="step" data-step="3">
+      <div class="step-label">Step 3 of 5</div>
+      <h2 class="step-title">Tell us about them.</h2>
+      <p class="step-desc">The more specific, the better the song. Small details &mdash; a nickname, a habit &mdash; travel further than big words.</p>
+
+      <div class="ambient" aria-hidden="true">
+        <img class="ambient__img"
+             src="https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=160&h=160&fit=crop&q=70"
+             alt="">
+        <p class="ambient__text">
+          "I cried on the first listen. The line about her Sunday coffee &mdash; I never told anyone."
+          <br>&mdash; <strong>Marta, Turin</strong>
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="adjectives">Three words that describe them</label>
+        <input type="text" id="adjectives" name="adjectives" placeholder="e.g. fierce, generous, stubborn" maxlength="160" required>
+      </div>
+      <div class="field">
+        <label for="memory">A small, specific memory</label>
+        <textarea id="memory" name="memory" placeholder="Even tiny things work: the song she always sings in the kitchen, the way he calls you 'kid'..." maxlength="600"></textarea>
+      </div>
+      <div class="field">
+        <label for="feeling">What do you want them to feel when they hear it?</label>
+        <textarea id="feeling" name="feeling" placeholder="e.g. seen, proud, not alone, loved..." maxlength="300"></textarea>
+      </div>
+      <div class="nav-row">
+        <button type="button" class="btn btn--ghost" data-prev>&larr; Back</button>
+        <button type="button" class="btn btn--primary" data-next disabled>Onward &rarr;</button>
+      </div>
+    </section>
+
+    <!-- STEP 4 : Voice + genre (filtered by tier) -->
+    <section class="step" data-step="4">
+      <div class="step-label">Step 4 of 5</div>
+      <h2 class="step-title">How should it sound?</h2>
+      <p class="step-desc" id="genreDesc">Pick a voice and a feel. You can fine-tune after we send a draft.</p>
+
+      <div class="ambient" aria-hidden="true">
+        <img class="ambient__img"
+             src="https://images.unsplash.com/photo-1516383274235-5f42d6c6426d?w=160&h=160&fit=crop&q=70"
+             alt="">
+        <p class="ambient__text">
+          The vibe we write in matters more than the polish. <strong>Warm beats perfect.</strong>
+        </p>
+      </div>
+
+      <div class="field">
+        <label>Voice</label>
+        <div class="chip-grid" data-field="voice">
+          <button type="button" class="chip" data-value="Warm female">Warm female</button>
+          <button type="button" class="chip" data-value="Intimate male">Intimate male</button>
+          <button type="button" class="chip" data-value="Folk male">Folk male</button>
+          <button type="button" class="chip" data-value="Soul female">Soul female</button>
+          <button type="button" class="chip" data-value="No preference">Surprise me</button>
+        </div>
+      </div>
+      <div class="field">
+        <label>Genre / feel <span id="genreCount" style="color: var(--txt-muted); font-weight: 400; margin-left: 6px;"></span></label>
+        <div class="chip-grid" data-field="genre" id="genreGrid"></div>
+      </div>
+
+      <label style="display:block; font-size: 0.88rem; color: var(--txt-muted); margin: 22px 0 8px;">Add-ons (optional)</label>
+
+      <!-- Extended cut — Personal + Premium -->
+      <label class="addon-row" data-addon-row="extended" data-addon-tiers="personal,premium">
+        <input type="checkbox" data-addon="extended" data-addon-price="25" data-addon-label="Extended cut (4+ min)">
+        <span class="addon-row__label">Extended cut &mdash; full 4+ minutes</span>
+        <span class="addon-row__price">+&euro;25</span>
+      </label>
+
+      <!-- Second voice — Premium only -->
+      <label class="addon-row" data-addon-row="second-voice" data-addon-tiers="premium">
+        <input type="checkbox" data-addon="second-voice" data-addon-price="19" data-addon-label="Second voice variant">
+        <span class="addon-row__label">Second voice variant &mdash; same song, different voice</span>
+        <span class="addon-row__price">+&euro;19</span>
+      </label>
+
+      <div class="nav-row">
+        <button type="button" class="btn btn--ghost" data-prev>&larr; Back</button>
+        <button type="button" class="btn btn--primary" data-next disabled>Onward &rarr;</button>
+      </div>
+    </section>
+
+    <!-- STEP 5 : Email + summary + trust block -->
+    <section class="step" data-step="5">
+      <div class="step-label">Step 5 of 5</div>
+      <h2 class="step-title">Last thing &mdash; where do we send it?</h2>
+      <p class="step-desc">We'll send the draft and the payment link to this address. Pay only when you're happy.</p>
+
+      <div class="ambient" aria-hidden="true">
+        <img class="ambient__img"
+             src="https://images.unsplash.com/photo-1526304640581-d334cdbbf45e?w=160&h=160&fit=crop&q=70"
+             alt="">
+        <p class="ambient__text">
+          Your inbox, not theirs. <strong>60% of orders are surprises</strong> &mdash; we never reach out to the recipient.
+        </p>
+      </div>
+
+      <div class="field">
+        <label for="email">Your email</label>
+        <input type="email" id="email" name="email" placeholder="you@example.com" required>
+      </div>
+      <div class="field">
+        <label for="yourname">Your first name (so we know who to thank)</label>
+        <input type="text" id="yourname" name="yourname" placeholder="e.g. Alex" maxlength="60">
+      </div>
+
+      <div class="summary" id="summary"></div>
+
+      <!-- Trust block — science-backed signals: padlock, Stripe, refund, GDPR. -->
+      <div class="trust-block" aria-label="Security and guarantees">
+        <p class="trust-block__title">
+          <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+            <rect x="4" y="9" width="12" height="8" rx="2"/>
+            <path d="M7 9V6a3 3 0 0 1 6 0v3"/>
+          </svg>
+          Your payment &mdash; handled like it matters
+        </p>
+        <ul class="trust-block__items">
+          <li class="trust-block__item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="7" width="14" height="10" rx="2"/><path d="M7 7V5a3 3 0 0 1 6 0v2"/></svg>
+            Secure payment via <span class="trust-block__stripe">Stripe</span>
+          </li>
+          <li class="trust-block__item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 2.5 3 5v5c0 4.4 3 8.2 7 9 4-.8 7-4.6 7-9V5l-7-2.5z"/></svg>
+            30-day money-back guarantee
+          </li>
+          <li class="trust-block__item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 2.5"/></svg>
+            Draft first &mdash; pay only if you love it
+          </li>
+          <li class="trust-block__item">
+            <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10l3 3 5-6"/><circle cx="10" cy="10" r="7.5"/></svg>
+            GDPR compliant &middot; no spam, ever
+          </li>
+        </ul>
+      </div>
+
+      <div class="placeholder-note" id="paymentNote">
+        <strong>Stripe integration arriving.</strong> For now, leave your email above and we'll
+        send you a secure payment link within 10 minutes of receiving your brief.
+      </div>
+
+      <div class="nav-row">
+        <button type="button" class="btn btn--ghost" data-prev>&larr; Back</button>
+        <button type="button" class="btn btn--primary" id="submitBtn">Send my brief &rarr;</button>
+      </div>
+    </section>
+
+    <!-- STEP 6 (hidden) : thank you -->
+    <section class="step" data-step="6">
+      <h2 class="step-title">Story received. Thank you.</h2>
+      <p class="step-desc">
+        We'll write a draft and send you both the song and the secure payment link within 10 minutes.
+        Check your inbox &mdash; and your spam folder, just in case.
+      </p>
+      <div class="nav-row">
+        <a href="index.html" class="btn btn--ghost">&larr; Back to home</a>
+        <a href="index.html#audio-examples" class="btn btn--primary">Hear examples while you wait &rarr;</a>
+      </div>
+    </section>
+
+  </form>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  // -----------------------------------------------------------------------
+  // Tier + genre config — the source of truth for what each tier offers.
+  // The founder decides what's deliverable; the form reflects that.
+  // -----------------------------------------------------------------------
+
+  // Deprecated bundle slugs — kept only to show the "bundles are no longer sold"
+  // notice and fall back to the closest single-song tier.
+  var LEGACY_BUNDLE_FALLBACK = {
+    'duo':            'personal',
+    'family-year':    'premium',
+    'wedding-suite':  'premium',
+    'valentines-duo': 'personal'
+  };
+
+  var URL_TIER_RAW = (function () {
+    try {
+      var q = new URLSearchParams(window.location.search);
+      return (q.get('tier') || '').toLowerCase();
+    } catch (e) { return ''; }
+  })();
+
+  var IS_LEGACY_BUNDLE = Object.prototype.hasOwnProperty.call(LEGACY_BUNDLE_FALLBACK, URL_TIER_RAW);
+
+  var TIER_FROM_URL = (function () {
+    if (IS_LEGACY_BUNDLE) return LEGACY_BUNDLE_FALLBACK[URL_TIER_RAW];
+    if (['quick','personal','premium'].indexOf(URL_TIER_RAW) >= 0) return URL_TIER_RAW;
+    return null;
+  })();
+
+  var TIER_META = {
+    quick:    { label: 'Quick',    price: 19 },
+    personal: { label: 'Personal', price: 39 },
+    premium:  { label: 'Premium',  price: 69 }
+  };
+
+  // Add-ons available per tier. Only deliverable options are listed.
+  var TIER_ADDONS = {
+    quick:    [],
+    personal: ['extended'],
+    premium:  ['extended', 'second-voice']
+  };
+
+  // Genre catalogue, scoped by tier.
+  var TIER_GENRES = {
+    quick: ['Pop', 'Acoustic', 'Ballad'],
+    personal: ['Pop', 'Acoustic', 'Ballad', 'Folk', 'Country', 'Soul', 'Jazz', 'Indie', 'R&B', 'Cinematic'],
+    premium: ['Pop', 'Acoustic', 'Ballad', 'Folk', 'Country', 'Soul', 'Jazz', 'Indie', 'R&B', 'Cinematic',
+              'Hip-Hop', 'Reggae', 'Lullaby', 'Rock', 'Electronic', 'Orchestral', 'Gospel', 'Blues', 'Lo-fi', 'World']
+  };
+
+  var DRAFT_KEY = 'songzy_order_draft';
+  var state = {
+    step: 1,
+    occasion: null,
+    recipient: '',
+    relationship: '',
+    adjectives: '',
+    memory: '',
+    feeling: '',
+    voice: null,
+    genre: null,
+    tier: TIER_FROM_URL || 'personal',
+    addons: {},
+    email: '',
+    yourname: ''
+  };
+
+  // -----------------------------------------------------------------------
+  // Draft persistence
+  // -----------------------------------------------------------------------
+  try {
+    var saved = JSON.parse(localStorage.getItem(DRAFT_KEY) || 'null');
+    if (saved && typeof saved === 'object') {
+      Object.keys(state).forEach(function (k) {
+        if (k !== 'step' && saved[k] != null) state[k] = saved[k];
+      });
+      if (TIER_FROM_URL) state.tier = TIER_FROM_URL;
+      // If the stored tier is no longer valid, revert to Personal default.
+      if (!TIER_META[state.tier]) state.tier = 'personal';
+    }
+  } catch (e) {}
+
+  function saveDraft() {
+    try { localStorage.setItem(DRAFT_KEY, JSON.stringify(state)); } catch (e) {}
+  }
+
+  var steps = document.querySelectorAll('.step');
+  var dots = document.querySelectorAll('[data-step-dot]');
+
+  // -----------------------------------------------------------------------
+  // Render / view
+  // -----------------------------------------------------------------------
+  function updateView() {
+    steps.forEach(function (s) {
+      s.classList.toggle('active', parseInt(s.getAttribute('data-step'), 10) === state.step);
+    });
+    dots.forEach(function (d) {
+      var n = parseInt(d.getAttribute('data-step-dot'), 10);
+      d.classList.toggle('active', n === state.step);
+      d.classList.toggle('done', n < state.step);
+    });
+    validateNext();
+    if (state.step === 4) renderGenreGrid();
+    if (state.step === 5) renderSummary();
+    if (state.step === 6) {
+      try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function validateNext() {
+    var cur = document.querySelector('.step.active');
+    if (!cur) return;
+    var btn = cur.querySelector('[data-next]');
+    if (!btn) return;
+    var ok = true;
+    switch (state.step) {
+      case 1: ok = !!state.tier; break;
+      case 2: ok = !!state.occasion && state.recipient.trim().length >= 1; break;
+      case 3: ok = state.adjectives.trim().length >= 1; break;
+      case 4: ok = !!state.voice && !!state.genre; break;
+    }
+    btn.disabled = !ok;
+  }
+
+  // -----------------------------------------------------------------------
+  // Chip / tier selection handlers
+  // -----------------------------------------------------------------------
+  function wireChipGroup(group) {
+    var field = group.getAttribute('data-field');
+    // Static chip groups (occasion, voice) wire themselves here.
+    // The genre grid is rendered dynamically — see renderGenreGrid().
+    if (field === 'genre') return;
+    var initial = state[field];
+    group.querySelectorAll('.chip').forEach(function (chip) {
+      if (chip.getAttribute('data-value') === initial) chip.classList.add('selected');
+      chip.addEventListener('click', function () {
+        group.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('selected'); });
+        chip.classList.add('selected');
+        state[field] = chip.getAttribute('data-value');
+        saveDraft(); validateNext();
+      });
+    });
+  }
+  document.querySelectorAll('[data-field]').forEach(function (group) {
+    var field = group.getAttribute('data-field');
+    if (field === 'tier') {
+      // Tier cards (step 1)
+      group.querySelectorAll('.tier-card').forEach(function (card) {
+        if (card.getAttribute('data-value') === state.tier) {
+          group.querySelectorAll('.tier-card').forEach(function (c) { c.classList.remove('selected'); });
+          card.classList.add('selected');
+        }
+        card.addEventListener('click', function () {
+          group.querySelectorAll('.tier-card').forEach(function (c) { c.classList.remove('selected'); });
+          card.classList.add('selected');
+          state.tier = card.getAttribute('data-value');
+          // If the previously-picked genre is not in the new tier, clear it.
+          var allowed = TIER_GENRES[state.tier] || [];
+          if (state.genre && allowed.indexOf(state.genre) < 0) state.genre = null;
+          saveDraft(); applyTierAddons(); validateNext();
+        });
+      });
+    } else {
+      wireChipGroup(group);
+    }
+  });
+
+  // -----------------------------------------------------------------------
+  // Genre grid — rendered at step 4 based on current tier.
+  // -----------------------------------------------------------------------
+  function renderGenreGrid() {
+    var grid = document.getElementById('genreGrid');
+    if (!grid) return;
+    var list = TIER_GENRES[state.tier] || TIER_GENRES.personal;
+    grid.innerHTML = list.map(function (g) {
+      var sel = state.genre === g ? ' selected' : '';
+      return '<button type="button" class="chip' + sel + '" data-value="' + g + '">' + g + '</button>';
+    }).join('');
+    // Wire new chips
+    grid.querySelectorAll('.chip').forEach(function (chip) {
+      chip.addEventListener('click', function () {
+        grid.querySelectorAll('.chip').forEach(function (c) { c.classList.remove('selected'); });
+        chip.classList.add('selected');
+        state.genre = chip.getAttribute('data-value');
+        saveDraft(); validateNext();
+      });
+    });
+    // Count indicator
+    var count = document.getElementById('genreCount');
+    if (count) count.textContent = '(' + list.length + ' available on ' + (TIER_META[state.tier].label) + ')';
+  }
+
+  // -----------------------------------------------------------------------
+  // Tier-scoped add-ons — show/hide, deselect if hidden.
+  // -----------------------------------------------------------------------
+  function applyTierAddons() {
+    var allowed = TIER_ADDONS[state.tier] || [];
+    document.querySelectorAll('[data-addon-row]').forEach(function (row) {
+      var key = row.getAttribute('data-addon-row');
+      var ok = allowed.indexOf(key) >= 0;
+      row.style.display = ok ? '' : 'none';
+      if (!ok) {
+        var cb = row.querySelector('input[type="checkbox"]');
+        if (cb && cb.checked) {
+          cb.checked = false;
+          delete state.addons[key];
+        }
+      }
+    });
+    saveDraft();
+  }
+
+  // Legacy bundle notice (if the user came from an old deep link).
+  (function showLegacyBundleNotice() {
+    var banner = document.getElementById('bundleBanner');
+    if (!banner || !IS_LEGACY_BUNDLE) return;
+    banner.style.display = '';
+  })();
+
+  // Addon checkboxes (static HTML — re-used regardless of which are shown).
+  document.querySelectorAll('[data-addon]').forEach(function (cb) {
+    var key = cb.getAttribute('data-addon');
+    if (state.addons[key]) cb.checked = true;
+    cb.addEventListener('change', function () {
+      if (cb.checked) {
+        state.addons[key] = {
+          label: cb.getAttribute('data-addon-label'),
+          price: parseFloat(cb.getAttribute('data-addon-price'))
+        };
+      } else {
+        delete state.addons[key];
+      }
+      saveDraft();
+    });
+  });
+
+  // Text inputs
+  ['recipient', 'relationship', 'adjectives', 'memory', 'feeling', 'email', 'yourname'].forEach(function (id) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    if (state[id]) el.value = state[id];
+    el.addEventListener('input', function () { state[id] = el.value; saveDraft(); validateNext(); });
+  });
+
+  // Nav buttons
+  document.querySelectorAll('[data-next]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      if (b.disabled) return;
+      state.step = Math.min(state.step + 1, 6);
+      saveDraft(); updateView();
+    });
+  });
+  document.querySelectorAll('[data-prev]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      state.step = Math.max(state.step - 1, 1);
+      saveDraft(); updateView();
+    });
+  });
+
+  // -----------------------------------------------------------------------
+  // Summary
+  // -----------------------------------------------------------------------
+  function renderSummary() {
+    var meta = TIER_META[state.tier] || TIER_META.personal;
+    var total = meta.price;
+    var rows = [
+      ['Package', meta.label + ' \u2014 \u20AC' + meta.price],
+      ['Occasion', state.occasion || '\u2014'],
+      ['For', state.recipient + (state.relationship ? ' (' + state.relationship + ')' : '')],
+      ['Voice / feel', (state.voice || '\u2014') + ' \u00b7 ' + (state.genre || '\u2014')]
+    ];
+    Object.keys(state.addons).forEach(function (k) {
+      total += state.addons[k].price;
+      rows.push(['Add-on', state.addons[k].label + ' (+\u20AC' + state.addons[k].price + ')']);
+    });
+    var html = rows.map(function (r) {
+      return '<div class="summary__row"><span class="summary__label">' + r[0] + '</span><span class="summary__value">' + escapeHtml(r[1]) + '</span></div>';
+    }).join('');
+    html += '<div class="summary__row summary__row--total"><span>Total</span><span>\u20AC' + total + '</span></div>';
+    document.getElementById('summary').innerHTML = html;
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  // -----------------------------------------------------------------------
+  // Submit
+  // -----------------------------------------------------------------------
+  document.getElementById('submitBtn').addEventListener('click', function () {
+    if (!state.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state.email)) {
+      alert('Please add a valid email so we can send you the draft.');
+      return;
+    }
+    var payload = JSON.stringify(state, null, 2);
+    try { localStorage.setItem('songzy_last_submitted_brief', payload); } catch (e) {}
+
+    var endpoint = 'https://formsubmit.co/ajax/hello@songzy.com';
+    fetch(endpoint, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        _subject: 'Songzy brief — ' + (state.occasion || 'new order') + ' for ' + (state.recipient || ''),
+        _template: 'table',
+        email: state.email,
+        yourname: state.yourname,
+        occasion: state.occasion,
+        recipient: state.recipient,
+        relationship: state.relationship,
+        adjectives: state.adjectives,
+        memory: state.memory,
+        feeling: state.feeling,
+        voice: state.voice,
+        genre: state.genre,
+        tier: state.tier,
+        legacy_bundle_slug: IS_LEGACY_BUNDLE ? URL_TIER_RAW : '',
+        addons: Object.keys(state.addons).map(function (k) { return state.addons[k].label; }).join(', '),
+        payload: payload
+      })
+    }).catch(function () { /* silent fail — fallback handled server-side */ });
+
+    state.step = 6; updateView();
+  });
+
+  // -----------------------------------------------------------------------
+  // Rotating ambient social proof (authentic, no fake counters).
+  // -----------------------------------------------------------------------
+  var PROOFS = [
+    'Elena from Milan \u2014 Personal song for her grandfather.',
+    'James in London \u2014 Premium song for his wife\u2019s 40th.',
+    'Sofia from Madrid \u2014 Quick song for Mother\u2019s Day.',
+    'Marco from Rome \u2014 Personal brief for an anniversary.',
+    'Amy in Brighton \u2014 Premium wedding song for her sister.',
+    'Luca from Bologna \u2014 Personal song for his best friend.'
+  ];
+  (function rotateProof() {
+    var node = document.getElementById('proofStripText');
+    if (!node) return;
+    var i = Math.floor(Math.random() * PROOFS.length);
+    node.textContent = PROOFS[i];
+    setInterval(function () {
+      i = (i + 1) % PROOFS.length;
+      node.style.opacity = '0';
+      setTimeout(function () {
+        node.textContent = PROOFS[i];
+        node.style.opacity = '1';
+      }, 250);
+    }, 6500);
+    node.style.transition = 'opacity 0.25s ease';
+  })();
+
+  // Initial render
+  applyTierAddons();
+  updateView();
+})();
+</script>
+
+</body>
+</html>

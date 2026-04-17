@@ -1,0 +1,1279 @@
+<!--
+  ============================================================================
+  SONGZY — NAV + HERO (01-nav-hero.html)
+  ============================================================================
+  Philosophy: the first six seconds decide whether they read or leave. So we
+  open not with a slogan but with a scene — a moment they can already picture.
+
+  1. FUTURE PACING in the headline — we put the buyer inside the future gift,
+     before we've asked for anything. The hands, the silence, the first line.
+  2. SENSORY LANGUAGE — hear, hold, play, the first note. Not "amazing tech".
+  3. CONTRAST PAIR in the sub — "Not a playlist. A song written for one
+     person." One beat. Says everything.
+  4. HONEST TRUST LINE — one short row, separated by a dot. No badges, no
+     stars out of five, no "AS SEEN ON". A refusal of friction (no account)
+     and a refund promise.
+  5. VISUAL QUIET — one audio-player mockup, glassmorphism, breathing
+     waveform. It says "there is a song on the other side of this button"
+     without having to say it.
+  6. CTA HIERARCHY — one primary (gradient, shine). One secondary (text
+     link, scrolls). Never two buttons competing.
+  ============================================================================
+-->
+
+<header class="nav" role="banner">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700;1,9..144,800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+    /* ------------------------------------------------------------------ */
+    /*  NAV — TOKENS (scoped)                                             */
+    /* ------------------------------------------------------------------ */
+    .nav {
+      --nv-orange: #FF6B35;
+      --nv-pink:   #E91E8C;
+      --nv-purple: #7B2FF7;
+      --nv-gradient: linear-gradient(135deg, var(--nv-orange), var(--nv-pink), var(--nv-purple));
+      --nv-bg:      #0B0B14;
+      --nv-surface: rgba(255,255,255,.02);
+      --nv-surface-2: rgba(255,255,255,.04);
+      --nv-border:  rgba(255,255,255,.08);
+      --nv-border-strong: rgba(255,255,255,.14);
+      --nv-text:    #ECECF4;
+      --nv-text-muted: #8E8EA8;
+      --nv-text-soft:  #B8B8CC;
+      --nv-radius:  14px;
+
+      --nv-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --nv-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --nv-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      background: transparent;
+      transition: background .3s ease, border-color .3s ease, backdrop-filter .3s ease;
+      border-bottom: 1px solid transparent;
+      font-family: var(--nv-font-body);
+      color: var(--nv-text);
+    }
+
+    /* Scrolled state: frosted glass, subtle hairline, contrast */
+    .nav.is-scrolled {
+      background: rgba(11,11,20,.72);
+      backdrop-filter: blur(16px) saturate(1.4);
+      -webkit-backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom-color: var(--nv-border);
+    }
+
+    .nav *,
+    .nav *::before,
+    .nav *::after { box-sizing: border-box; }
+
+    /* Skip-link — visually hidden until focused */
+    .nav__skip {
+      position: absolute;
+      left: 16px;
+      top: 8px;
+      padding: 10px 16px;
+      background: var(--nv-gradient);
+      color: #fff;
+      border-radius: 10px;
+      font-size: .88rem;
+      font-weight: 600;
+      text-decoration: none;
+      transform: translateY(-120%);
+      transition: transform .2s ease;
+      z-index: 100;
+    }
+    .nav__skip:focus { transform: translateY(0); outline: 2px solid #fff; outline-offset: 2px; }
+
+    .nav__container {
+      max-width: 1180px;
+      margin: 0 auto;
+      padding: 18px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  LOGO                                                              */
+    /* ------------------------------------------------------------------ */
+    .nav__logo {
+      display: inline-flex;
+      align-items: center;
+      text-decoration: none;
+      font-size: 1.32rem;
+      font-weight: 800;
+      letter-spacing: -.02em;
+      color: var(--nv-text);
+      line-height: 1;
+    }
+    .nav__logo-accent {
+      background: var(--nv-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline-block;
+    }
+    .nav__logo:focus-visible {
+      outline: 2px solid var(--nv-pink);
+      outline-offset: 4px;
+      border-radius: 4px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  PRIMARY NAV LINKS (desktop)                                       */
+    /* ------------------------------------------------------------------ */
+    .nav__links {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .nav__links a {
+      display: inline-block;
+      text-decoration: none;
+      color: var(--nv-text-soft);
+      font-size: .94rem;
+      font-weight: 500;
+      letter-spacing: .005em;
+      transition: color .2s ease;
+      position: relative;
+      padding: 4px 0;
+    }
+
+    .nav__links a::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; bottom: -2px;
+      height: 1.5px;
+      background: var(--nv-gradient);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .3s ease;
+    }
+
+    .nav__links a:hover,
+    .nav__links a:focus-visible { color: var(--nv-text); }
+    .nav__links a:hover::after,
+    .nav__links a:focus-visible::after { transform: scaleX(1); }
+    .nav__links a:focus-visible { outline: none; }
+
+    /* ------------------------------------------------------------------ */
+    /*  RIGHT SIDE — currency indicator + CTA                             */
+    /* ------------------------------------------------------------------ */
+    .nav__right {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav__currency {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 12px;
+      background: var(--nv-surface);
+      border: 1px solid var(--nv-border);
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .03em;
+      color: var(--nv-text-soft);
+      font-variant-numeric: tabular-nums;
+      line-height: 1;
+      cursor: default;
+      transition: border-color .2s ease, color .2s ease;
+    }
+    .nav__currency:hover {
+      border-color: var(--nv-border-strong);
+      color: var(--nv-text);
+    }
+    .nav__currency-symbol {
+      font-size: .9rem;
+      opacity: .85;
+    }
+
+    .nav__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: var(--nv-gradient);
+      color: #fff;
+      font-size: .9rem;
+      font-weight: 600;
+      letter-spacing: .005em;
+      text-decoration: none;
+      border-radius: var(--nv-radius);
+      box-shadow: 0 6px 20px -8px rgba(233,30,140,.55);
+      transition: transform .2s ease, box-shadow .25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .nav__cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.22), transparent);
+      transition: left .7s ease;
+    }
+    .nav__cta:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 28px -8px rgba(233,30,140,.65);
+    }
+    .nav__cta:hover::before { left: 100%; }
+    .nav__cta:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  HAMBURGER (mobile only)                                           */
+    /* ------------------------------------------------------------------ */
+    .nav__toggle {
+      display: none;
+      appearance: none;
+      background: transparent;
+      border: 1px solid var(--nv-border);
+      border-radius: 10px;
+      width: 42px;
+      height: 42px;
+      padding: 0;
+      cursor: pointer;
+      color: var(--nv-text);
+      align-items: center;
+      justify-content: center;
+      transition: border-color .2s ease, background .2s ease;
+    }
+    .nav__toggle:hover { border-color: var(--nv-border-strong); background: var(--nv-surface-2); }
+    .nav__toggle:focus-visible { outline: 2px solid var(--nv-pink); outline-offset: 2px; }
+
+    .nav__toggle-bars {
+      position: relative;
+      width: 18px;
+      height: 12px;
+      display: inline-block;
+    }
+    .nav__toggle-bars::before,
+    .nav__toggle-bars::after,
+    .nav__toggle-bars span {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1.8px;
+      background: currentColor;
+      border-radius: 2px;
+      transition: transform .3s ease, opacity .2s ease, top .3s ease;
+    }
+    .nav__toggle-bars::before { top: 0; }
+    .nav__toggle-bars span    { top: 5px; display: block; }
+    .nav__toggle-bars::after  { top: 10px; }
+
+    .nav__toggle[aria-expanded="true"] .nav__toggle-bars::before {
+      top: 5px; transform: rotate(45deg);
+    }
+    .nav__toggle[aria-expanded="true"] .nav__toggle-bars::after {
+      top: 5px; transform: rotate(-45deg);
+    }
+    .nav__toggle[aria-expanded="true"] .nav__toggle-bars span {
+      opacity: 0;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  DRAWER (mobile)                                                   */
+    /* ------------------------------------------------------------------ */
+    .nav__drawer {
+      position: fixed;
+      inset: 72px 0 0 0;
+      background: rgba(11,11,20,.96);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      padding: 32px 24px 40px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: opacity .28s ease, transform .28s ease, visibility 0s linear .28s;
+      z-index: 40;
+      overflow-y: auto;
+    }
+    .nav__drawer[data-open="true"] {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+      transition: opacity .28s ease, transform .28s ease, visibility 0s linear 0s;
+    }
+
+    .nav__drawer-links {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .nav__drawer-links a {
+      display: block;
+      padding: 16px 4px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      color: var(--nv-text);
+      text-decoration: none;
+      border-bottom: 1px solid var(--nv-border);
+      transition: color .2s ease;
+    }
+    .nav__drawer-links a:hover { color: var(--nv-pink); }
+
+    .nav__drawer-cta {
+      margin-top: 26px;
+      display: inline-flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px 22px;
+      background: var(--nv-gradient);
+      color: #fff;
+      font-weight: 600;
+      border-radius: var(--nv-radius);
+      text-decoration: none;
+      box-shadow: 0 10px 30px -8px rgba(233,30,140,.5);
+    }
+
+    .nav__drawer-foot {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      font-size: .84rem;
+      color: var(--nv-text-muted);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  RESPONSIVE                                                        */
+    /* ------------------------------------------------------------------ */
+    @media (max-width: 880px) {
+      .nav__links { display: none; }
+      .nav__cta   { display: none; }
+      .nav__toggle { display: inline-flex; }
+    }
+    @media (min-width: 881px) {
+      .nav__drawer { display: none !important; }
+    }
+
+    /* Lock body scroll when drawer open — handled by JS toggling class */
+    :root.nav-drawer-open,
+    body.nav-drawer-open { overflow: hidden; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nav, .nav__cta, .nav__cta::before,
+      .nav__toggle-bars::before, .nav__toggle-bars::after, .nav__toggle-bars span,
+      .nav__drawer, .nav__links a::after {
+        transition: none !important;
+      }
+    }
+  </style>
+
+  <!-- Skip-link for screen-reader / keyboard users -->
+  <a class="nav__skip" href="#hero-headline">Skip to content</a>
+
+  <div class="nav__container">
+
+    <!-- Logo — gradient on the "o" to echo the brand without shouting -->
+    <a href="#top" class="nav__logo" aria-label="Songzy — home">
+      S<span class="nav__logo-accent">o</span>ngzy
+    </a>
+
+    <!-- Primary nav (desktop) -->
+    <nav role="navigation" aria-label="Primary">
+      <ul class="nav__links">
+        <li><a href="#how-it-works">How it works</a></li>
+        <li><a href="#examples">Examples</a></li>
+        <li><a href="#pricing">Pricing</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+
+    <!-- Right side: currency indicator + CTA + mobile toggle -->
+    <div class="nav__right">
+
+      <!-- Currency indicator — read-only, syncs with pricing toggle -->
+      <span
+        class="nav__currency"
+        data-nav-currency
+        title="Change currency in the Pricing section"
+        aria-label="Current currency">
+        <span class="nav__currency-symbol" data-nav-currency-symbol>€</span>
+        <span data-nav-currency-code>EUR</span>
+      </span>
+
+      <a href="#pricing" class="nav__cta">Give a song</a>
+
+      <button
+        type="button"
+        class="nav__toggle"
+        aria-expanded="false"
+        aria-controls="nav-drawer"
+        aria-label="Open menu">
+        <span class="nav__toggle-bars" aria-hidden="true"><span></span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================================================================== -->
+  <!--  MOBILE DRAWER                                                     -->
+  <!-- ================================================================== -->
+  <div
+    id="nav-drawer"
+    class="nav__drawer"
+    data-open="false"
+    aria-hidden="true">
+
+    <ul class="nav__drawer-links">
+      <li><a href="#how-it-works" data-nav-close>How it works</a></li>
+      <li><a href="#examples"     data-nav-close>Examples</a></li>
+      <li><a href="#pricing"      data-nav-close>Pricing</a></li>
+      <li><a href="#faq"          data-nav-close>FAQ</a></li>
+    </ul>
+
+    <a href="#pricing" class="nav__drawer-cta" data-nav-close>Give a song</a>
+
+    <div class="nav__drawer-foot">
+      <span>Delivered in 2 hours</span>
+      <span aria-hidden="true">·</span>
+      <span>Refund if it isn't right</span>
+    </div>
+
+  </div>
+
+</header>
+
+
+<!-- ============================================================================
+     HERO
+     ============================================================================ -->
+<section id="top" class="hero" aria-labelledby="hero-headline">
+  <style>
+    /* ------------------------------------------------------------------ */
+    /*  HERO — TOKENS (scoped)                                            */
+    /* ------------------------------------------------------------------ */
+    .hero {
+      --hr-orange: #FF6B35;
+      --hr-pink:   #E91E8C;
+      --hr-purple: #7B2FF7;
+      --hr-gradient: linear-gradient(135deg, var(--hr-orange), var(--hr-pink), var(--hr-purple));
+      --hr-bg:      #0B0B14;
+      --hr-surface: rgba(255,255,255,.03);
+      --hr-surface-2: rgba(255,255,255,.05);
+      --hr-border:  rgba(255,255,255,.08);
+      --hr-border-strong: rgba(255,255,255,.14);
+      --hr-text:    #ECECF4;
+      --hr-text-muted: #8E8EA8;
+      --hr-text-soft:  #B8B8CC;
+      --hr-radius-lg: 22px;
+      --hr-radius:    14px;
+
+      --hr-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --hr-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --hr-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      position: relative;
+      background: var(--hr-bg);
+      color: var(--hr-text);
+      font-family: var(--hr-font-body);
+      padding: 168px 24px 120px;
+      overflow: hidden;
+      isolation: isolate;
+      margin-top: -72px; /* slide under the sticky nav */
+    }
+
+    /* Grain overlay — the "vinyl" texture */
+    .hero > .hero__grain {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      opacity: .04;
+      mix-blend-mode: overlay;
+      background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .7 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    }
+
+    .hero *,
+    .hero *::before,
+    .hero *::after { box-sizing: border-box; }
+
+    /* ------------------------------------------------------------------ */
+    /*  AMBIENT ORBS (behind everything)                                  */
+    /* ------------------------------------------------------------------ */
+    .hero__orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: -1;
+      opacity: .55;
+      animation: hero-orb-float 22s ease-in-out infinite alternate;
+    }
+    .hero__orb--1 {
+      top: -6%;
+      left: -4%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(255,107,53,.18) 0%, transparent 70%);
+      animation-delay: 0s;
+    }
+    .hero__orb--2 {
+      top: 24%;
+      right: -8%;
+      width: 580px;
+      height: 580px;
+      background: radial-gradient(circle, rgba(233,30,140,.16) 0%, transparent 70%);
+      animation-delay: -7s;
+    }
+    .hero__orb--3 {
+      bottom: -10%;
+      left: 30%;
+      width: 620px;
+      height: 620px;
+      background: radial-gradient(circle, rgba(123,47,247,.14) 0%, transparent 70%);
+      animation-delay: -14s;
+    }
+
+    @keyframes hero-orb-float {
+      0%   { transform: translate3d(0,0,0)      scale(1); }
+      50%  { transform: translate3d(2%,-3%,0)   scale(1.05); }
+      100% { transform: translate3d(-2%,2%,0)   scale(.98); }
+    }
+
+    /* subtle grain on top of everything for texture */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+      background-image:
+        radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+      background-size: 3px 3px;
+      opacity: .5;
+      mix-blend-mode: overlay;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CONTAINER + LAYOUT                                                */
+    /* ------------------------------------------------------------------ */
+    .hero__container {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 55%) minmax(0, 45%);
+      align-items: center;
+      gap: 64px;
+      position: relative;
+    }
+
+    @media (max-width: 960px) {
+      .hero { padding: 140px 20px 80px; }
+      .hero__container {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  LEFT — COPY                                                       */
+    /* ------------------------------------------------------------------ */
+    .hero__copy { max-width: 620px; }
+
+    .hero__eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--hr-text-muted);
+      margin-bottom: 26px;
+      padding: 8px 14px;
+      background: var(--hr-surface);
+      border: 1px solid var(--hr-border);
+      border-radius: 999px;
+    }
+    .hero__eyebrow-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--hr-gradient);
+      box-shadow: 0 0 10px rgba(233,30,140,.6);
+      animation: hero-eyebrow-pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes hero-eyebrow-pulse {
+      0%, 100% { opacity: .55; transform: scale(1); }
+      50%      { opacity: 1;   transform: scale(1.3); }
+    }
+
+    .hero__headline {
+      font-family: var(--hr-font-display);
+      font-size: clamp(2.2rem, 5.2vw, 3.8rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      margin: 0 0 22px;
+      color: var(--hr-text);
+      font-variation-settings: "opsz" 96;
+    }
+    .hero__headline em {
+      font-style: italic;
+      font-weight: 600;
+      font-variation-settings: "opsz" 144;
+      color: var(--hr-text);
+    }
+    .hero__headline-accent {
+      background: var(--hr-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: inline;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .hero__sub {
+      font-size: 1.1rem;
+      line-height: 1.6;
+      color: var(--hr-text-soft);
+      margin: 0 0 34px;
+      max-width: 540px;
+    }
+    .hero__sub strong {
+      color: var(--hr-text);
+      font-weight: 600;
+    }
+
+    /* ── CTA row ─────────────────────────────────────────────────────── */
+    .hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 18px 26px;
+      margin-bottom: 20px;
+    }
+
+    .hero__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 18px 30px;
+      background: var(--hr-gradient);
+      color: #fff;
+      font-size: 1.02rem;
+      font-weight: 600;
+      letter-spacing: .005em;
+      text-decoration: none;
+      border-radius: var(--hr-radius);
+      box-shadow: 0 12px 34px -10px rgba(233,30,140,.6),
+                  0 4px 14px -4px rgba(123,47,247,.35);
+      position: relative;
+      overflow: hidden;
+      transition: transform .22s ease, box-shadow .28s ease;
+      will-change: transform;
+    }
+    .hero__cta::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.28), transparent);
+      transition: left .75s ease;
+    }
+    .hero__cta:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 16px 42px -10px rgba(233,30,140,.72),
+                  0 6px 18px -4px rgba(123,47,247,.45);
+    }
+    .hero__cta:hover::before { left: 100%; }
+    .hero__cta:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+    .hero__cta-arrow {
+      display: inline-block;
+      transition: transform .25s ease;
+    }
+    .hero__cta:hover .hero__cta-arrow { transform: translateX(3px); }
+
+    /* secondary — quiet text link, no visual competition */
+    .hero__secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--hr-text-soft);
+      text-decoration: none;
+      font-size: .98rem;
+      font-weight: 500;
+      padding: 6px 2px;
+      border-bottom: 1px solid transparent;
+      transition: color .2s ease, border-color .2s ease, gap .25s ease;
+    }
+    .hero__secondary:hover {
+      color: var(--hr-text);
+      border-bottom-color: var(--hr-border-strong);
+      gap: 10px;
+    }
+    .hero__secondary:focus-visible {
+      outline: 2px solid var(--hr-pink);
+      outline-offset: 3px;
+      border-radius: 2px;
+    }
+    .hero__secondary-arrow {
+      display: inline-block;
+      transition: transform .4s cubic-bezier(.5,.1,.2,1);
+    }
+    .hero__secondary:hover .hero__secondary-arrow {
+      transform: translateY(3px);
+    }
+
+    /* ── Micro trust line ────────────────────────────────────────────── */
+    .hero__trust {
+      margin: 20px 0 0;
+      font-size: .86rem;
+      color: var(--hr-text-muted);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 6px 12px;
+      line-height: 1.5;
+    }
+    .hero__trust-dot {
+      color: rgba(255,255,255,.22);
+      padding: 0 2px;
+      user-select: none;
+    }
+    .hero__trust strong {
+      color: var(--hr-text-soft);
+      font-weight: 600;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  RIGHT — AUDIO PLAYER MOCKUP (glassmorphism)                       */
+    /* ------------------------------------------------------------------ */
+    .hero__player-wrap {
+      position: relative;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* glowing halo behind the card */
+    .hero__player-wrap::before {
+      content: '';
+      position: absolute;
+      inset: -30px;
+      background: var(--hr-gradient);
+      filter: blur(60px);
+      opacity: .22;
+      border-radius: 50%;
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    .hero__player {
+      width: 100%;
+      max-width: 420px;
+      background:
+        linear-gradient(160deg, rgba(255,255,255,.055) 0%, rgba(255,255,255,.02) 60%) padding-box;
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--hr-radius-lg);
+      padding: 26px 24px 22px;
+      backdrop-filter: blur(22px) saturate(1.3);
+      -webkit-backdrop-filter: blur(22px) saturate(1.3);
+      box-shadow:
+        0 30px 70px -20px rgba(0,0,0,.6),
+        0 8px 28px -10px rgba(123,47,247,.3),
+        inset 0 1px 0 rgba(255,255,255,.08);
+      transform: perspective(1200px) rotateY(-4deg) rotateX(3deg);
+      transition: transform .5s cubic-bezier(.2,.8,.2,1);
+    }
+    .hero__player:hover {
+      transform: perspective(1200px) rotateY(-2deg) rotateX(1.5deg) translateY(-4px);
+    }
+
+    /* small color chip — a "label" for the song */
+    .hero__player-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: .64rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: #fff;
+      padding: 4px 10px;
+      background: var(--hr-gradient);
+      border-radius: 6px;
+      margin-bottom: 14px;
+      box-shadow: 0 2px 10px -2px rgba(233,30,140,.55);
+    }
+
+    .hero__player-title {
+      font-family: var(--hr-font-display);
+      font-size: 1.12rem;
+      font-weight: 600;
+      color: var(--hr-text);
+      margin: 0 0 4px;
+      line-height: 1.2;
+      letter-spacing: -.015em;
+      font-variation-settings: "opsz" 72;
+    }
+    .hero__player-sub {
+      font-size: .82rem;
+      color: var(--hr-text-muted);
+      margin: 0 0 22px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero__player-sub-dot {
+      color: rgba(255,255,255,.2);
+    }
+
+    /* ── Controls row ────────────────────────────────────────────────── */
+    .hero__player-controls {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 18px;
+    }
+
+    .hero__play {
+      flex-shrink: 0;
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: var(--hr-gradient);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 0;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 8px 22px -6px rgba(233,30,140,.55);
+      position: relative;
+      transition: transform .2s ease, box-shadow .25s ease;
+    }
+    .hero__play::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.12);
+      animation: hero-play-ring 2.6s ease-in-out infinite;
+    }
+    @keyframes hero-play-ring {
+      0%, 100% { transform: scale(1);   opacity: .55; }
+      50%      { transform: scale(1.15); opacity: 0; }
+    }
+    .hero__play:hover {
+      transform: scale(1.05);
+      box-shadow: 0 10px 28px -6px rgba(233,30,140,.75);
+    }
+    .hero__play:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 3px;
+    }
+
+    /* waveform — 21 bars, animated, staggered delays, varied amplitudes */
+    .hero__waveform {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 44px;
+      padding: 0 2px;
+    }
+    .hero__waveform span {
+      display: block;
+      flex: 1;
+      min-width: 2px;
+      background: var(--hr-gradient);
+      border-radius: 2px;
+      opacity: .85;
+      transform-origin: center;
+      animation: hero-wave 1.4s ease-in-out infinite;
+    }
+
+    /* bars that have already "played" get a slightly dimmer baseline */
+    .hero__waveform span.is-played { opacity: .55; }
+    /* the "playhead" bar is full-brightness */
+    .hero__waveform span.is-head {
+      opacity: 1;
+      box-shadow: 0 0 12px rgba(233,30,140,.65);
+    }
+
+    /* bar heights — staggered to look like a real waveform */
+    .hero__waveform span:nth-child(1)  { height: 22%; animation-delay: -.10s; }
+    .hero__waveform span:nth-child(2)  { height: 38%; animation-delay: -.25s; }
+    .hero__waveform span:nth-child(3)  { height: 56%; animation-delay: -.40s; }
+    .hero__waveform span:nth-child(4)  { height: 72%; animation-delay: -.55s; }
+    .hero__waveform span:nth-child(5)  { height: 48%; animation-delay: -.70s; }
+    .hero__waveform span:nth-child(6)  { height: 64%; animation-delay: -.85s; }
+    .hero__waveform span:nth-child(7)  { height: 88%; animation-delay: -1.00s; }
+    .hero__waveform span:nth-child(8)  { height: 75%; animation-delay: -1.15s; }
+    .hero__waveform span:nth-child(9)  { height: 52%; animation-delay: -1.30s; }
+    .hero__waveform span:nth-child(10) { height: 66%; animation-delay: -.05s; }
+    .hero__waveform span:nth-child(11) { height: 94%; animation-delay: -.20s; } /* head */
+    .hero__waveform span:nth-child(12) { height: 58%; animation-delay: -.35s; }
+    .hero__waveform span:nth-child(13) { height: 44%; animation-delay: -.50s; }
+    .hero__waveform span:nth-child(14) { height: 72%; animation-delay: -.65s; }
+    .hero__waveform span:nth-child(15) { height: 36%; animation-delay: -.80s; }
+    .hero__waveform span:nth-child(16) { height: 60%; animation-delay: -.95s; }
+    .hero__waveform span:nth-child(17) { height: 48%; animation-delay: -1.10s; }
+    .hero__waveform span:nth-child(18) { height: 30%; animation-delay: -1.25s; }
+    .hero__waveform span:nth-child(19) { height: 42%; animation-delay: -1.40s; }
+    .hero__waveform span:nth-child(20) { height: 24%; animation-delay: -.15s; }
+    .hero__waveform span:nth-child(21) { height: 18%; animation-delay: -.30s; }
+
+    @keyframes hero-wave {
+      0%, 100% { transform: scaleY(.55); }
+      50%      { transform: scaleY(1);   }
+    }
+
+    /* ── Progress + timecode ─────────────────────────────────────────── */
+    .hero__player-progress {
+      position: relative;
+      height: 3px;
+      background: rgba(255,255,255,.08);
+      border-radius: 2px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .hero__player-progress-fill {
+      display: block;
+      height: 100%;
+      width: 48%;
+      background: var(--hr-gradient);
+      border-radius: 2px;
+      position: relative;
+    }
+    .hero__player-progress-fill::after {
+      content: '';
+      position: absolute;
+      right: -4px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: #fff;
+      box-shadow: 0 0 0 2px rgba(233,30,140,.55), 0 0 10px rgba(233,30,140,.6);
+    }
+
+    .hero__player-time {
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--hr-font-mono);
+      font-size: .74rem;
+      color: var(--hr-text-muted);
+      font-variant-numeric: tabular-nums;
+      letter-spacing: .02em;
+    }
+    .hero__player-time strong {
+      color: var(--hr-text-soft);
+      font-weight: 600;
+    }
+
+    /* small ambient "note" icons floating next to the card (decor only) */
+    .hero__note {
+      position: absolute;
+      font-size: 1.3rem;
+      color: rgba(255,255,255,.35);
+      animation: hero-note-float 6s ease-in-out infinite;
+      pointer-events: none;
+      user-select: none;
+    }
+    .hero__note--1 {
+      top: -18px;
+      left: 8%;
+      animation-delay: -1s;
+      color: rgba(255,107,53,.55);
+    }
+    .hero__note--2 {
+      bottom: 8%;
+      right: -4%;
+      animation-delay: -3s;
+      color: rgba(233,30,140,.5);
+    }
+    .hero__note--3 {
+      top: 55%;
+      left: -2%;
+      animation-delay: -5s;
+      color: rgba(123,47,247,.55);
+    }
+    @keyframes hero-note-float {
+      0%, 100% { transform: translateY(0)    rotate(-4deg); opacity: .5; }
+      50%      { transform: translateY(-14px) rotate(4deg); opacity: .9; }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  REDUCED MOTION — freeze every animation, keep layout intact       */
+    /* ------------------------------------------------------------------ */
+    @media (prefers-reduced-motion: reduce) {
+      .hero__orb,
+      .hero__eyebrow-dot,
+      .hero__player,
+      .hero__cta, .hero__cta::before,
+      .hero__secondary, .hero__secondary-arrow,
+      .hero__play, .hero__play::before,
+      .hero__waveform span,
+      .hero__note {
+        animation: none !important;
+        transition: none !important;
+      }
+      .hero__waveform span {
+        transform: scaleY(.7) !important;
+      }
+      .hero__player {
+        transform: none !important;
+      }
+    }
+
+    /* Tighter mobile copy */
+    @media (max-width: 560px) {
+      .hero { padding: 130px 18px 72px; }
+      .hero__headline { font-size: clamp(1.9rem, 8vw, 2.6rem); }
+      .hero__sub { font-size: 1rem; }
+      .hero__cta { padding: 16px 24px; width: 100%; justify-content: center; }
+      .hero__actions { gap: 14px; }
+      .hero__secondary { width: 100%; justify-content: center; }
+      .hero__player { transform: none; }
+      .hero__player:hover { transform: translateY(-2px); }
+    }
+  </style>
+
+  <div class="hero__grain" aria-hidden="true"></div>
+
+  <!-- Ambient gradient orbs — behind everything, non-interactive -->
+  <div class="hero__orb hero__orb--1" aria-hidden="true"></div>
+  <div class="hero__orb hero__orb--2" aria-hidden="true"></div>
+  <div class="hero__orb hero__orb--3" aria-hidden="true"></div>
+
+  <div class="hero__container">
+
+    <!-- ================================================================ -->
+    <!--  LEFT — COPY                                                     -->
+    <!-- ================================================================ -->
+    <div class="hero__copy">
+
+      <span class="hero__eyebrow">
+        <span class="hero__eyebrow-dot" aria-hidden="true"></span>
+        Songs written from your words
+      </span>
+
+      <h1 id="hero-headline" class="hero__headline">
+        The <em>silence</em> before they press play.
+        <span class="hero__headline-accent">Then their name, sung back to them.</span>
+      </h1>
+
+      <p class="hero__sub">
+        You write a few lines — who they are, what you'd say if the words didn't
+        get stuck. Our studio turns it into a real song, in the genre that
+        suits them, <strong>delivered in two hours</strong>. Theirs to keep,
+        theirs to replay on the drive home.
+      </p>
+
+      <!-- Action row: one primary, one quiet secondary -->
+      <div class="hero__actions">
+        <a href="#pricing" class="hero__cta">
+          <span>Give a song, not a card</span>
+          <span class="hero__cta-arrow" aria-hidden="true">→</span>
+        </a>
+
+        <a href="#audio-examples" class="hero__secondary">
+          <span>Hear one first</span>
+          <span class="hero__secondary-arrow" aria-hidden="true">↓</span>
+        </a>
+      </div>
+
+      <!-- Micro trust: one line, two honest things -->
+      <p class="hero__trust">
+        <strong>No account needed</strong>
+        <span class="hero__trust-dot" aria-hidden="true">·</span>
+        <strong>Refund if it isn't right</strong>
+      </p>
+    </div>
+
+    <!-- ================================================================ -->
+    <!--  RIGHT — PLAYER MOCKUP (pure CSS, non-functional)                -->
+    <!-- ================================================================ -->
+    <div class="hero__player-wrap" aria-hidden="true">
+
+      <!-- Decorative floating notes -->
+      <span class="hero__note hero__note--1">&#9834;</span>
+      <span class="hero__note hero__note--2">&#9835;</span>
+      <span class="hero__note hero__note--3">&#9834;</span>
+
+      <figure class="hero__player" role="img" aria-label="Preview of a personalized Songzy track for Sarah, on her 40th birthday.">
+
+        <span class="hero__player-tag">Now playing</span>
+
+        <h2 class="hero__player-title">For Sarah, on her 40th</h2>
+        <p class="hero__player-sub">
+          <span>Songzy</span>
+          <span class="hero__player-sub-dot">·</span>
+          <span>Personal</span>
+        </p>
+
+        <div class="hero__player-controls">
+
+          <!-- Play button — visually "paused" because the waveform already moves -->
+          <button type="button" class="hero__play" aria-label="Play preview" tabindex="-1">
+            <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+              <path d="M6 4.5l10 5.5-10 5.5V4.5z" fill="currentColor"/>
+            </svg>
+          </button>
+
+          <!-- Waveform — 21 bars, each animated independently -->
+          <div class="hero__waveform" aria-hidden="true">
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-played"></span>
+            <span class="is-head"></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span>
+          </div>
+        </div>
+
+        <div class="hero__player-progress" aria-hidden="true">
+          <span class="hero__player-progress-fill"></span>
+        </div>
+
+        <div class="hero__player-time">
+          <span><strong>1:34</strong></span>
+          <span>3:12</span>
+        </div>
+
+      </figure>
+    </div>
+
+  </div>
+  <!-- /container -->
+
+</section>
+
+<script>
+/* --------------------------------------------------------------------------
+   NAV + HERO — small, focused JS
+   1. Toggle "is-scrolled" state on the nav when the page moves
+   2. Mobile drawer open/close (aria-expanded, body scroll-lock, ESC to close)
+   3. Currency indicator: read localStorage "songzy.currency" (fallback EUR)
+      and sync across tabs via the "storage" event, and within the same tab
+      via a light 800ms poll (the "storage" event doesn't fire in the tab
+      that actually wrote the value).
+   -------------------------------------------------------------------------- */
+(function () {
+  const nav = document.querySelector('.nav');
+  if (!nav) return;
+
+  /* --------------------------------- 1. Scroll state --------------------- */
+  const onScroll = () => {
+    if (window.scrollY > 8) nav.classList.add('is-scrolled');
+    else                    nav.classList.remove('is-scrolled');
+  };
+  onScroll();
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  /* --------------------------------- 2. Mobile drawer -------------------- */
+  const toggle = nav.querySelector('.nav__toggle');
+  const drawer = nav.querySelector('.nav__drawer');
+
+  function setDrawer(open) {
+    if (!toggle || !drawer) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    drawer.setAttribute('data-open', String(open));
+    drawer.setAttribute('aria-hidden', String(!open));
+    document.body.classList.toggle('nav-drawer-open', open);
+    document.documentElement.classList.toggle('nav-drawer-open', open);
+  }
+
+  if (toggle && drawer) {
+    toggle.addEventListener('click', () => {
+      const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+      setDrawer(!isOpen);
+    });
+
+    // close when any drawer link is clicked
+    drawer.querySelectorAll('[data-nav-close]').forEach((el) => {
+      el.addEventListener('click', () => setDrawer(false));
+    });
+
+    // close on ESC
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && toggle.getAttribute('aria-expanded') === 'true') {
+        setDrawer(false);
+        toggle.focus();
+      }
+    });
+
+    // if the viewport grows back to desktop, make sure drawer state is clean
+    const mq = window.matchMedia('(min-width: 881px)');
+    const onMq = () => { if (mq.matches) setDrawer(false); };
+    if (mq.addEventListener) mq.addEventListener('change', onMq);
+    else if (mq.addListener) mq.addListener(onMq);
+  }
+
+  /* --------------------------------- 3. Currency indicator --------------- */
+  const STORE_KEY = 'songzy.currency';
+  const SYMBOL    = { eur: '€', gbp: '£' };
+  const LABEL     = { eur: 'EUR', gbp: 'GBP' };
+
+  const codeEls   = nav.querySelectorAll('[data-nav-currency-code]');
+  const symEls    = nav.querySelectorAll('[data-nav-currency-symbol]');
+
+  function readCurrency() {
+    let saved = null;
+    try { saved = localStorage.getItem(STORE_KEY); } catch (_) {}
+    if (saved === 'gbp' || saved === 'eur') return saved;
+    return 'eur'; // spec: default EUR when missing
+  }
+
+  function renderCurrency(cur) {
+    const c = (cur === 'gbp') ? 'gbp' : 'eur';
+    codeEls.forEach((el) => { el.textContent = LABEL[c]; });
+    symEls.forEach((el)  => { el.textContent = SYMBOL[c]; });
+  }
+
+  renderCurrency(readCurrency());
+
+  // Cross-tab sync — native storage event
+  window.addEventListener('storage', (e) => {
+    if (e.key === STORE_KEY) renderCurrency(e.newValue);
+  });
+
+  // Same-tab sync — cheap poll so the nav indicator updates when the user
+  // flips EUR/GBP in the pricing section
+  let last = readCurrency();
+  setInterval(() => {
+    const now = readCurrency();
+    if (now !== last) { last = now; renderCurrency(now); }
+  }, 800);
+})();
+</script>

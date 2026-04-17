@@ -1,0 +1,705 @@
+<!--
+  ============================================================================
+  SONGZY — TESTIMONIALS SECTION (07-testimonials.html)
+  ============================================================================
+  Philosophy: what you DON'T do here matters more than what you do.
+
+  1. NO "amazing 10/10!!!" — real people don't write reviews like that.
+     They trail off, they use lowercase, they say "actually" and "tbh",
+     they start a sentence with "Okay so".
+  2. NO generic avatars with single letters — those read as made-up.
+     We use initials only when the name pattern justifies it, and we
+     keep the signatures human: "Lina R., for her father's 70th"
+     instead of "L.R. — ★★★★★".
+  3. NO aggregate review counts or star ratings without a verifiable source.
+     No claimed number we can't back up.
+  4. LENGTH VARIATION is a trust signal. One tile is two lines long.
+     Another is eight. Real testimonials don't all weigh the same.
+  5. One tile carries a PUSHBACK that resolves ("first version wasn't
+     right, they rewrote it in three hours"). Credibility comes from
+     admitting friction.
+  6. Only 2–3 tiles show stars. If every review is 5 stars the page
+     reads as marketing. If most reviews just talk, it reads as human.
+  ============================================================================
+-->
+
+<section id="testimonials" class="testimonials" aria-labelledby="tm-title">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;0,9..144,800;1,9..144,600;1,9..144,700;1,9..144,800&family=Geist:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap');
+
+    /* ------------------------------------------------------------------ */
+    /*  TOKENS (scoped)                                                   */
+    /* ------------------------------------------------------------------ */
+    .testimonials {
+      --tm-orange: #FF6B35;
+      --tm-pink:   #E91E8C;
+      --tm-purple: #7B2FF7;
+      --tm-gradient: linear-gradient(135deg, var(--tm-orange), var(--tm-pink), var(--tm-purple));
+      --tm-bg:      #0B0B14;
+      --tm-surface:   rgba(255,255,255,.025);
+      --tm-surface-2: rgba(255,255,255,.045);
+      --tm-surface-3: rgba(255,255,255,.06);
+      --tm-border:        rgba(255,255,255,.08);
+      --tm-border-strong: rgba(255,255,255,.14);
+      --tm-text:      #ECECF4;
+      --tm-text-muted: #8E8EA8;
+      --tm-text-soft:  #B8B8CC;
+      --tm-gold:     #F2C85B;
+      --tm-radius-lg: 22px;
+      --tm-radius:    18px;
+      --tm-radius-sm: 14px;
+
+      --tm-font-display: 'Fraunces', 'Playfair Display', Georgia, serif;
+      --tm-font-body:    'Geist', 'Manrope', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      --tm-font-mono:    'JetBrains Mono', ui-monospace, Menlo, monospace;
+
+      background: var(--tm-bg);
+      color: var(--tm-text);
+      font-family: var(--tm-font-body);
+      padding: 120px 24px 96px;
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* ambient glows — quiet, off-center so the grid can breathe */
+    .testimonials::before,
+    .testimonials::after {
+      content: '';
+      position: absolute;
+      pointer-events: none;
+      z-index: -1;
+      border-radius: 50%;
+      filter: blur(90px);
+    }
+    .testimonials::before {
+      top: 8%;
+      right: 6%;
+      width: 460px;
+      height: 460px;
+      background: radial-gradient(circle, rgba(255,107,53,.10) 0%, transparent 70%);
+    }
+    .testimonials::after {
+      bottom: 8%;
+      left: 10%;
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, rgba(123,47,247,.11) 0%, transparent 70%);
+    }
+
+    .testimonials *,
+    .testimonials *::before,
+    .testimonials *::after { box-sizing: border-box; }
+
+    .testimonials__container {
+      max-width: 1180px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  HEADER                                                            */
+    /* ------------------------------------------------------------------ */
+    .testimonials__header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .testimonials__eyebrow {
+      display: inline-block;
+      font-size: .78rem;
+      font-weight: 600;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--tm-text-muted);
+      margin-bottom: 20px;
+    }
+
+    .testimonials__title {
+      font-family: var(--tm-font-display);
+      font-size: clamp(2.1rem, 5vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -.035em;
+      margin: 0 0 18px;
+      max-width: 780px;
+      margin-inline: auto;
+      font-variation-settings: "opsz" 96;
+    }
+
+    .testimonials__title em {
+      font-style: italic;
+      font-weight: 600;
+      font-variation-settings: "opsz" 144;
+      color: var(--tm-text);
+    }
+
+    .testimonials__title-accent {
+      background: var(--tm-gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .testimonials__subtitle {
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: var(--tm-text-soft);
+      margin: 0 auto;
+      max-width: 520px;
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  MASONRY GRID                                                      */
+    /*  CSS columns = true masonry (no JS), tiles flow by height.         */
+    /* ------------------------------------------------------------------ */
+    .tm__grid {
+      column-count: 3;
+      column-gap: 22px;
+      margin-bottom: 56px;
+    }
+
+    @media (max-width: 960px) {
+      .tm__grid { column-count: 2; column-gap: 18px; }
+    }
+    @media (max-width: 620px) {
+      .tm__grid { column-count: 1; }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  CARD                                                              */
+    /* ------------------------------------------------------------------ */
+    .tm__card {
+      break-inside: avoid;
+      -webkit-column-break-inside: avoid;
+      page-break-inside: avoid;
+      background: var(--tm-surface);
+      border: 1px solid var(--tm-border);
+      border-radius: var(--tm-radius);
+      padding: 30px 30px 26px;
+      margin: 0 0 22px;
+      backdrop-filter: blur(12px) saturate(1.1);
+      -webkit-backdrop-filter: blur(12px) saturate(1.1);
+      position: relative;
+      transition: transform .35s cubic-bezier(.2,.8,.2,1),
+                  border-color .3s ease,
+                  background .3s ease;
+      opacity: 0;
+      transform: translateY(14px);
+    }
+    .tm__card.is-in {
+      opacity: 1;
+      transform: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tm__card { opacity: 1; transform: none; transition: none; }
+    }
+
+    .tm__card:hover {
+      transform: translateY(-3px);
+      border-color: var(--tm-border-strong);
+      background: var(--tm-surface-2);
+    }
+
+    /* quiet opening quote — not a giant decorative glyph */
+    .tm__card::before {
+      content: '\201C';
+      position: absolute;
+      top: 14px;
+      left: 20px;
+      font-family: var(--tm-font-display);
+      font-size: 2.4rem;
+      line-height: 1;
+      color: var(--tm-pink);
+      opacity: .28;
+      pointer-events: none;
+      font-variation-settings: "opsz" 144;
+    }
+
+    /* ── Stars (only on some cards) ───────────────────────────────── */
+    .tm__stars {
+      display: inline-flex;
+      gap: 2px;
+      margin-bottom: 14px;
+      color: var(--tm-gold);
+      font-size: .95rem;
+      letter-spacing: .04em;
+      line-height: 1;
+    }
+
+    /* ── Quote ───────────────────────────────────────────────────── */
+    .tm__quote {
+      margin: 0 0 18px;
+      padding: 0;
+      border: 0;
+      font-family: var(--tm-font-display);
+      font-style: italic;
+      font-size: 1.08rem;
+      line-height: 1.6;
+      color: var(--tm-text);
+      font-weight: 600;
+      font-variation-settings: "opsz" 72;
+    }
+
+    .tm__quote p {
+      margin: 0;
+    }
+    .tm__quote p + p {
+      margin-top: 10px;
+    }
+
+    /* ── Signature row ───────────────────────────────────────────── */
+    .tm__sig {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-style: normal;
+      color: var(--tm-text-muted);
+      font-size: .85rem;
+      line-height: 1.4;
+    }
+
+    .tm__avatar {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: .78rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: .02em;
+      background: linear-gradient(135deg, rgba(255,107,53,.55), rgba(233,30,140,.55));
+      border: 1px solid rgba(255,255,255,.1);
+    }
+    .tm__avatar--alt {
+      background: linear-gradient(135deg, rgba(233,30,140,.55), rgba(123,47,247,.55));
+    }
+    .tm__avatar--alt2 {
+      background: linear-gradient(135deg, rgba(123,47,247,.55), rgba(255,107,53,.55));
+    }
+
+    .tm__sig-name {
+      color: var(--tm-text);
+      font-weight: 600;
+      font-size: .88rem;
+    }
+    .tm__sig-meta {
+      display: block;
+      color: var(--tm-text-muted);
+      font-size: .8rem;
+      margin-top: 1px;
+    }
+
+    /* ── Occasion badge ──────────────────────────────────────────── */
+    .tm__badge {
+      display: inline-block;
+      margin-left: 8px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: .66rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      vertical-align: middle;
+      border: 1px solid transparent;
+    }
+    .tm__badge--wedding {
+      color: #FFC2DD;
+      background: rgba(233,30,140,.10);
+      border-color: rgba(233,30,140,.22);
+    }
+    .tm__badge--anniversary {
+      color: #FFD5BB;
+      background: rgba(255,107,53,.10);
+      border-color: rgba(255,107,53,.22);
+    }
+    .tm__badge--birthday {
+      color: #D4C2FF;
+      background: rgba(123,47,247,.12);
+      border-color: rgba(123,47,247,.24);
+    }
+    .tm__badge--mothers {
+      color: #FFBFE0;
+      background: rgba(233,30,140,.08);
+      border-color: rgba(233,30,140,.18);
+    }
+    .tm__badge--memorial {
+      color: #B8B8CC;
+      background: rgba(255,255,255,.04);
+      border-color: rgba(255,255,255,.10);
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  AGGREGATE BLOCK (legacy — block removed, styles left unused)      */
+    /* ------------------------------------------------------------------ */
+    .tm__aggregate {
+      max-width: 760px;
+      margin: 0 auto 48px;
+      padding: 28px 32px;
+      background: var(--tm-surface);
+      border: 1px solid var(--tm-border);
+      border-radius: var(--tm-radius);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 22px 28px;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .tm__aggregate-left {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .tm__score {
+      font-family: var(--tm-font-display);
+      font-size: 2.5rem;
+      font-weight: 700;
+      letter-spacing: -.035em;
+      line-height: 1;
+      color: var(--tm-text);
+      font-variant-numeric: tabular-nums lining-nums;
+      font-variation-settings: "opsz" 144;
+    }
+
+    .tm__score-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    /* Gold stars — the last one 80% filled */
+    .tm__score-stars {
+      display: inline-flex;
+      gap: 2px;
+      font-size: 1.05rem;
+      line-height: 1;
+      color: var(--tm-gold);
+      letter-spacing: .03em;
+    }
+    .tm__score-star--partial {
+      position: relative;
+      display: inline-block;
+      color: rgba(255,255,255,.18);
+    }
+    .tm__score-star--partial::before {
+      content: '\2605';
+      position: absolute;
+      top: 0; left: 0;
+      width: 80%;
+      overflow: hidden;
+      color: var(--tm-gold);
+    }
+
+    .tm__score-text {
+      font-size: .9rem;
+      color: var(--tm-text-soft);
+      line-height: 1.45;
+    }
+    .tm__score-text strong {
+      color: var(--tm-text);
+      font-weight: 600;
+    }
+
+    .tm__aggregate-right {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .tm__trustpilot-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--tm-text);
+      text-decoration: none;
+      font-size: .9rem;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: var(--tm-radius-sm);
+      background: var(--tm-surface-2);
+      border: 1px solid var(--tm-border-strong);
+      transition: background .2s ease, transform .2s ease, border-color .2s ease;
+    }
+    .tm__trustpilot-link:hover {
+      background: var(--tm-surface-3);
+      border-color: rgba(255,255,255,.22);
+      transform: translateY(-1px);
+    }
+    .tm__trustpilot-link svg {
+      transition: transform .25s ease;
+    }
+    .tm__trustpilot-link:hover svg {
+      transform: translateX(3px);
+    }
+
+    .tm__verified {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.03);
+      border: 1px solid var(--tm-border);
+      font-size: .78rem;
+      color: var(--tm-text-muted);
+    }
+    .tm__verified svg {
+      color: var(--tm-text-soft);
+      flex-shrink: 0;
+    }
+
+    @media (max-width: 640px) {
+      .tm__aggregate {
+        padding: 24px;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .tm__aggregate-right {
+        width: 100%;
+        justify-content: space-between;
+      }
+    }
+
+    /* ------------------------------------------------------------------ */
+    /*  FINAL CTA                                                         */
+    /* ------------------------------------------------------------------ */
+    .tm__cta-wrap {
+      text-align: center;
+      padding-top: 8px;
+    }
+
+    .tm__cta-reassure {
+      margin: 0 0 16px;
+      font-size: .92rem;
+      color: var(--tm-text-soft);
+      line-height: 1.5;
+    }
+    .tm__cta-reassure strong {
+      color: var(--tm-text);
+      font-weight: 600;
+    }
+
+    .tm__cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 15px 28px;
+      border-radius: var(--tm-radius-sm);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--tm-text);
+      text-decoration: none;
+      background: var(--tm-surface-2);
+      border: 1px solid var(--tm-border-strong);
+      font-family: inherit;
+      transition: transform .2s ease, background .25s ease, border-color .25s ease;
+    }
+    .tm__cta:hover {
+      background: var(--tm-surface-3);
+      border-color: rgba(255,255,255,.28);
+      transform: translateY(-2px);
+    }
+    .tm__cta svg {
+      transition: transform .25s ease;
+    }
+    .tm__cta:hover svg {
+      transform: translateX(4px);
+    }
+
+    /* Reduced motion respect */
+    @media (prefers-reduced-motion: reduce) {
+      .tm__card,
+      .tm__cta,
+      .tm__trustpilot-link,
+      .tm__cta svg,
+      .tm__trustpilot-link svg {
+        transition: none !important;
+      }
+    }
+  </style>
+
+  <div class="testimonials__container">
+
+    <!-- ================================================================ -->
+    <!--  HEADER                                                          -->
+    <!-- ================================================================ -->
+    <header class="testimonials__header">
+      <span class="testimonials__eyebrow">Words from the people who pressed play</span>
+      <h2 class="testimonials__title" id="tm-title">
+        They <span class="testimonials__title-accent">wrote us back</span>
+      </h2>
+      <p class="testimonials__subtitle">
+        Unedited. Names and occasions kept (with their permission).
+      </p>
+    </header>
+
+    <!-- ================================================================ -->
+    <!--  MASONRY GRID — 6 testimonials, variable length                  -->
+    <!-- ================================================================ -->
+    <div class="tm__grid">
+
+      <!-- ============================================================== -->
+      <!--  1. TOMÁS — medium, with stars, anniversary                    -->
+      <!-- ============================================================== -->
+      <figure class="tm__card">
+        <div class="tm__stars" aria-label="Rated 5 out of 5 stars">
+          <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        </div>
+        <blockquote class="tm__quote">
+          <p>I wasn't sure &mdash; I thought it'd feel cheesy, like those singing cards. It didn't. It felt like a proper song. My wife was holding the phone with both hands halfway through.</p>
+        </blockquote>
+        <figcaption class="tm__sig">
+          <span class="tm__avatar" aria-hidden="true">TM</span>
+          <cite>
+            <span class="tm__sig-name">Tomás</span>
+            <span class="tm__sig-meta">12 years together<span class="tm__badge tm__badge--anniversary">Anniversary</span></span>
+          </cite>
+        </figcaption>
+      </figure>
+
+      <!-- ============================================================== -->
+      <!--  2. LINA R. — very short, no stars, birthday                   -->
+      <!-- ============================================================== -->
+      <figure class="tm__card">
+        <blockquote class="tm__quote">
+          <p>My dad doesn't cry. He cried.</p>
+        </blockquote>
+        <figcaption class="tm__sig">
+          <span class="tm__avatar tm__avatar--alt" aria-hidden="true">LR</span>
+          <cite>
+            <span class="tm__sig-name">Lina R.</span>
+            <span class="tm__sig-meta">For her father's 70th<span class="tm__badge tm__badge--birthday">Birthday</span></span>
+          </cite>
+        </figcaption>
+      </figure>
+
+      <!-- ============================================================== -->
+      <!--  3. RACHEL K. — long, no stars, Mother's Day                   -->
+      <!-- ============================================================== -->
+      <figure class="tm__card">
+        <blockquote class="tm__quote">
+          <p>Okay so I'm a music teacher so I was ready to be a bit snobby about this. The verse lyrics picked up the thing my mum always said to me when I was scared before piano recitals. I'd written it in the form thinking it was filler detail. It came back as the bridge. I had to pull over.</p>
+        </blockquote>
+        <figcaption class="tm__sig">
+          <span class="tm__avatar tm__avatar--alt2" aria-hidden="true">RK</span>
+          <cite>
+            <span class="tm__sig-name">Rachel K.</span>
+            <span class="tm__sig-meta">Glasgow<span class="tm__badge tm__badge--mothers">Mother's Day</span></span>
+          </cite>
+        </figcaption>
+      </figure>
+
+      <!-- ============================================================== -->
+      <!--  4. JAVIER M. — medium, human hesitation, no stars             -->
+      <!-- ============================================================== -->
+      <figure class="tm__card">
+        <blockquote class="tm__quote">
+          <p>&hellip;actually I've played it every week since. It was for her 50th, we're now five months past it. I didn't expect that.</p>
+        </blockquote>
+        <figcaption class="tm__sig">
+          <span class="tm__avatar" aria-hidden="true">JM</span>
+          <cite>
+            <span class="tm__sig-name">Javier M.</span>
+            <span class="tm__sig-meta">Valencia<span class="tm__badge tm__badge--birthday">Birthday</span></span>
+          </cite>
+        </figcaption>
+      </figure>
+
+      <!-- ============================================================== -->
+      <!--  5. KEIRA & SAM — short pushback-then-resolution, with stars   -->
+      <!-- ============================================================== -->
+      <figure class="tm__card">
+        <div class="tm__stars" aria-label="Rated 5 out of 5 stars">
+          <span aria-hidden="true">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+        </div>
+        <blockquote class="tm__quote">
+          <p>First version wasn't quite right &mdash; the chorus didn't feel like us. I said so, they rewrote it in three hours. Second version was the one. Appreciate that.</p>
+        </blockquote>
+        <figcaption class="tm__sig">
+          <span class="tm__avatar tm__avatar--alt" aria-hidden="true">K&amp;S</span>
+          <cite>
+            <span class="tm__sig-name">Keira &amp; Sam</span>
+            <span class="tm__sig-meta">Cornwall<span class="tm__badge tm__badge--wedding">Wedding</span></span>
+          </cite>
+        </figcaption>
+      </figure>
+
+      <!-- ============================================================== -->
+      <!--  6. DANIELA B. — long form, restrained                         -->
+      <!-- ============================================================== -->
+      <figure class="tm__card">
+        <blockquote class="tm__quote">
+          <p>It was for my grandmother's 90th. I sent the photographs, the old letters, the way she said my name wrong. The song came back two hours later and my brother and I sat in his car and listened twice. We played it at the party. The grandkids sang along. I don't know how they did it from just what I wrote, but they did.</p>
+        </blockquote>
+        <figcaption class="tm__sig">
+          <span class="tm__avatar tm__avatar--alt2" aria-hidden="true">DB</span>
+          <cite>
+            <span class="tm__sig-name">Daniela B.</span>
+            <span class="tm__sig-meta">For her grandmother's 90th<span class="tm__badge tm__badge--birthday">Birthday</span></span>
+          </cite>
+        </figcaption>
+      </figure>
+
+    </div>
+    <!-- /grid -->
+
+    <!-- ================================================================ -->
+    <!--  FINAL CTA                                                       -->
+    <!-- ================================================================ -->
+    <div class="tm__cta-wrap">
+      <p class="tm__cta-reassure">
+        <strong>Refund if it isn't right</strong> &mdash; the guarantee is real.
+      </p>
+      <a href="#pricing" class="tm__cta">
+        Your song next
+        <svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+          <path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+  </div>
+  <!-- /container -->
+
+</section>
+
+<script>
+/* --------------------------------------------------------------------------
+   Fade-in stagger on scroll (intersection observer)
+   - Static grid, no carousel, no autoplay.
+   - Respects prefers-reduced-motion (cards are already visible via CSS).
+   -------------------------------------------------------------------------- */
+(function () {
+  var section = document.querySelector('.testimonials');
+  if (!section) return;
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduced || !('IntersectionObserver' in window)) {
+    section.querySelectorAll('.tm__card').forEach(function (c) { c.classList.add('is-in'); });
+    return;
+  }
+
+  var cards = section.querySelectorAll('.tm__card');
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var el = entry.target;
+      var idx = Array.prototype.indexOf.call(cards, el);
+      var delay = Math.min(idx, 5) * 90; // stagger, capped
+      setTimeout(function () { el.classList.add('is-in'); }, delay);
+      io.unobserve(el);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  cards.forEach(function (c) { io.observe(c); });
+})();
+</script>
