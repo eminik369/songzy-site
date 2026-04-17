@@ -1,0 +1,19 @@
+{
+  "name": "songzy-site",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'Static site — no build needed'",
+    "dev": "python3 -m http.server 8000"
+  },
+  "dependencies": {
+    "stripe": "^19.0.0",
+    "resend": "^6.0.0",
+    "@vercel/postgres": "^0.10.0",
+    "@vercel/blob": "^2.0.0",
+    "zod": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

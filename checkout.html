@@ -11,6 +11,9 @@
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&family=Fraunces:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
   <link rel="icon" href="logo-songzy.jpg" type="image/jpeg">
+  <!-- Runtime config (Iubenda + analytics IDs) + analytics bootstrap -->
+  <script src="/api/env.js"></script>
+  <script defer src="/scripts/analytics.js"></script>
 
   <style>
     :root {
@@ -979,41 +982,71 @@
   }
 
   // -----------------------------------------------------------------------
-  // Submit
+  // Submit — creates a Stripe Checkout Session and redirects. The full brief
+  // (story, voice, genre…) is also stashed in localStorage so the post-payment
+  // /order-brief.html page can auto-fill whatever the customer already typed.
   // -----------------------------------------------------------------------
   document.getElementById('submitBtn').addEventListener('click', function () {
     if (!state.email || !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(state.email)) {
       alert('Please add a valid email so we can send you the draft.');
       return;
     }
-    var payload = JSON.stringify(state, null, 2);
-    try { localStorage.setItem('songzy_last_submitted_brief', payload); } catch (e) {}
+    var btn = this;
+    btn.disabled = true;
+    var originalText = btn.innerHTML;
+    btn.innerHTML = 'Redirecting to secure payment…';
 
-    var endpoint = 'https://formsubmit.co/ajax/hello@songzy.com';
-    fetch(endpoint, {
+    // Persist the draft locally so the post-payment page can prefill.
+    try {
+      localStorage.setItem('songzy_prefill_brief', JSON.stringify({
+        occasion: state.occasion, recipient: state.recipient, relationship: state.relationship,
+        adjectives: state.adjectives, memory: state.memory, feeling: state.feeling,
+        voice: state.voice, genre: state.genre, tier: state.tier,
+        addons: Object.keys(state.addons)
+      }));
+    } catch (e) {}
+
+    // Map UI addon keys to the backend-understood ones. Backend currently
+    // understands 'extended' and 'second-voice'; ignore anything unknown so we
+    // never send a price that isn't configured in Stripe.
+    var ADDON_MAP = { extended: 'extended', 'second-voice': 'second-voice' };
+    var mappedAddons = Object.keys(state.addons || {})
+      .map(function (k) { return ADDON_MAP[k]; })
+      .filter(Boolean);
+
+    // Analytics: fire InitiateCheckout so pixel audiences can pick it up.
+    try { window.songzyTrack && window.songzyTrack('InitiateCheckout', { tier: state.tier, addons: mappedAddons.join(',') }); } catch (e) {}
+
+    fetch('/api/checkout', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        _subject: 'Songzy brief — ' + (state.occasion || 'new order') + ' for ' + (state.recipient || ''),
-        _template: 'table',
-        email: state.email,
-        yourname: state.yourname,
-        occasion: state.occasion,
-        recipient: state.recipient,
-        relationship: state.relationship,
-        adjectives: state.adjectives,
-        memory: state.memory,
-        feeling: state.feeling,
-        voice: state.voice,
-        genre: state.genre,
         tier: state.tier,
-        legacy_bundle_slug: IS_LEGACY_BUNDLE ? URL_TIER_RAW : '',
-        addons: Object.keys(state.addons).map(function (k) { return state.addons[k].label; }).join(', '),
-        payload: payload
+        addons: mappedAddons,
+        customerEmail: state.email,
+        currency: 'eur',
+        metadata: {
+          occasion: state.occasion || '',
+          recipientName: state.recipient || '',
+          fromUrl: location.href
+        }
       })
-    }).catch(function () { /* silent fail — fallback handled server-side */ });
-
-    state.step = 6; updateView();
+    })
+      .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, status: r.status, d: d }; }); })
+      .then(function (res) {
+        if (!res.ok || !res.d.url) {
+          btn.disabled = false;
+          btn.innerHTML = originalText;
+          alert((res.d && res.d.error) ? ('Checkout error: ' + res.d.error) : ('Checkout failed (' + res.status + ')'));
+          return;
+        }
+        window.location.href = res.d.url;
+      })
+      .catch(function (e) {
+        btn.disabled = false;
+        btn.innerHTML = originalText;
+        alert('Network error: ' + e.message);
+      });
   });
 
   // -----------------------------------------------------------------------

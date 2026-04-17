@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Songzy — Admin</title>
+<link rel="icon" href="logo-songzy.jpg" type="image/jpeg">
+<script src="/api/env.js"></script>
+<script defer src="/scripts/analytics.js"></script>
+<style>
+  :root{--bg:#0f0f1a;--elev:#17172a;--elev2:#1f1f38;--txt:#f5f3ee;--mut:#a8a3b5;--line:#2c2c48;--pink:#E91E8C;--or:#FF6B35;--pu:#7B2FF7;--grad:linear-gradient(90deg,var(--or),var(--pink),var(--pu));}
+  *{box-sizing:border-box}html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font:14px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh}
+  header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(15,15,26,.9);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10}
+  header h1{font:500 18px/1 Georgia,serif;margin:0}
+  header .muted{color:var(--mut);font-size:12px}
+  main{max-width:1300px;margin:0 auto;padding:24px 20px 60px}
+  .card{background:var(--elev);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px}
+  .card h2{font:500 16px/1.2 Georgia,serif;margin:0 0 12px}
+  label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
+  input,textarea,select{width:100%;background:var(--elev2);border:1px solid var(--line);color:var(--txt);padding:10px 12px;border-radius:8px;font:inherit}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pink)}
+  textarea{min-height:80px;resize:vertical}
+  button{font:inherit;font-weight:600;padding:10px 18px;border:none;border-radius:999px;cursor:pointer;background:var(--grad);color:#fff}
+  button.ghost{background:transparent;color:var(--mut);border:1px solid var(--line)}
+  button:disabled{opacity:.5;cursor:not-allowed}
+  .row{display:flex;gap:10px;flex-wrap:wrap}
+  .row > *{flex:1;min-width:200px}
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
+  th{color:var(--mut);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:600}
+  .pill.pending{background:#2c2c48;color:#a8a3b5}
+  .pill.paid{background:rgba(255,107,53,.2);color:#ffc6a8}
+  .pill.in_production{background:rgba(233,30,140,.2);color:#ff99cd}
+  .pill.delivered{background:rgba(48,217,138,.2);color:#8cf0bd}
+  .pill.refunded,.pill.failed{background:rgba(255,90,90,.2);color:#ffa6a6}
+  code{font:12px/1.4 ui-monospace,'SF Mono',monospace;background:var(--elev2);padding:2px 6px;border-radius:4px;color:#cfc9d6}
+  details{margin-top:6px}
+  details summary{cursor:pointer;color:var(--mut);font-size:12px}
+  .err{color:#ff9090;font-size:13px;margin-top:10px}
+  .ok{color:#8cf0bd;font-size:13px;margin-top:10px}
+</style>
+</head>
+<body>
+<header>
+  <h1>Songzy — Admin</h1>
+  <div class="muted" id="status">Not signed in</div>
+</header>
+<main>
+
+  <section class="card" id="login-card">
+    <h2>Sign in</h2>
+    <p class="muted" style="margin:0 0 12px;font-size:13px">Use the <code>ADMIN_PASSWORD</code> set in Vercel env.</p>
+    <label for="pw">Password</label>
+    <input id="pw" type="password" autocomplete="current-password">
+    <div class="row" style="margin-top:14px">
+      <button id="loginBtn">Sign in</button>
+      <button class="ghost" id="logoutBtn" style="display:none">Sign out</button>
+    </div>
+    <div id="loginMsg"></div>
+  </section>
+
+  <section class="card" id="orders-card" style="display:none">
+    <h2>Recent orders</h2>
+    <div class="row" style="justify-content:flex-end;margin-bottom:10px">
+      <button class="ghost" id="refreshBtn" style="flex:0 0 auto">Refresh</button>
+    </div>
+    <div style="overflow-x:auto"><table id="ordersTable"><thead><tr>
+      <th>When</th><th>Status</th><th>Tier</th><th>Email</th><th>Recipient</th>
+      <th>Voice</th><th>Genre</th><th>Brief</th><th>Delivery</th>
+    </tr></thead><tbody id="ordersBody"></tbody></table></div>
+    <div id="ordersMsg" class="err"></div>
+  </section>
+
+  <section class="card" id="deliver-card" style="display:none">
+    <h2>Upload MP3 + deliver</h2>
+    <p class="muted" style="margin:0 0 12px;font-size:13px">Pick an order, attach the MP3 (or paste a URL), add lyrics, and ship it. The customer gets an email with the unlisted share link.</p>
+    <label for="dOrder">Order</label>
+    <select id="dOrder"></select>
+    <label for="dMp3">MP3 file</label>
+    <input id="dMp3" type="file" accept="audio/mpeg,audio/mp3">
+    <label for="dMp3Url">…or MP3 URL (if already hosted)</label>
+    <input id="dMp3Url" type="url" placeholder="https://...">
+    <label for="dCover">Cover image URL (optional)</label>
+    <input id="dCover" type="url" placeholder="https://...">
+    <label for="dLyrics">Lyrics</label>
+    <textarea id="dLyrics" placeholder="Verse 1..."></textarea>
+    <div class="row" style="margin-top:14px">
+      <button id="deliverBtn" style="flex:0 0 auto">Ship it</button>
+    </div>
+    <div id="deliverMsg"></div>
+  </section>
+
+</main>
+<script>
+(function(){
+  'use strict';
+  var TOKEN_KEY = 'songzy_admin_token';
+  var tokenCache = '';
+
+  function setStatus(t){ document.getElementById('status').textContent = t; }
+  function authHeader(){ return 'Basic ' + btoa('admin:' + tokenCache); }
+
+  function showMsg(el, msg, ok){
+    el.textContent = msg || ''; el.className = ok ? 'ok' : 'err';
+  }
+
+  function signedIn(ok){
+    document.getElementById('orders-card').style.display  = ok ? 'block' : 'none';
+    document.getElementById('deliver-card').style.display = ok ? 'block' : 'none';
+    document.getElementById('logoutBtn').style.display    = ok ? 'inline-block' : 'none';
+    document.getElementById('loginBtn').style.display     = ok ? 'none' : 'inline-block';
+    if (ok) { setStatus('Signed in'); loadOrders(); } else setStatus('Not signed in');
+  }
+
+  document.getElementById('loginBtn').onclick = function(){
+    var pw = document.getElementById('pw').value.trim();
+    if (!pw) return;
+    tokenCache = pw;
+    fetch('/api/admin/orders', { headers: { Authorization: authHeader() } })
+      .then(function(r){
+        if (r.status === 401) { showMsg(document.getElementById('loginMsg'), 'Wrong password', false); return; }
+        if (!r.ok) { showMsg(document.getElementById('loginMsg'), 'Server error ' + r.status, false); return; }
+        try { sessionStorage.setItem(TOKEN_KEY, pw); } catch(e){}
+        document.getElementById('pw').value = '';
+        showMsg(document.getElementById('loginMsg'), 'OK', true);
+        signedIn(true);
+      })
+      .catch(function(e){ showMsg(document.getElementById('loginMsg'), e.message, false); });
+  };
+
+  document.getElementById('logoutBtn').onclick = function(){
+    try { sessionStorage.removeItem(TOKEN_KEY); } catch(e){}
+    tokenCache = ''; signedIn(false);
+  };
+
+  document.getElementById('refreshBtn').onclick = loadOrders;
+
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function fmt(d){ try { return new Date(d).toLocaleString(); } catch(e){ return d || ''; } }
+
+  function loadOrders(){
+    var msg = document.getElementById('ordersMsg'); msg.textContent = 'Loading…'; msg.className = '';
+    fetch('/api/admin/orders', { headers: { Authorization: authHeader() } })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if (!d.orders) { showMsg(msg, d.error || 'No data', false); return; }
+        msg.textContent = '';
+        var body = document.getElementById('ordersBody');
+        body.innerHTML = d.orders.map(function(o){
+          var briefRows = [
+            o.occasion     ? '<div><b>Occasion:</b> '   + esc(o.occasion) + '</div>' : '',
+            o.story_1      ? '<div><b>Adjectives:</b> ' + esc(o.story_1)  + '</div>' : '',
+            o.story_2      ? '<div><b>Memory:</b> '     + esc(o.story_2)  + '</div>' : '',
+            o.story_3      ? '<div><b>Emotion:</b> '    + esc(o.story_3)  + '</div>' : '',
+            o.tempo        ? '<div><b>Tempo:</b> '      + esc(o.tempo)    + '</div>' : '',
+            o.gift_message ? '<div><b>Gift msg:</b> '   + esc(o.gift_message) + '</div>' : ''
+          ].filter(Boolean).join('');
+          var delivery = o.share_slug
+            ? '<a href="/m/'+esc(o.share_slug)+'" target="_blank">/m/'+esc(o.share_slug)+'</a>'
+            : '<span class="muted">—</span>';
+          return '<tr>' +
+            '<td>'+esc(fmt(o.created_at))+'</td>' +
+            '<td><span class="pill '+esc(o.status)+'">'+esc(o.status)+'</span></td>' +
+            '<td>'+esc(o.tier)+'<div class="muted" style="font-size:11px">'+(o.addons||[]).map(esc).join(', ')+'</div></td>' +
+            '<td>'+esc(o.customer_email||'')+'</td>' +
+            '<td>'+esc(o.recipient_name||'')+'</td>' +
+            '<td>'+esc(o.voice_slug||'')+'</td>' +
+            '<td>'+esc(o.genre||'')+'</td>' +
+            '<td>'+(briefRows ? '<details><summary>View</summary>'+briefRows+'</details>' : '<span class="muted">—</span>')+'</td>' +
+            '<td>'+delivery+'<div class="muted" style="font-size:11px">'+esc(o.id)+'</div></td>' +
+            '</tr>';
+        }).join('');
+        var sel = document.getElementById('dOrder');
+        sel.innerHTML = '<option value="">— pick an order —</option>' +
+          d.orders.filter(function(o){ return o.status !== 'delivered'; })
+            .map(function(o){ return '<option value="'+esc(o.id)+'">'+esc(o.created_at)+' — '+esc(o.tier)+' — '+esc(o.customer_email||'(no email)')+'</option>'; }).join('');
+      })
+      .catch(function(e){ showMsg(msg, e.message, false); });
+  }
+
+  document.getElementById('deliverBtn').onclick = function(){
+    var msg = document.getElementById('deliverMsg'); showMsg(msg, 'Uploading…', true);
+    var orderId = document.getElementById('dOrder').value;
+    if (!orderId) { showMsg(msg, 'Pick an order', false); return; }
+    var file = document.getElementById('dMp3').files[0];
+    var mp3Url = document.getElementById('dMp3Url').value.trim();
+    if (!file && !mp3Url) { showMsg(msg, 'Attach an MP3 or paste a URL', false); return; }
+    var fd = new FormData();
+    fd.append('orderId', orderId);
+    fd.append('lyrics', document.getElementById('dLyrics').value);
+    fd.append('coverUrl', document.getElementById('dCover').value);
+    if (file) fd.append('mp3', file);
+    else fd.append('mp3Url', mp3Url);
+    fetch('/api/admin/deliver', { method: 'POST', headers: { Authorization: authHeader() }, body: fd })
+      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
+      .then(function(r){
+        if (!r.ok) { showMsg(msg, r.d.error || 'Upload failed', false); return; }
+        showMsg(msg, 'Shipped. Share: ' + r.d.shareUrl, true);
+        loadOrders();
+      })
+      .catch(function(e){ showMsg(msg, e.message, false); });
+  };
+
+  // Restore session
+  try {
+    var saved = sessionStorage.getItem(TOKEN_KEY);
+    if (saved) { tokenCache = saved; signedIn(true); }
+  } catch(e){}
+})();
+</script>
+</body>
+</html>
