@@ -7,13 +7,13 @@
     "dev": "python3 -m http.server 8000"
   },
   "dependencies": {
-    "stripe": "^19.0.0",
-    "resend": "^6.0.0",
+    "stripe": "^17.0.0",
+    "resend": "^4.0.0",
     "@vercel/postgres": "^0.10.0",
-    "@vercel/blob": "^2.0.0",
-    "zod": "^4.0.0"
+    "@vercel/blob": "^0.27.0",
+    "zod": "^3.23.8"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=20"
   }
 }
