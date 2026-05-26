@@ -3,8 +3,11 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "echo 'Static site — no build needed'",
-    "dev": "python3 -m http.server 8000"
+    "build": "node scripts/build-landing-pages.mjs && echo 'Static site + generated landing pages'",
+    "dev": "python3 -m http.server 8000",
+    "migrate": "node scripts/migrate.mjs",
+    "build-landings": "node scripts/build-landing-pages.mjs",
+    "generate-blog": "node scripts/generate-blog-posts.mjs"
   },
   "dependencies": {
     "stripe": "^17.0.0",
