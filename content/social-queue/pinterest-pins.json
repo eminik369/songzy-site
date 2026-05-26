@@ -14,7 +14,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-002",
@@ -31,7 +33,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551419",
+    "board_mapped_to": "Anniversary Gifts That Mean Something"
   },
   {
     "pin_id": "pin-003",
@@ -48,7 +52,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551426",
+    "board_mapped_to": "Birthday Gift Ideas"
   },
   {
     "pin_id": "pin-004",
@@ -65,7 +71,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551434",
+    "board_mapped_to": "Memorial Tribute Songs"
   },
   {
     "pin_id": "pin-005",
@@ -82,7 +90,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551419",
+    "board_mapped_to": "Anniversary Gifts That Mean Something"
   },
   {
     "pin_id": "pin-006",
@@ -99,7 +109,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551426",
+    "board_mapped_to": "Birthday Gift Ideas"
   },
   {
     "pin_id": "pin-007",
@@ -116,7 +128,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551419",
+    "board_mapped_to": "Anniversary Gifts That Mean Something"
   },
   {
     "pin_id": "pin-008",
@@ -133,7 +147,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-009",
@@ -150,7 +166,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-010",
@@ -167,7 +185,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-011",
@@ -184,7 +204,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-012",
@@ -201,7 +223,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551434",
+    "board_mapped_to": "Memorial Tribute Songs"
   },
   {
     "pin_id": "pin-013",
@@ -218,7 +242,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551426",
+    "board_mapped_to": "Birthday Gift Ideas"
   },
   {
     "pin_id": "pin-014",
@@ -235,7 +261,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-015",
@@ -252,7 +280,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-016",
@@ -269,7 +299,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-017",
@@ -286,7 +318,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-018",
@@ -303,7 +337,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-019",
@@ -320,7 +356,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551426",
+    "board_mapped_to": "Birthday Gift Ideas"
   },
   {
     "pin_id": "pin-020",
@@ -337,7 +375,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-021",
@@ -354,7 +394,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-022",
@@ -371,7 +413,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551419",
+    "board_mapped_to": "Anniversary Gifts That Mean Something"
   },
   {
     "pin_id": "pin-023",
@@ -388,7 +432,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551434",
+    "board_mapped_to": "Memorial Tribute Songs"
   },
   {
     "pin_id": "pin-024",
@@ -405,7 +451,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551426",
+    "board_mapped_to": "Birthday Gift Ideas"
   },
   {
     "pin_id": "pin-025",
@@ -422,7 +470,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-026",
@@ -439,7 +489,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-027",
@@ -456,7 +508,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-028",
@@ -473,7 +527,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-029",
@@ -490,7 +546,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-030",
@@ -507,7 +565,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-031",
@@ -524,7 +584,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-032",
@@ -541,7 +603,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551434",
+    "board_mapped_to": "Memorial Tribute Songs"
   },
   {
     "pin_id": "pin-033",
@@ -558,7 +622,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-034",
@@ -575,7 +641,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-035",
@@ -592,7 +660,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551426",
+    "board_mapped_to": "Birthday Gift Ideas"
   },
   {
     "pin_id": "pin-036",
@@ -609,7 +679,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551419",
+    "board_mapped_to": "Anniversary Gifts That Mean Something"
   },
   {
     "pin_id": "pin-037",
@@ -626,7 +698,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-038",
@@ -643,7 +717,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-039",
@@ -660,7 +736,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-040",
@@ -677,7 +755,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-041",
@@ -694,7 +774,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-042",
@@ -711,7 +793,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-043",
@@ -728,7 +812,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-044",
@@ -745,7 +831,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-045",
@@ -762,7 +850,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-046",
@@ -779,7 +869,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551419",
+    "board_mapped_to": "Anniversary Gifts That Mean Something"
   },
   {
     "pin_id": "pin-047",
@@ -796,7 +888,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-048",
@@ -813,7 +907,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551417",
+    "board_mapped_to": "Wedding First Dance Songs"
   },
   {
     "pin_id": "pin-049",
@@ -830,7 +926,9 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   },
   {
     "pin_id": "pin-050",
@@ -847,6 +945,8 @@
     "scheduled_at": null,
     "posted_at": null,
     "external_pin_id": null,
-    "external_image_url": null
+    "external_image_url": null,
+    "board_service_id": "1145181080188551424",
+    "board_mapped_to": "Personalized Music Gifts"
   }
 ]
