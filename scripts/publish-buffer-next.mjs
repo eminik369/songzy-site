@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 // =============================================================================
-// SONGZY — Buffer auto-scheduler
+// SONGZY — Buffer GraphQL auto-publisher
 //
-// Takes the next "queued" entry from content/social-queue/buffer-posts.json
-// and schedules it on the matching Buffer profile (IG, TikTok, Facebook, etc.).
-// Image is generated via Pollinations.ai if `image_prompt` is set.
+// Takes the next "queued" entry from content/social-queue/buffer-posts.json,
+// resolves the matching Buffer channel, generates the image via Pollinations,
+// and creates the post via Buffer GraphQL API.
 //
 // Run:   node scripts/publish-buffer-next.mjs
 // =============================================================================
@@ -12,29 +12,23 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
-import crypto from 'node:crypto';
 
 import {
   bufferConfigured,
-  listProfiles,
-  createUpdate,
+  listChannels,
+  createPost,
 } from '../lib/buffer.js';
 import {
-  imageBuffer,
+  imageUrl as pollImageUrl,
   brandInstagramSquarePrompt,
+  brandPinterestPrompt,
   IG_SQUARE_DIMENSIONS,
+  PIN_DIMENSIONS,
 } from '../lib/image-gen.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT      = path.resolve(__dirname, '..');
 const QUEUE_PATH = path.join(ROOT, 'content/social-queue/buffer-posts.json');
-
-// We need to host the image somewhere Buffer can fetch it. Two options:
-//  A) Upload to Vercel Blob and use that URL
-//  B) Use Pollinations URL directly (Buffer can fetch it during scheduling)
-// Option B is simpler and free. Use option A if you want stable URLs across
-// regenerations. We default to B.
-const USE_POLLINATIONS_URL_DIRECT = true;
 
 async function loadQueue() {
   const text = await fs.readFile(QUEUE_PATH, 'utf-8');
@@ -43,15 +37,6 @@ async function loadQueue() {
 
 async function saveQueue(posts) {
   await fs.writeFile(QUEUE_PATH, JSON.stringify(posts, null, 2), 'utf-8');
-}
-
-async function uploadToBlob(buf, contentType) {
-  // Lazy import so the script doesn't require Blob token when running queue-only ops
-  const { put } = await import('@vercel/blob');
-  const ext = contentType?.includes('png') ? 'png' : 'jpg';
-  const key = `social/${crypto.randomUUID()}.${ext}`;
-  const { url } = await put(key, buf, { access: 'public', contentType });
-  return url;
 }
 
 async function main() {
@@ -69,59 +54,66 @@ async function main() {
 
   console.log(`[publish-buffer] processing ${next.post_id} (${next.platform}): ${next.caption?.slice(0, 80)}...`);
 
-  // 1) Find Buffer profile for the platform
-  const profiles = await listProfiles();
-  const profile = profiles.find((p) =>
-    p.service?.toLowerCase() === next.platform.toLowerCase()
-  );
-  if (!profile) {
-    console.error(`[publish-buffer] no Buffer profile for "${next.platform}". Connect it in Buffer first.`);
+  // 1) Find Buffer channel for the platform
+  const channels = await listChannels();
+  if (!channels.length) {
+    console.error('[publish-buffer] no Buffer channels connected. Connect at https://publish.buffer.com/channels');
     next.status = 'failed';
-    next.error = `No Buffer profile for ${next.platform}`;
+    next.error = 'No Buffer channels connected';
     await saveQueue(posts);
     process.exit(3);
   }
-  console.log(`[publish-buffer] profile: ${profile.service} (@${profile.formatted_username || profile.username})`);
+  console.log(`[publish-buffer] available channels: ${channels.map((c) => c.service).join(', ')}`);
 
-  // 2) Resolve / generate image URL
-  let imageUrl = next.image_url;
-  if (!imageUrl && next.image_prompt) {
-    if (USE_POLLINATIONS_URL_DIRECT) {
-      const { imageUrl: pollUrl } = await import('../lib/image-gen.js');
-      imageUrl = pollUrl(
-        brandInstagramSquarePrompt(next.image_prompt, { mood: next.mood || 'warm' }),
-        { width: IG_SQUARE_DIMENSIONS.width, height: IG_SQUARE_DIMENSIONS.height, seed: next.image_seed }
-      );
-    } else {
-      console.log(`[publish-buffer] generating + uploading image...`);
-      const { buffer, contentType } = await imageBuffer(
-        brandInstagramSquarePrompt(next.image_prompt, { mood: next.mood || 'warm' }),
-        { width: IG_SQUARE_DIMENSIONS.width, height: IG_SQUARE_DIMENSIONS.height, seed: next.image_seed }
-      );
-      imageUrl = await uploadToBlob(buffer, contentType);
-      next.image_url = imageUrl;  // cache so re-runs reuse it
-    }
+  const channel = channels.find((c) => c.service?.toLowerCase() === next.platform.toLowerCase());
+  if (!channel) {
+    console.error(`[publish-buffer] no Buffer channel for "${next.platform}". Available: ${channels.map((c) => c.service).join(', ')}`);
+    next.status = 'failed';
+    next.error = `No Buffer channel for ${next.platform}`;
+    await saveQueue(posts);
+    process.exit(3);
+  }
+  console.log(`[publish-buffer] using channel: ${channel.service} (${channel.displayName || channel.name})`);
+
+  // 2) Generate image URL (Pollinations direct URL — Buffer fetches it)
+  let imageUrls = [];
+  if (next.image_url) {
+    imageUrls = [next.image_url];
+  } else if (next.image_prompt) {
+    const isPinterest = channel.service?.toLowerCase() === 'pinterest';
+    const dims = isPinterest ? PIN_DIMENSIONS : IG_SQUARE_DIMENSIONS;
+    const promptBuilder = isPinterest ? brandPinterestPrompt : brandInstagramSquarePrompt;
+    const url = pollImageUrl(
+      promptBuilder(next.image_prompt, { mood: next.mood || 'warm' }),
+      { width: dims.width, height: dims.height, seed: next.image_seed }
+    );
+    imageUrls = [url];
+    next.image_url = url;  // cache
   }
 
-  // 3) Create Buffer update
-  console.log(`[publish-buffer] scheduling on Buffer...`);
-  const update = await createUpdate({
-    profileIds: [profile.id],
-    text: next.caption + (next.hashtags?.length ? '\n\n' + next.hashtags.map((h) => `#${h}`).join(' ') : ''),
-    scheduledAt: next.scheduled_at,
-    imageUrl,
-    shorten: false,  // we already include UTM-tagged short URLs ourselves
+  // 3) Build caption (add hashtags inline for the platforms that want them)
+  const captionWithHashtags = next.caption + (next.hashtags?.length
+    ? '\n\n' + next.hashtags.map((h) => `#${h}`).join(' ')
+    : '');
+
+  // 4) Create post via Buffer GraphQL
+  console.log(`[publish-buffer] creating post...`);
+  const post = await createPost({
+    channelIds: [channel.id],
+    text: captionWithHashtags,
+    scheduledAt: next.scheduled_at || undefined,
+    imageUrls,
+    boardId: next.board_id || undefined,
+    now: next.now || false,
   });
 
-  // 4) Update queue
-  next.status = update.updates?.[0]?.status === 'pending' ? 'scheduled' : 'posted';
-  next.buffer_update_id = update.updates?.[0]?.id;
-  next.scheduled_at = update.updates?.[0]?.scheduled_at
-    ? new Date(update.updates[0].scheduled_at * 1000).toISOString()
-    : next.scheduled_at;
+  // 5) Update queue
+  next.status = post.status?.toLowerCase() === 'sent' ? 'posted' : 'scheduled';
+  next.buffer_post_id = post.id;
+  next.posted_at = post.scheduledAt || new Date().toISOString();
   await saveQueue(posts);
 
-  console.log(`[publish-buffer] ✓ scheduled: ${next.buffer_update_id} (${next.status})`);
+  console.log(`[publish-buffer] ✓ ${next.status}: ${post.id}`);
 }
 
 main().catch((e) => {
