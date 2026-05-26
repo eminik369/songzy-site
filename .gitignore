@@ -1,9 +1,14 @@
+.cache/
 .DS_Store
-node_modules/
 .env
 .env.local
+.env.vercel-import
+.env*
 .env*.local
-*.log
-npm-debug.log*
 .vercel
-.cache/
+*.log
+# Local generated video files (uploaded to Vercel Blob, not needed in git)
+content/social-queue/videos/_tmp_frames/
+content/social-queue/videos/*.mp4
+node_modules/
+npm-debug.log*

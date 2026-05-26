@@ -1,0 +1,92 @@
+[
+  {
+    "post_id": "tiktok-001",
+    "video_file": "content/social-queue/videos/short-001.mp4",
+    "audio_source": "golden-hour-rewrite",
+    "hook": "A song from\nyour love story",
+    "subhook": "Custom wedding & anniversary songs",
+    "cta": "From 19 EUR  songzy.eu",
+    "size_mb": "0.45"
+  },
+  {
+    "post_id": "tiktok-002",
+    "video_file": "content/social-queue/videos/short-002.mp4",
+    "audio_source": "golden-hour-rewrite",
+    "hook": "Their first dance,\nwritten from your story",
+    "subhook": "Custom wedding song. Ready in 2h.",
+    "cta": "songzy.eu",
+    "size_mb": "0.44"
+  },
+  {
+    "post_id": "tiktok-003",
+    "video_file": "content/social-queue/videos/short-003.mp4",
+    "audio_source": "those-hands",
+    "hook": "A song about your\n10 years together",
+    "subhook": "Custom anniversary songs",
+    "cta": "From 19 EUR  songzy.eu",
+    "size_mb": "0.84"
+  },
+  {
+    "post_id": "tiktok-004",
+    "video_file": "content/social-queue/videos/short-004.mp4",
+    "audio_source": "those-hands",
+    "hook": "For the partner who\nhas everything",
+    "subhook": "A custom song from your story",
+    "cta": "songzy.eu",
+    "size_mb": "0.84"
+  },
+  {
+    "post_id": "tiktok-005",
+    "video_file": "content/social-queue/videos/short-005.mp4",
+    "audio_source": "little-blue-steps",
+    "hook": "A song to play when\nwords arent enough",
+    "subhook": "Memorial tribute songs",
+    "cta": "songzy.eu",
+    "size_mb": "0.39"
+  },
+  {
+    "post_id": "tiktok-006",
+    "video_file": "content/social-queue/videos/short-006.mp4",
+    "audio_source": "muddy-paws",
+    "hook": "A birthday song for dad\nhell quietly replay",
+    "subhook": "Custom songs from your story",
+    "cta": "From 19 EUR  songzy.eu",
+    "size_mb": "0.51"
+  },
+  {
+    "post_id": "tiktok-007",
+    "video_file": "content/social-queue/videos/short-007.mp4",
+    "audio_source": "muddy-paws",
+    "hook": "No tie. No mug.\nA song.",
+    "subhook": "For dads who have everything",
+    "cta": "songzy.eu",
+    "size_mb": "0.50"
+  },
+  {
+    "post_id": "tiktok-008",
+    "video_file": "content/social-queue/videos/short-008.mp4",
+    "audio_source": "unbreakable-rooms",
+    "hook": "The gift theyll play\non repeat for a week",
+    "subhook": "Personalized songs from your words",
+    "cta": "From 19 EUR  songzy.eu",
+    "size_mb": "0.52"
+  },
+  {
+    "post_id": "tiktok-009",
+    "video_file": "content/social-queue/videos/short-009.mp4",
+    "audio_source": "unbreakable-rooms",
+    "hook": "Better than flowers.\nLasts longer than chocolate.",
+    "subhook": "A song from their story",
+    "cta": "songzy.eu",
+    "size_mb": "0.50"
+  },
+  {
+    "post_id": "tiktok-010",
+    "video_file": "content/social-queue/videos/short-010.mp4",
+    "audio_source": "golden-hour-rewrite",
+    "hook": "Your mums 70th.\nHer grandkids sang along.",
+    "subhook": "A song from her story. From 19 EUR.",
+    "cta": "songzy.eu",
+    "size_mb": "0.44"
+  }
+]
