@@ -57,7 +57,7 @@ export default async function handler(req, res) {
           `;
         }
         if (email) {
-          const briefUrl = `${process.env.SITE_URL || 'https://songzy.com'}/order-brief.html?session_id=${s.id}`;
+          const briefUrl = `${process.env.SITE_URL || 'https://songzy.eu'}/order-brief.html?session_id=${s.id}`;
           await send({
             to: email,
             subject: 'Your Songzy order — tell us the story',

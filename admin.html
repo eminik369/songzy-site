@@ -1,214 +1,694 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>Songzy — Admin</title>
+<title>Songzy · Admin</title>
 <link rel="icon" href="logo-songzy.jpg" type="image/jpeg">
 <script src="/api/env.js"></script>
 <script defer src="/scripts/analytics.js"></script>
 <style>
-  :root{--bg:#0f0f1a;--elev:#17172a;--elev2:#1f1f38;--txt:#f5f3ee;--mut:#a8a3b5;--line:#2c2c48;--pink:#E91E8C;--or:#FF6B35;--pu:#7B2FF7;--grad:linear-gradient(90deg,var(--or),var(--pink),var(--pu));}
-  *{box-sizing:border-box}html,body{margin:0;padding:0}
-  body{background:var(--bg);color:var(--txt);font:14px/1.55 -apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;min-height:100vh}
-  header{display:flex;align-items:center;justify-content:space-between;padding:14px 20px;border-bottom:1px solid var(--line);background:rgba(15,15,26,.9);backdrop-filter:blur(10px);position:sticky;top:0;z-index:10}
-  header h1{font:500 18px/1 Georgia,serif;margin:0}
-  header .muted{color:var(--mut);font-size:12px}
-  main{max-width:1300px;margin:0 auto;padding:24px 20px 60px}
-  .card{background:var(--elev);border:1px solid var(--line);border-radius:12px;padding:20px;margin-bottom:20px}
-  .card h2{font:500 16px/1.2 Georgia,serif;margin:0 0 12px}
-  label{display:block;font-size:12px;color:var(--mut);margin:10px 0 4px}
-  input,textarea,select{width:100%;background:var(--elev2);border:1px solid var(--line);color:var(--txt);padding:10px 12px;border-radius:8px;font:inherit}
-  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pink)}
-  textarea{min-height:80px;resize:vertical}
-  button{font:inherit;font-weight:600;padding:10px 18px;border:none;border-radius:999px;cursor:pointer;background:var(--grad);color:#fff}
-  button.ghost{background:transparent;color:var(--mut);border:1px solid var(--line)}
-  button:disabled{opacity:.5;cursor:not-allowed}
-  .row{display:flex;gap:10px;flex-wrap:wrap}
-  .row > *{flex:1;min-width:200px}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{text-align:left;padding:10px;border-bottom:1px solid var(--line);vertical-align:top}
-  th{color:var(--mut);font-weight:500;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
-  .pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:11px;font-weight:600}
-  .pill.pending{background:#2c2c48;color:#a8a3b5}
-  .pill.paid{background:rgba(255,107,53,.2);color:#ffc6a8}
+  :root{
+    --bg:#0a0a12; --panel:#13131f; --panel2:#1a1a2b; --panel3:#252542;
+    --txt:#f5f3ee; --mut:#8b8aa0; --mut2:#5e5d73; --line:#242437;
+    --pink:#E91E8C; --or:#FF6B35; --pu:#7B2FF7; --green:#30D98A; --red:#ff5a5a; --yellow:#ffb547;
+    --grad:linear-gradient(90deg,var(--or),var(--pink),var(--pu));
+    --shadow:0 1px 3px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.15);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{background:var(--bg);color:var(--txt);font:14px/1.55 -apple-system,BlinkMacSystemFont,'Inter','Segoe UI',Roboto,sans-serif;min-height:100vh;-webkit-font-smoothing:antialiased}
+
+  header{position:sticky;top:0;z-index:20;background:rgba(10,10,18,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+  .head-inner{max-width:1240px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:14px 24px;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font:500 17px/1 'Fraunces',Georgia,serif}
+  .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--grad)}
+  .head-actions{display:flex;align-items:center;gap:12px}
+  .head-actions .dot{width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 8px var(--green)}
+  .head-actions .dot.off{background:var(--mut2);box-shadow:none}
+  .head-actions .who{font-size:13px;color:var(--mut)}
+
+  main{max-width:1240px;margin:0 auto;padding:28px 24px 80px}
+
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;margin-bottom:22px;box-shadow:var(--shadow)}
+  .panel h2{font:500 19px/1.2 'Fraunces',Georgia,serif;margin:0 0 4px;display:flex;align-items:center;gap:10px}
+  .panel h2 .count{font:600 12px/1 -apple-system,sans-serif;background:var(--panel3);color:var(--mut);padding:5px 11px;border-radius:999px;letter-spacing:.04em}
+  .panel .sub{color:var(--mut);font-size:13px;margin:0 0 18px}
+
+  /* Stats */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:22px}
+  @media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+  .stat .k{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px}
+  .stat .v{font:500 24px/1 'Fraunces',Georgia,serif}
+  .stat .v.small{font-size:18px}
+  .stat .d{font-size:12px;color:var(--mut);margin-top:2px}
+
+  /* Form controls */
+  label{display:block;font-size:12px;color:var(--mut);margin:12px 0 6px;font-weight:500}
+  input,textarea,select{width:100%;background:var(--panel2);border:1px solid var(--line);color:var(--txt);padding:11px 13px;border-radius:8px;font:inherit;transition:border-color .15s}
+  input:hover,textarea:hover,select:hover{border-color:#30304d}
+  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pink);background:var(--panel3)}
+  textarea{min-height:120px;resize:vertical;font:13px/1.5 ui-monospace,'SF Mono',monospace}
+  input[type="file"]{padding:9px 13px}
+  input[type="file"]::file-selector-button{background:var(--panel3);color:var(--txt);border:1px solid var(--line);border-radius:6px;padding:6px 12px;margin-right:10px;cursor:pointer;font:inherit;font-weight:500}
+
+  /* Buttons */
+  .btn{font:inherit;font-weight:600;padding:11px 20px;border:none;border-radius:999px;cursor:pointer;background:var(--grad);color:#fff;transition:transform .1s, filter .15s;display:inline-flex;align-items:center;gap:6px}
+  .btn:hover{filter:brightness(1.1)}
+  .btn:active{transform:scale(.98)}
+  .btn.ghost{background:transparent;color:var(--mut);border:1px solid var(--line)}
+  .btn.ghost:hover{color:var(--txt);border-color:var(--mut)}
+  .btn.sm{padding:7px 13px;font-size:13px}
+  .btn:disabled{opacity:.5;cursor:not-allowed;filter:none}
+
+  .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+  /* Orders */
+  .toolbar{display:flex;gap:10px;margin-bottom:14px;align-items:center}
+  .toolbar .search{flex:1;max-width:360px}
+  .order-list{display:flex;flex-direction:column;gap:10px}
+  .order{background:var(--panel2);border:1px solid var(--line);border-radius:12px;transition:all .15s;overflow:hidden}
+  .order:hover{border-color:#3d3d62}
+  .order.open{border-color:var(--pink);box-shadow:0 0 0 1px var(--pink) inset}
+  .order-head{display:grid;grid-template-columns:130px 120px 1fr 1fr 100px 28px;gap:14px;align-items:center;padding:14px 18px;cursor:pointer;user-select:none}
+  @media (max-width:820px){
+    .order-head{grid-template-columns:1fr auto;gap:6px 12px}
+    .order-head .when{order:1;font-size:11px}
+    .order-head .status{order:2;justify-self:end}
+    .order-head .tier{order:3;font-size:13px}
+    .order-head .email{order:4;justify-self:end;max-width:60%}
+    .order-head .amount{order:5;font-size:12px}
+    .order-head .chev{order:6;justify-self:end}
+  }
+  .order-head .when{font-size:12px;color:var(--mut);line-height:1.3}
+  .order-head .when .new-badge{display:inline-block;background:var(--green);color:#052b14;font-weight:700;font-size:10px;padding:1px 6px;border-radius:999px;margin-right:5px;vertical-align:1px}
+  .order-head .tier{font-weight:600;text-transform:capitalize}
+  .order-head .tier .addon{display:block;font-size:11px;color:var(--mut);font-weight:400;margin-top:2px}
+  .order-head .email{font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mut)}
+  .order-head .amount{text-align:right;font-variant-numeric:tabular-nums;font-weight:500}
+  .order-head .chev{color:var(--mut);transition:transform .2s;text-align:center;font-size:14px}
+  .order.open .chev{transform:rotate(90deg);color:var(--pink)}
+  .order-body{display:none;padding:18px;border-top:1px solid var(--line);background:var(--panel)}
+  .order.open .order-body{display:block}
+
+  /* Detail grid */
+  .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px}
+  @media (max-width:720px){.detail-grid{grid-template-columns:1fr}}
+  .detail{background:var(--panel2);border:1px solid var(--line);border-radius:8px;padding:10px 13px}
+  .detail .k{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-bottom:3px;font-weight:500}
+  .detail .v{font-size:13px;color:var(--txt);white-space:pre-wrap;word-break:break-word;line-height:1.5}
+  .detail.full{grid-column:1 / -1}
+  .detail.empty .v{color:var(--mut2);font-style:italic}
+  .detail.highlight{border-color:rgba(233,30,140,.4);background:rgba(233,30,140,.05)}
+
+  .section-label{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.1em;margin:20px 0 10px;font-weight:600;display:flex;align-items:center;gap:10px}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--line)}
+
+  /* Pills */
+  .pill{display:inline-block;padding:4px 11px;border-radius:999px;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em}
+  .pill.pending{background:#232338;color:#a8a3b5}
+  .pill.paid{background:rgba(255,181,71,.18);color:#ffcd7a}
+  .pill.brief_received{background:rgba(123,47,247,.2);color:#c6a8ff}
   .pill.in_production{background:rgba(233,30,140,.2);color:#ff99cd}
-  .pill.delivered{background:rgba(48,217,138,.2);color:#8cf0bd}
-  .pill.refunded,.pill.failed{background:rgba(255,90,90,.2);color:#ffa6a6}
-  code{font:12px/1.4 ui-monospace,'SF Mono',monospace;background:var(--elev2);padding:2px 6px;border-radius:4px;color:#cfc9d6}
-  details{margin-top:6px}
-  details summary{cursor:pointer;color:var(--mut);font-size:12px}
-  .err{color:#ff9090;font-size:13px;margin-top:10px}
-  .ok{color:#8cf0bd;font-size:13px;margin-top:10px}
+  .pill.delivered{background:rgba(48,217,138,.18);color:#8cf0bd}
+  .pill.refunded,.pill.failed{background:rgba(255,90,90,.18);color:#ffa6a6}
+
+  /* Deliver form */
+  .deliver-form{margin-top:22px;padding:18px;background:var(--panel2);border:1px dashed var(--line);border-radius:10px}
+  .deliver-form h3{font:500 15px/1 'Fraunces',Georgia,serif;margin:0 0 12px;display:flex;align-items:center;gap:8px}
+  .deliver-form .actions{margin-top:16px;display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+  .deliver-form .form-help{font-size:12px;color:var(--mut);margin-top:4px}
+
+  .delivery-box{margin-top:14px;padding:14px;background:rgba(48,217,138,.06);border:1px solid rgba(48,217,138,.35);border-radius:10px}
+  .delivery-box .title{font-weight:600;color:#8cf0bd;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .delivery-box a{color:#a8f0c6;word-break:break-all;text-decoration:none;border-bottom:1px dashed rgba(168,240,198,.4)}
+  .delivery-box .mp3-link{margin-top:6px;font-size:13px}
+
+  .empty{text-align:center;padding:40px 20px;color:var(--mut);font-size:13px;background:var(--panel2);border-radius:10px;border:1px dashed var(--line)}
+  .empty .big{font-size:30px;margin-bottom:10px;filter:grayscale(1);opacity:.5}
+
+  /* Login */
+  .login-wrap{max-width:420px;margin:60px auto 0}
+
+  /* Toast */
+  #toast{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:100}
+  .toast{background:var(--panel3);border:1px solid var(--line);padding:12px 16px;border-radius:10px;box-shadow:var(--shadow);min-width:240px;max-width:360px;font-size:13px;animation:slide .25s ease-out}
+  .toast.ok{border-left:3px solid var(--green)}
+  .toast.err{border-left:3px solid var(--red)}
+  .toast.info{border-left:3px solid var(--pink)}
+  @keyframes slide{from{transform:translateX(20px);opacity:0}to{transform:translateX(0);opacity:1}}
+
+  .msg{font-size:13px;margin-top:10px}
+  .msg.ok{color:#8cf0bd}
+  .msg.err{color:#ff9090}
+
+  code{font:12px/1.4 ui-monospace,'SF Mono',monospace;background:var(--panel3);padding:2px 7px;border-radius:4px;color:#cfc9d6;word-break:break-all}
+
+  /* Copy button */
+  .copy-btn{background:none;border:1px solid var(--line);color:var(--mut);padding:5px 10px;border-radius:6px;font:inherit;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
+  .copy-btn:hover{border-color:var(--pink);color:var(--pink)}
+  .copy-btn.copied{border-color:var(--green);color:var(--green)}
+
+  .loading{display:inline-flex;align-items:center;gap:8px;color:var(--mut);font-size:13px}
+  .spinner{width:14px;height:14px;border:2px solid var(--line);border-top-color:var(--pink);border-radius:50%;animation:spin .8s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* Song library */
+  .song-lib-list{display:flex;flex-direction:column;gap:14px}
+  .song-lib-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:18px}
+  .song-lib-card .title-row{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;flex-wrap:wrap;margin-bottom:10px}
+  .song-lib-card .song-title{font:500 16px/1.2 'Fraunces',Georgia,serif;margin:0}
+  .song-lib-card .song-meta{font-size:12px;color:var(--mut);margin:3px 0 0}
+  .song-lib-card .song-tags{display:flex;gap:6px;flex-wrap:wrap}
+  .song-lib-card .song-tag{background:var(--panel3);color:var(--mut);padding:3px 9px;border-radius:999px;font-size:11px;font-weight:500}
+  .song-lib-card .song-tag.use{background:rgba(233,30,140,.12);color:#ff99cd}
+  .song-lib-card .field-block{margin-top:10px}
+  .song-lib-card .field-label{font-size:11px;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin:0 0 5px;font-weight:500;display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .song-lib-card .field-box{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:11px/1.5 ui-monospace,'SF Mono',monospace;color:#d8d2e6;white-space:pre-wrap;word-break:break-word;max-height:200px;overflow-y:auto}
+  .song-lib-card audio{width:100%;margin-top:8px;filter:invert(.85) sepia(.1)}
+  .song-lib-card .copy-btn{background:var(--panel3);border:1px solid var(--line);color:var(--txt);padding:4px 10px;border-radius:6px;font:inherit;font-size:11px;font-weight:500;cursor:pointer;transition:all .15s}
+  .song-lib-card .copy-btn:hover{border-color:var(--pink);color:var(--pink)}
+  .song-lib-card .copy-btn.copied{background:rgba(48,217,138,.12);border-color:var(--green);color:var(--green)}
+
+  /* Voice library */
+  .voice-lib-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}
+  @media (max-width:820px){.voice-lib-grid{grid-template-columns:1fr}}
+  .voice-lib-card{background:var(--panel2);border:1px solid var(--line);border-radius:12px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+  .voice-lib-card .avatar{width:72px;height:72px;border-radius:50%;overflow:hidden;flex:none;border:2px solid var(--line)}
+  .voice-lib-card .avatar img{width:100%;height:100%;object-fit:cover}
+  .voice-lib-card .info{flex:1;min-width:0}
+  .voice-lib-card .name{font:500 16px/1.2 'Fraunces',Georgia,serif;margin:0}
+  .voice-lib-card .meta{font-size:12px;color:var(--mut);margin:3px 0 8px}
+  .voice-lib-card .desc{font-size:12px;color:var(--txt);line-height:1.5;margin:0 0 10px;opacity:.85}
+  .voice-lib-card .prompt{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:10px 12px;font:11px/1.45 ui-monospace,'SF Mono',monospace;color:#d8d2e6;white-space:pre-wrap;word-break:break-word;max-height:130px;overflow-y:auto;margin-bottom:8px}
+  .voice-lib-card .copy-prompt{background:var(--panel3);border:1px solid var(--line);color:var(--txt);padding:6px 12px;border-radius:6px;font:inherit;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s}
+  .voice-lib-card .copy-prompt:hover{border-color:var(--pink);color:var(--pink)}
+  .voice-lib-card .copy-prompt.copied{background:rgba(48,217,138,.12);border-color:var(--green);color:var(--green)}
 </style>
 </head>
 <body>
+
 <header>
-  <h1>Songzy — Admin</h1>
-  <div class="muted" id="status">Not signed in</div>
+  <div class="head-inner">
+    <div class="logo"><span class="logo-dot"></span> Songzy <span style="color:var(--mut);font-weight:400;font-size:13px;font-family:-apple-system,sans-serif">· admin</span></div>
+    <div class="head-actions">
+      <div id="statusIndicator" class="head-actions"><span class="dot off" id="liveDot"></span><span class="who" id="status">Offline</span></div>
+      <button class="btn ghost sm" id="logoutBtn" style="display:none">Esci</button>
+    </div>
+  </div>
 </header>
+
 <main>
 
-  <section class="card" id="login-card">
-    <h2>Sign in</h2>
-    <p class="muted" style="margin:0 0 12px;font-size:13px">Use the <code>ADMIN_PASSWORD</code> set in Vercel env.</p>
+  <section class="panel login-wrap" id="login-card">
+    <h2>Accedi</h2>
+    <p class="sub">Inserisci la password admin (<code>ADMIN_PASSWORD</code>).</p>
     <label for="pw">Password</label>
-    <input id="pw" type="password" autocomplete="current-password">
+    <input id="pw" type="password" autocomplete="current-password" autofocus>
     <div class="row" style="margin-top:14px">
-      <button id="loginBtn">Sign in</button>
-      <button class="ghost" id="logoutBtn" style="display:none">Sign out</button>
+      <button class="btn" id="loginBtn">Sign in</button>
     </div>
-    <div id="loginMsg"></div>
+    <div id="loginMsg" class="msg"></div>
   </section>
 
-  <section class="card" id="orders-card" style="display:none">
-    <h2>Recent orders</h2>
-    <div class="row" style="justify-content:flex-end;margin-bottom:10px">
-      <button class="ghost" id="refreshBtn" style="flex:0 0 auto">Refresh</button>
-    </div>
-    <div style="overflow-x:auto"><table id="ordersTable"><thead><tr>
-      <th>When</th><th>Status</th><th>Tier</th><th>Email</th><th>Recipient</th>
-      <th>Voice</th><th>Genre</th><th>Brief</th><th>Delivery</th>
-    </tr></thead><tbody id="ordersBody"></tbody></table></div>
-    <div id="ordersMsg" class="err"></div>
-  </section>
+  <div id="adminArea" style="display:none">
 
-  <section class="card" id="deliver-card" style="display:none">
-    <h2>Upload MP3 + deliver</h2>
-    <p class="muted" style="margin:0 0 12px;font-size:13px">Pick an order, attach the MP3 (or paste a URL), add lyrics, and ship it. The customer gets an email with the unlisted share link.</p>
-    <label for="dOrder">Order</label>
-    <select id="dOrder"></select>
-    <label for="dMp3">MP3 file</label>
-    <input id="dMp3" type="file" accept="audio/mpeg,audio/mp3">
-    <label for="dMp3Url">…or MP3 URL (if already hosted)</label>
-    <input id="dMp3Url" type="url" placeholder="https://...">
-    <label for="dCover">Cover image URL (optional)</label>
-    <input id="dCover" type="url" placeholder="https://...">
-    <label for="dLyrics">Lyrics</label>
-    <textarea id="dLyrics" placeholder="Verse 1..."></textarea>
-    <div class="row" style="margin-top:14px">
-      <button id="deliverBtn" style="flex:0 0 auto">Ship it</button>
+    <div class="stats">
+      <div class="stat"><div class="k">Da lavorare</div><div class="v" id="statTodo">0</div><div class="d">ordini in coda</div></div>
+      <div class="stat"><div class="k">Incassato oggi</div><div class="v" id="statTodayRev">€0</div><div class="d" id="statTodayN">0 ordini</div></div>
+      <div class="stat"><div class="k">Totale consegnate</div><div class="v" id="statDelivered">0</div><div class="d">canzoni inviate</div></div>
+      <div class="stat"><div class="k">Totale incassato</div><div class="v small" id="statAllRev">€0</div><div class="d" id="statAllN">0 ordini pagati</div></div>
     </div>
-    <div id="deliverMsg"></div>
-  </section>
+
+    <section class="panel" id="todo-card">
+      <h2>🎯 Da lavorare <span class="count" id="todoCount">0</span></h2>
+      <p class="sub">Ordini pagati in attesa di consegna. Clicca una riga per vedere il brief e caricare la canzone.</p>
+      <div class="toolbar">
+        <input type="search" class="search" id="searchBox" placeholder="🔎 Cerca per email, nome, occasione…">
+        <button class="btn ghost sm" id="refreshBtn">↻ Refresh</button>
+      </div>
+      <div class="order-list" id="todoList"></div>
+      <div class="empty" id="todoEmpty" style="display:none">
+        <div class="big">✨</div>
+        <div>Nessun ordine da lavorare.</div>
+        <div style="font-size:12px;margin-top:4px">Quando un cliente paga lo vedi qui in tempo reale.</div>
+      </div>
+    </section>
+
+    <section class="panel" id="done-card">
+      <h2>✅ Completati <span class="count" id="doneCount">0</span></h2>
+      <p class="sub">Consegnati, rimborsati, falliti. Clicca per rivedere i dettagli e il link canzone.</p>
+      <div class="order-list" id="doneList"></div>
+      <div class="empty" id="doneEmpty" style="display:none">
+        <div class="big">📦</div>
+        <div>Ancora nessun ordine completato.</div>
+      </div>
+    </section>
+
+    <section class="panel" id="voice-lib-card">
+      <h2>🎤 Voice Library</h2>
+      <p class="sub">Le 6 voci del checkout con il prompt esatto per ricrearle sempre identiche. Click "Copia prompt" → incolla nello <i>Style</i> del generatore (Suno / Artlist Lyria / Udio).</p>
+      <div class="voice-lib-grid" id="voiceLibGrid"></div>
+    </section>
+
+  </div>
 
 </main>
+
+<div id="toast"></div>
+
 <script>
 (function(){
   'use strict';
   var TOKEN_KEY = 'songzy_admin_token';
   var tokenCache = '';
+  var ORDERS = [];
+  var openOrderId = null;
+  var searchQ = '';
+  var pollTimer = null;
+  var lastSeenIds = new Set();
 
-  function setStatus(t){ document.getElementById('status').textContent = t; }
+  var TODO_STATUSES = ['pending','paid','brief_received','in_production'];
+  var DONE_STATUSES = ['delivered','refunded','failed'];
+
   function authHeader(){ return 'Basic ' + btoa('admin:' + tokenCache); }
+  function setStatus(t, live){
+    document.getElementById('status').textContent = t;
+    document.getElementById('liveDot').classList.toggle('off', !live);
+  }
+  function showMsg(el, msg, ok){ el.textContent = msg || ''; el.className = 'msg ' + (ok ? 'ok' : 'err'); }
+  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
+  function fmt(d){ try { return new Date(d).toLocaleString('it-IT',{day:'2-digit',month:'short',year:'2-digit',hour:'2-digit',minute:'2-digit'}); } catch(e){ return d || ''; } }
+  function fmtDate(d){ try { return new Date(d).toLocaleDateString('it-IT',{day:'2-digit',month:'short'}); } catch(e){ return d; } }
+  function money(a,c){ if (a==null) return '—'; try { return new Intl.NumberFormat('it-IT',{style:'currency',currency:(c||'eur').toUpperCase()}).format(a/100); } catch(e){ return (a/100)+' €'; } }
+  function isRecent(d){ try { return (Date.now() - new Date(d).getTime()) < 3600*1000; } catch(e){ return false; } }
+  function today(d){ try { var x=new Date(d), t=new Date(); return x.toDateString()===t.toDateString(); } catch(e){ return false; } }
 
-  function showMsg(el, msg, ok){
-    el.textContent = msg || ''; el.className = ok ? 'ok' : 'err';
+  function toast(msg, kind){
+    var el = document.createElement('div');
+    el.className = 'toast ' + (kind||'info');
+    el.textContent = msg;
+    document.getElementById('toast').appendChild(el);
+    setTimeout(function(){ el.style.transition='opacity .3s'; el.style.opacity='0'; setTimeout(function(){ el.remove(); },300); }, 3800);
   }
 
   function signedIn(ok){
-    document.getElementById('orders-card').style.display  = ok ? 'block' : 'none';
-    document.getElementById('deliver-card').style.display = ok ? 'block' : 'none';
-    document.getElementById('logoutBtn').style.display    = ok ? 'inline-block' : 'none';
-    document.getElementById('loginBtn').style.display     = ok ? 'none' : 'inline-block';
-    if (ok) { setStatus('Signed in'); loadOrders(); } else setStatus('Not signed in');
+    document.getElementById('login-card').style.display = ok ? 'none' : 'block';
+    document.getElementById('adminArea').style.display = ok ? 'block' : 'none';
+    document.getElementById('logoutBtn').style.display = ok ? 'inline-flex' : 'none';
+    if (ok) {
+      setStatus('Live · polling ogni 60s', true);
+      loadOrders(true);
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = setInterval(function(){
+        if (openOrderId) return; // non refresh-are quando stai editando un ordine
+        loadOrders(false);
+      }, 60000);
+    } else {
+      setStatus('Offline', false);
+      if (pollTimer) clearInterval(pollTimer);
+    }
   }
 
-  document.getElementById('loginBtn').onclick = function(){
+  document.getElementById('loginBtn').onclick = doLogin;
+  document.getElementById('pw').onkeydown = function(e){ if (e.key === 'Enter') doLogin(); };
+  function doLogin(){
     var pw = document.getElementById('pw').value.trim();
     if (!pw) return;
     tokenCache = pw;
+    var msg = document.getElementById('loginMsg');
+    msg.textContent = 'Verifica…'; msg.className = 'msg';
     fetch('/api/admin/orders', { headers: { Authorization: authHeader() } })
       .then(function(r){
-        if (r.status === 401) { showMsg(document.getElementById('loginMsg'), 'Wrong password', false); return; }
-        if (!r.ok) { showMsg(document.getElementById('loginMsg'), 'Server error ' + r.status, false); return; }
+        if (r.status === 401) { showMsg(msg, 'Password errata', false); return; }
+        if (!r.ok) { showMsg(msg, 'Errore server ' + r.status, false); return; }
         try { sessionStorage.setItem(TOKEN_KEY, pw); } catch(e){}
         document.getElementById('pw').value = '';
-        showMsg(document.getElementById('loginMsg'), 'OK', true);
         signedIn(true);
       })
-      .catch(function(e){ showMsg(document.getElementById('loginMsg'), e.message, false); });
-  };
+      .catch(function(e){ showMsg(msg, e.message, false); });
+  }
 
   document.getElementById('logoutBtn').onclick = function(){
     try { sessionStorage.removeItem(TOKEN_KEY); } catch(e){}
     tokenCache = ''; signedIn(false);
   };
 
-  document.getElementById('refreshBtn').onclick = loadOrders;
+  document.getElementById('refreshBtn').onclick = function(){ loadOrders(true); toast('Aggiornato', 'info'); };
+  document.getElementById('searchBox').oninput = function(e){ searchQ = e.target.value.toLowerCase(); render(); };
 
-  function esc(s){ return (s==null?'':String(s)).replace(/[&<>"']/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]; }); }
-  function fmt(d){ try { return new Date(d).toLocaleString(); } catch(e){ return d || ''; } }
-
-  function loadOrders(){
-    var msg = document.getElementById('ordersMsg'); msg.textContent = 'Loading…'; msg.className = '';
+  function loadOrders(firstLoad){
     fetch('/api/admin/orders', { headers: { Authorization: authHeader() } })
-      .then(function(r){ return r.json(); })
+      .then(function(r){ if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
       .then(function(d){
-        if (!d.orders) { showMsg(msg, d.error || 'No data', false); return; }
-        msg.textContent = '';
-        var body = document.getElementById('ordersBody');
-        body.innerHTML = d.orders.map(function(o){
-          var briefRows = [
-            o.occasion     ? '<div><b>Occasion:</b> '   + esc(o.occasion) + '</div>' : '',
-            o.story_1      ? '<div><b>Adjectives:</b> ' + esc(o.story_1)  + '</div>' : '',
-            o.story_2      ? '<div><b>Memory:</b> '     + esc(o.story_2)  + '</div>' : '',
-            o.story_3      ? '<div><b>Emotion:</b> '    + esc(o.story_3)  + '</div>' : '',
-            o.tempo        ? '<div><b>Tempo:</b> '      + esc(o.tempo)    + '</div>' : '',
-            o.gift_message ? '<div><b>Gift msg:</b> '   + esc(o.gift_message) + '</div>' : ''
-          ].filter(Boolean).join('');
-          var delivery = o.share_slug
-            ? '<a href="/m/'+esc(o.share_slug)+'" target="_blank">/m/'+esc(o.share_slug)+'</a>'
-            : '<span class="muted">—</span>';
-          return '<tr>' +
-            '<td>'+esc(fmt(o.created_at))+'</td>' +
-            '<td><span class="pill '+esc(o.status)+'">'+esc(o.status)+'</span></td>' +
-            '<td>'+esc(o.tier)+'<div class="muted" style="font-size:11px">'+(o.addons||[]).map(esc).join(', ')+'</div></td>' +
-            '<td>'+esc(o.customer_email||'')+'</td>' +
-            '<td>'+esc(o.recipient_name||'')+'</td>' +
-            '<td>'+esc(o.voice_slug||'')+'</td>' +
-            '<td>'+esc(o.genre||'')+'</td>' +
-            '<td>'+(briefRows ? '<details><summary>View</summary>'+briefRows+'</details>' : '<span class="muted">—</span>')+'</td>' +
-            '<td>'+delivery+'<div class="muted" style="font-size:11px">'+esc(o.id)+'</div></td>' +
-            '</tr>';
-        }).join('');
-        var sel = document.getElementById('dOrder');
-        sel.innerHTML = '<option value="">— pick an order —</option>' +
-          d.orders.filter(function(o){ return o.status !== 'delivered'; })
-            .map(function(o){ return '<option value="'+esc(o.id)+'">'+esc(o.created_at)+' — '+esc(o.tier)+' — '+esc(o.customer_email||'(no email)')+'</option>'; }).join('');
+        if (!d.orders) return;
+        // Detect new orders (since last poll)
+        if (!firstLoad) {
+          d.orders.forEach(function(o){
+            if (!lastSeenIds.has(o.id) && TODO_STATUSES.indexOf(o.status) >= 0) {
+              toast('🔔 Nuovo ordine: ' + (o.customer_email || o.tier), 'ok');
+            }
+          });
+        }
+        lastSeenIds = new Set(d.orders.map(function(o){ return o.id; }));
+        ORDERS = d.orders;
+        render();
       })
-      .catch(function(e){ showMsg(msg, e.message, false); });
+      .catch(function(e){ setStatus('Errore: ' + e.message, false); });
   }
 
-  document.getElementById('deliverBtn').onclick = function(){
-    var msg = document.getElementById('deliverMsg'); showMsg(msg, 'Uploading…', true);
-    var orderId = document.getElementById('dOrder').value;
-    if (!orderId) { showMsg(msg, 'Pick an order', false); return; }
-    var file = document.getElementById('dMp3').files[0];
-    var mp3Url = document.getElementById('dMp3Url').value.trim();
-    if (!file && !mp3Url) { showMsg(msg, 'Attach an MP3 or paste a URL', false); return; }
-    var fd = new FormData();
-    fd.append('orderId', orderId);
-    fd.append('lyrics', document.getElementById('dLyrics').value);
-    fd.append('coverUrl', document.getElementById('dCover').value);
-    if (file) fd.append('mp3', file);
-    else fd.append('mp3Url', mp3Url);
-    fetch('/api/admin/deliver', { method: 'POST', headers: { Authorization: authHeader() }, body: fd })
-      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, d: d }; }); })
-      .then(function(r){
-        if (!r.ok) { showMsg(msg, r.d.error || 'Upload failed', false); return; }
-        showMsg(msg, 'Shipped. Share: ' + r.d.shareUrl, true);
-        loadOrders();
-      })
-      .catch(function(e){ showMsg(msg, e.message, false); });
-  };
+  function matchesSearch(o){
+    if (!searchQ) return true;
+    var hay = [o.customer_email, o.customer_name, o.tier, o.occasion, o.recipient_name, o.voice_slug, o.genre, o.story_1, o.story_2, o.story_3, o.gift_message].join(' ').toLowerCase();
+    return hay.indexOf(searchQ) >= 0;
+  }
 
-  // Restore session
+  function render(){
+    var todo = ORDERS.filter(function(o){ return TODO_STATUSES.indexOf(o.status) >= 0 && matchesSearch(o); });
+    var done = ORDERS.filter(function(o){ return DONE_STATUSES.indexOf(o.status) >= 0 && matchesSearch(o); });
+    document.getElementById('todoCount').textContent = todo.length;
+    document.getElementById('doneCount').textContent = done.length;
+    document.getElementById('todoEmpty').style.display = todo.length ? 'none' : 'block';
+    document.getElementById('doneEmpty').style.display = done.length ? 'none' : 'block';
+    document.getElementById('todoList').innerHTML = todo.map(renderOrder).join('');
+    document.getElementById('doneList').innerHTML = done.map(renderOrder).join('');
+
+    // Stats
+    var paidOrDone = ORDERS.filter(function(o){ return o.status !== 'pending' && o.status !== 'failed'; });
+    var allTodo = ORDERS.filter(function(o){ return TODO_STATUSES.indexOf(o.status) >= 0; });
+    var todayOrders = paidOrDone.filter(function(o){ return today(o.created_at); });
+    var deliveredCount = ORDERS.filter(function(o){ return o.status === 'delivered'; }).length;
+    var todayRev = todayOrders.reduce(function(a,o){ return a + (o.amount_total||0); }, 0);
+    var allRev = paidOrDone.reduce(function(a,o){ return a + (o.amount_total||0); }, 0);
+    document.getElementById('statTodo').textContent = allTodo.length;
+    document.getElementById('statTodayRev').textContent = money(todayRev, paidOrDone[0] && paidOrDone[0].currency);
+    document.getElementById('statTodayN').textContent = todayOrders.length + ' ordini';
+    document.getElementById('statDelivered').textContent = deliveredCount;
+    document.getElementById('statAllRev').textContent = money(allRev, paidOrDone[0] && paidOrDone[0].currency);
+    document.getElementById('statAllN').textContent = paidOrDone.length + ' ordini pagati';
+
+    attachClicks();
+  }
+
+  function renderOrder(o){
+    var isOpen = o.id === openOrderId;
+    var addonStr = (o.addons||[]).length ? '+ ' + (o.addons||[]).length + ' add-on' : '';
+    var newBadge = isRecent(o.created_at) ? '<span class="new-badge">NEW</span>' : '';
+    return ''
+      + '<article class="order'+(isOpen?' open':'')+'" data-id="'+esc(o.id)+'">'
+      +   '<div class="order-head">'
+      +     '<div class="when">'+newBadge+esc(fmt(o.created_at))+'</div>'
+      +     '<div class="status"><span class="pill '+esc(o.status)+'">'+esc(o.status.replace(/_/g,' '))+'</span></div>'
+      +     '<div class="tier">'+esc(o.tier||'—')+(addonStr?'<span class="addon">'+esc(addonStr)+'</span>':'')+'</div>'
+      +     '<div class="email">'+esc(o.customer_email||'—')+'</div>'
+      +     '<div class="amount">'+money(o.amount_total,o.currency)+'</div>'
+      +     '<div class="chev">▸</div>'
+      +   '</div>'
+      +   '<div class="order-body">'+(isOpen ? renderBody(o) : '')+'</div>'
+      + '</article>';
+  }
+
+  function briefText(o){
+    var parts = [];
+    if (o.occasion) parts.push('Occasione: ' + o.occasion);
+    if (o.recipient_name) parts.push('Per: ' + o.recipient_name);
+    if (o.voice_slug) parts.push('Voce: ' + o.voice_slug);
+    if (o.genre) parts.push('Genere: ' + o.genre);
+    if (o.mood) parts.push('Mood: ' + o.mood);
+    if (o.tempo) parts.push('Tempo: ' + o.tempo);
+    if (o.story_1) parts.push('Aggettivi: ' + o.story_1);
+    if (o.story_2) parts.push('Ricordo/storia: ' + o.story_2);
+    if (o.story_3) parts.push('Emozione voluta: ' + o.story_3);
+    if (o.gift_message) parts.push('Messaggio regalo: ' + o.gift_message);
+    return parts.join('\n');
+  }
+
+  function renderBody(o){
+    var hasBrief = !!(o.occasion || o.story_1 || o.story_2 || o.story_3 || o.recipient_name);
+
+    var infoHtml = ''
+      + '<div class="detail-grid">'
+      +   '<div class="detail"><div class="k">Cliente</div><div class="v"><a href="mailto:'+esc(o.customer_email||'')+'" style="color:var(--pink);text-decoration:none">'+esc(o.customer_email||'—')+'</a></div></div>'
+      +   '<div class="detail"><div class="k">Totale pagato</div><div class="v" style="font-weight:600">'+money(o.amount_total,o.currency)+'</div></div>'
+      +   '<div class="detail"><div class="k">Data</div><div class="v">'+esc(fmt(o.created_at))+'</div></div>'
+      +   '<div class="detail"><div class="k">Status</div><div class="v"><span class="pill '+esc(o.status)+'">'+esc(o.status.replace(/_/g,' '))+'</span></div></div>'
+      +   '<div class="detail full"><div class="k">Stripe session</div><div class="v"><code>'+esc(o.stripe_session_id||'—')+'</code></div></div>'
+      +   '<div class="detail full"><div class="k">Ordine ID</div><div class="v"><code>'+esc(o.id)+'</code></div></div>'
+      + '</div>';
+
+    var briefFields = [
+      ['Occasione', o.occasion, false],
+      ['Destinatario', o.recipient_name, false],
+      ['Voce (voice)', o.voice_slug, false],
+      ['Genere', o.genre, false],
+      ['Mood', o.mood, false],
+      ['Tempo', o.tempo, false],
+      ['Sorpresa?', o.is_surprise == null ? null : (o.is_surprise ? 'Sì — tenere segreto' : 'No — il destinatario sa'), false],
+      ['3 aggettivi sul destinatario', o.story_1, true],
+      ['Ricordo o storia specifica', o.story_2, true],
+      ['Emozione desiderata', o.story_3, true],
+      ['Messaggio regalo', o.gift_message, true],
+    ];
+
+    var briefHtml = '';
+    if (hasBrief) {
+      briefHtml = '<div class="detail-grid">' + briefFields.map(function(f){
+        var empty = !f[1];
+        return '<div class="detail'+(f[2]?' full':'')+(empty?' empty':'')+(f[2]&&f[1]?' highlight':'')+'">'
+          + '<div class="k">'+esc(f[0])+'</div>'
+          + '<div class="v">'+(empty ? '— non fornito' : esc(f[1]))+'</div>'
+          + '</div>';
+      }).join('') + '</div>';
+    } else {
+      briefHtml = '<div class="empty" style="margin:0"><div>Il cliente non ha ancora compilato il brief.</div><div style="font-size:12px;margin-top:6px">Appena lo fa, ricevi email e vedrai i dettagli qui.</div></div>';
+    }
+
+    var deliveryBox = '';
+    if (o.share_slug) {
+      var url = location.origin + '/m/' + o.share_slug;
+      deliveryBox = '<div class="delivery-box">'
+        + '<div class="title">✓ Canzone consegnata</div>'
+        + '<div><b>Link pubblico:</b> <a href="/m/'+esc(o.share_slug)+'" target="_blank">'+esc(url)+'</a></div>'
+        + (o.mp3_url ? '<div class="mp3-link"><b>MP3:</b> <a href="'+esc(o.mp3_url)+'" target="_blank">scarica</a></div>' : '')
+        + (o.delivered_at ? '<div class="mp3-link" style="color:var(--mut)">Consegnato il '+esc(fmt(o.delivered_at))+'</div>' : '')
+        + '</div>';
+    }
+
+    var isDone = DONE_STATUSES.indexOf(o.status) >= 0;
+    var deliverForm = '';
+    if (!isDone) {
+      var briefReady = hasBrief;
+      deliverForm = ''
+        + '<div class="deliver-form">'
+        +   '<h3>🚀 Consegna la canzone</h3>'
+        +   (briefReady
+              ? '<p class="form-help" style="margin:0 0 10px">Workflow: copia il brief qui sopra → generi la canzone su Suno → carichi MP3 qui sotto → clicchi "Ship it". Il cliente riceve subito email con il link.</p>'
+              : '<p class="form-help" style="margin:0 0 10px;color:var(--yellow)">⚠️ Il cliente non ha ancora compilato il brief. Aspetta l\'email "Brief ricevuto" prima di consegnare.</p>')
+        +   '<label>File MP3 <span style="color:var(--mut)">(max ~20MB)</span></label>'
+        +   '<input type="file" class="d-mp3" accept="audio/mpeg,audio/mp3">'
+        +   '<label>…oppure URL MP3 già hostato</label>'
+        +   '<input type="text" class="d-mp3url" placeholder="(lascia vuoto se carichi il file sopra)">'
+        +   '<label>URL immagine copertina <span style="color:var(--mut)">(opzionale)</span></label>'
+        +   '<input type="text" class="d-cover" placeholder="(opzionale — lascia vuoto)">'
+        +   '<label>Testo della canzone (lyrics)</label>'
+        +   '<textarea class="d-lyrics" placeholder="[Verse 1]\nLa prima strofa…\n\n[Chorus]\nIl ritornello…"></textarea>'
+        +   '<div class="actions">'
+        +     '<div class="form-help">Verrà mandata email al cliente con il link <code>/m/&lt;slug&gt;</code>.</div>'
+        +     '<div class="row" style="flex:0 0 auto">'
+        +       '<button type="button" class="btn ghost sm d-cancel">Chiudi</button>'
+        +       '<button type="button" class="btn d-submit">🚀 Ship it</button>'
+        +     '</div>'
+        +   '</div>'
+        +   '<div class="d-msg msg"></div>'
+        + '</div>';
+    }
+
+    return ''
+      + '<div class="section-label">📋 Info ordine</div>'
+      + infoHtml
+      + '<div class="section-label">'
+      +   '✍️ Brief del cliente'
+      +   (hasBrief ? '<button class="copy-btn" data-copy-brief>📋 Copia per Suno</button>' : '')
+      + '</div>'
+      + briefHtml
+      + deliveryBox
+      + deliverForm;
+  }
+
+  function attachClicks(){
+    document.querySelectorAll('.order').forEach(function(el){
+      var id = el.getAttribute('data-id');
+      var head = el.querySelector('.order-head');
+      head.onclick = function(){
+        openOrderId = (openOrderId === id) ? null : id;
+        render();
+      };
+      var submit = el.querySelector('.d-submit');
+      if (submit) submit.onclick = function(e){ e.stopPropagation(); shipOrder(id, el); };
+      var cancel = el.querySelector('.d-cancel');
+      if (cancel) cancel.onclick = function(e){ e.stopPropagation(); openOrderId = null; render(); };
+      var copyBtn = el.querySelector('[data-copy-brief]');
+      if (copyBtn) copyBtn.onclick = function(e){
+        e.stopPropagation();
+        var o = ORDERS.find(function(x){ return x.id === id; });
+        if (!o) return;
+        var text = briefText(o);
+        navigator.clipboard.writeText(text).then(function(){
+          copyBtn.classList.add('copied');
+          copyBtn.textContent = '✓ Copiato';
+          setTimeout(function(){ copyBtn.classList.remove('copied'); copyBtn.textContent = '📋 Copia per Suno'; }, 1800);
+        }).catch(function(){ toast('Copia fallita', 'err'); });
+      };
+    });
+  }
+
+  async function shipOrder(id, el){
+    var msg = el.querySelector('.d-msg');
+    var file = el.querySelector('.d-mp3').files[0];
+    var mp3UrlField = el.querySelector('.d-mp3url').value.trim();
+    var coverUrl = el.querySelector('.d-cover').value.trim();
+    var lyrics = el.querySelector('.d-lyrics').value;
+
+    if (!file && !mp3UrlField) { showMsg(msg, '✗ Carica un file MP3 o incolla un URL', false); return; }
+    if (mp3UrlField && !/^https?:\/\/.+/.test(mp3UrlField)) { showMsg(msg, '✗ L\'URL MP3 non è valido', false); return; }
+    if (coverUrl && !/^https?:\/\/.+/.test(coverUrl)) { showMsg(msg, '✗ L\'URL cover non è valido', false); return; }
+
+    if (!confirm('Confermi la consegna? Il cliente riceverà subito l\'email con il link canzone.')) return;
+
+    var submitBtn = el.querySelector('.d-submit');
+    submitBtn.disabled = true;
+
+    try {
+      var mp3Url = mp3UrlField;
+
+      if (file) {
+        // Client-side upload to Vercel Blob (bypasses 4.5MB function body limit)
+        msg.innerHTML = '<span class="loading"><span class="spinner"></span>Upload file al Blob…</span>';
+        var blobClient = await import('https://esm.sh/@vercel/blob@0.27.0/client');
+        var key = 'songs/' + id + '-' + Date.now() + '.mp3';
+        var newBlob = await blobClient.upload(key, file, {
+          access: 'public',
+          handleUploadUrl: '/api/admin/blob-token',
+          clientPayload: JSON.stringify({ adminToken: tokenCache, orderId: id }),
+        });
+        mp3Url = newBlob.url;
+      }
+
+      // Now send metadata (no file) to /api/admin/deliver
+      msg.innerHTML = '<span class="loading"><span class="spinner"></span>Invio consegna…</span>';
+      var deliverRes = await fetch('/api/admin/deliver', {
+        method: 'POST',
+        headers: { Authorization: authHeader(), 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          orderId: id,
+          lyrics: lyrics,
+          coverUrl: coverUrl || null,
+          mp3Url: mp3Url,
+        }),
+      });
+      var data = await deliverRes.json();
+      if (!deliverRes.ok) throw new Error(data.error || 'Delivery failed');
+
+      submitBtn.disabled = false;
+      toast('✓ Canzone consegnata · email inviata al cliente', 'ok');
+      openOrderId = null;
+      loadOrders(true);
+    } catch (err) {
+      submitBtn.disabled = false;
+      showMsg(msg, '✗ ' + (err.message || 'Errore'), false);
+    }
+  }
+
+  // ---------- Voice Library ----------
+  var VOICES = [
+    {
+      slug: 'sofia',
+      name: 'Sofia',
+      meta: 'Warm soprano · pop uptempo · 95 BPM',
+      photo: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&h=160&fit=crop&q=75',
+      desc: 'Voce femminile soprano calda e luminosa, energia gioiosa. Per dediche celebrative: compleanni importanti, traguardi, amicizie. Ritmata con handclaps e drums.',
+      prompt: 'upbeat joyful female pop vocal song, strummed acoustic guitar, snappy pop drum kit with kick and snare, handclaps in chorus, bright piano, groovy bass, tambourine, 95 BPM, key of E major, celebratory and uplifting feel-good pop, studio quality, English vocals, female soprano singer'
+    },
+    {
+      slug: 'matteo',
+      name: 'Matteo',
+      meta: 'Intimate tenor · indie folk',
+      photo: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=160&h=160&fit=crop&q=75',
+      desc: 'Voce maschile tenore morbida, calda e vivace. Folk con momentum: fingerpicking ritmato + drums gentili. Per dediche affettuose con un po\' di vita dentro. 85 BPM, indie folk medio.',
+      prompt: 'tender male vocal indie folk song about the day he rescued a dog and found home, intimate male tenor with warm emotional delivery, fingerpicked acoustic guitar with steady rhythm, warm upright piano, soft drum kit with kick-snare pattern, rich bass guitar, subtle mandolin fills, 85 BPM, key of G major, hopeful modern indie folk, studio quality, English vocals, male tenor singer only'
+    },
+    {
+      slug: 'leonardo',
+      name: 'Leonardo',
+      meta: 'Baritone · cinematic',
+      photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&h=160&fit=crop&q=75',
+      desc: 'Voce maschile baritono profonda, narrativa, da storyteller cinematografico. Piano + archi + build emotivo controllato. Per momenti solenni: nonni, commemorazioni, dediche importanti. 72 BPM, cinematic ballad.',
+      prompt: 'slow cinematic ballad about a grandfather and his weathered working hands, deep rich male baritone with storytelling delivery, piano with felt hammers, warm cello and viola strings, subtle ambient pads, soft kick drum entering at bridge, glockenspiel in outro, 72 BPM, key of D minor, cinematic chamber pop with restrained emotional build, studio quality, reverent and moving, English vocals, adult male baritone singer only'
+    },
+    {
+      slug: 'giada',
+      name: 'Giada',
+      meta: 'Husky alto · soul ballad',
+      photo: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&h=160&fit=crop&q=75',
+      desc: 'Voce femminile alto roca e potente, con grit soul. Ballad intense che crescono: Rhodes + drums + Hammond + archi + horn. Per dediche forti, resilienza, amori duraturi. 80 BPM, soul ballad emotivamente climatica.',
+      prompt: 'powerful soul ballad about enduring love and resilience, husky rich female alto with gritty emotional delivery and soulful runs, warm Rhodes electric piano, groovy upright bass, full drum kit with tight snare and ride cymbal, Hammond B3 organ swells, string section rising in the bridge, tight horn section with sax and trumpet, 80 BPM, key of A minor, classic soul meets modern R&B ballad, studio quality, intense and emotionally climactic, English vocals, adult female alto singer only'
+    },
+    {
+      slug: 'aurora',
+      name: 'Aurora',
+      meta: 'Airy mezzo · indie pop dreamy',
+      photo: 'https://images.unsplash.com/photo-1517841905240-472988babdf9?w=160&h=160&fit=crop&q=75',
+      desc: 'Voce femminile aerea e giocosa, mezzosoprano luminoso. Indie pop bouncy con glockenspiel, tambourine, synth shimmery. Per dediche tenere e vivaci: bambini, passi importanti, momenti teneri di vita. 100 BPM, indie pop dreamy.',
+      prompt: 'dreamy bouncy indie pop song about a child taking first steps and wonder, warm airy female mezzo-soprano with playful delivery and subtle harmonies, twinkling glockenspiel and celesta, fingerpicked electric guitar with chorus effect, groovy electric bass, bouncy drum kit with tambourine and shakers, shimmering synth pad, subtle brass swells in bridge, 100 BPM, key of F major, modern indie pop with tender whimsical energy, studio quality, luminous and hopeful, English vocals, adult female mezzo-soprano singer only'
+    },
+    {
+      slug: 'nico',
+      name: 'Nico',
+      meta: 'Soul tenor · R&B uptempo',
+      photo: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=160&h=160&fit=crop&q=75',
+      desc: 'Voce maschile soul con groove irresistibile. Wurlitzer + horn section + backup femminili + Motown drums. Per dediche gioiose con carattere: amicizie, momenti condivisi, rituali. 92 BPM, vintage soul uptempo.',
+      prompt: 'groovy soulful R&B song about Saturday mornings shared with someone you love and the sound of old radio, smooth warm male tenor-baritone with soulful runs and gospel inflections, clean electric guitar with tremolo, vintage Wurlitzer piano, groovy electric bass with melodic fills, classic Motown drum kit with tight snare, full horn section trumpet sax and trombone answering the vocal, female backup singers ad-libbing in chorus, tambourine, 92 BPM, key of G major, vintage 60s soul meets modern R&B, studio quality, warm and irresistibly groovy, English vocals, adult male soul singer only'
+    }
+  ];
+
+  (function renderVoiceLib(){
+    var grid = document.getElementById('voiceLibGrid');
+    if (!grid) return;
+    grid.innerHTML = VOICES.map(function(v){
+      return ''
+        + '<div class="voice-lib-card">'
+        +   '<div class="avatar"><img src="'+esc(v.photo)+'" alt=""></div>'
+        +   '<div class="info">'
+        +     '<h3 class="name">'+esc(v.name)+'</h3>'
+        +     '<div class="meta">'+esc(v.meta)+'</div>'
+        +     '<p class="desc">'+esc(v.desc)+'</p>'
+        +     '<div class="prompt" id="prompt-'+esc(v.slug)+'">'+esc(v.prompt)+'</div>'
+        +     '<button type="button" class="copy-prompt" data-copy-voice="'+esc(v.slug)+'">📋 Copia prompt Suno</button>'
+        +   '</div>'
+        + '</div>';
+    }).join('');
+    grid.querySelectorAll('[data-copy-voice]').forEach(function(btn){
+      btn.onclick = function(){
+        var slug = btn.getAttribute('data-copy-voice');
+        var v = VOICES.find(function(x){ return x.slug === slug; });
+        if (!v) return;
+        navigator.clipboard.writeText(v.prompt).then(function(){
+          btn.classList.add('copied');
+          btn.textContent = '✓ Copiato';
+          setTimeout(function(){ btn.classList.remove('copied'); btn.textContent = '📋 Copia prompt Suno'; }, 1800);
+        }).catch(function(){ toast('Copia fallita', 'err'); });
+      };
+    });
+  })();
+
+  // Auto-login se token presente
   try {
     var saved = sessionStorage.getItem(TOKEN_KEY);
     if (saved) { tokenCache = saved; signedIn(true); }
   } catch(e){}
+
 })();
 </script>
 </body>

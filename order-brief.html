@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="it">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<meta name="description" content="Tell us the story. We'll write the song.">
-<title>Songzy — Your story</title>
+<meta name="description" content="Thank you — your song is in the works.">
+<title>Songzy — Pagamento ricevuto</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Fraunces:ital,wght@0,400;0,500;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <link rel="icon" href="logo-songzy.jpg" type="image/jpeg">
 <script src="/api/env.js"></script>
 <script defer src="/scripts/analytics.js"></script>
+
+  <!-- TikTok Pixel Code (inline for TikTok crawler verification) -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+  var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+  ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('D8BE4JJC77U5H2VHI250');
+    ttq.page();
+  }(window, document, 'ttq');
+  </script>
+  <!-- TikTok Pixel Code End -->
 <style>
   :root{--or:#FF6B35;--pink:#E91E8C;--pu:#7B2FF7;--bg:#0f0f1a;--el:#17172a;--el2:#1f1f38;--txt:#f5f3ee;--mut:#a8a3b5;--line:#2c2c48;--grad:linear-gradient(90deg,var(--or),var(--pink),var(--pu));}
   *{box-sizing:border-box}html,body{margin:0;padding:0}
@@ -20,164 +32,91 @@
       radial-gradient(ellipse 900px 600px at 10% -5%, rgba(255,107,53,.10) 0%, transparent 60%),
       radial-gradient(ellipse 900px 700px at 95% 20%, rgba(233,30,140,.10) 0%, transparent 60%),
       radial-gradient(ellipse 1200px 900px at 50% 110%, rgba(123,47,247,.12) 0%, transparent 65%);}
-  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
-    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/></svg>");
-    opacity:.06;mix-blend-mode:overlay}
   header{position:sticky;top:0;z-index:10;background:rgba(15,15,26,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-  .hdr{max-width:780px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
+  .hdr{max-width:680px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between}
   .brand{display:flex;align-items:center;gap:10px;font-family:'Fraunces',serif;font-weight:700;font-size:1.25rem;color:var(--txt);text-decoration:none}
   .dot{width:10px;height:10px;border-radius:50%;background:var(--grad)}
-  main{position:relative;z-index:1;max-width:720px;margin:0 auto;padding:36px 24px 100px}
-  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(1.8rem,3.6vw,2.4rem);line-height:1.15;margin:0 0 8px;letter-spacing:-0.01em}
+  main{position:relative;z-index:1;max-width:620px;margin:0 auto;padding:60px 24px 100px}
+  h1{font-family:'Fraunces',serif;font-weight:500;font-size:clamp(2rem,4vw,2.6rem);line-height:1.15;margin:0 0 12px;letter-spacing:-0.01em}
   h1 em{font-style:italic;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
-  .sub{color:var(--mut);font-size:1.02rem;margin:0 0 28px;max-width:560px}
-  .card{background:var(--el);border:1px solid var(--line);border-radius:14px;padding:28px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
-  .field{margin-bottom:18px}
-  label{display:block;font-size:.9rem;color:var(--mut);margin-bottom:6px;font-weight:500}
-  input,textarea,select{width:100%;background:var(--el2);border:1px solid var(--line);color:var(--txt);padding:12px 14px;border-radius:10px;font-family:inherit;font-size:.98rem;resize:vertical}
-  input:focus,textarea:focus,select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(233,30,140,.12)}
-  textarea{min-height:96px}
-  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-  @media (max-width:560px){.row2{grid-template-columns:1fr}}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{background:var(--el2);border:1px solid var(--line);color:var(--txt);padding:9px 16px;border-radius:999px;font-size:.92rem;cursor:pointer;font-family:inherit;transition:all .2s ease}
-  .chip:hover{border-color:var(--pink)}
-  .chip.on{background:linear-gradient(135deg,rgba(233,30,140,.22),rgba(123,47,247,.22));border-color:var(--pink)}
-  .nav{display:flex;justify-content:flex-end;gap:10px;margin-top:24px;padding-top:20px;border-top:1px solid var(--line)}
-  button{font-family:inherit;font-weight:600;font-size:1rem;padding:13px 26px;border-radius:999px;cursor:pointer;border:none;transition:all .2s ease;background:var(--grad);color:#fff;box-shadow:0 6px 24px rgba(233,30,140,.3)}
-  button:hover{transform:translateY(-1px)}
-  button:disabled{opacity:.4;cursor:not-allowed;transform:none}
-  .ok,.err{margin-top:18px;padding:14px 16px;border-radius:10px;font-size:.94rem}
-  .ok{background:rgba(48,217,138,.12);border:1px solid rgba(48,217,138,.35);color:#b4f2cf}
-  .err{background:rgba(255,90,90,.1);border:1px solid rgba(255,90,90,.35);color:#ffb4b4}
-  .done{text-align:center;padding:28px}
-  .done h2{font-family:'Fraunces',serif;font-weight:500;font-size:1.8rem;margin:0 0 12px}
-  .toggle{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--el2);border:1px solid var(--line);border-radius:10px;cursor:pointer;font-size:.94rem}
-  .toggle input{width:auto;accent-color:var(--pink)}
+  .sub{color:var(--mut);font-size:1.04rem;margin:0 0 28px;max-width:520px}
+  .card{background:var(--el);border:1px solid var(--line);border-radius:16px;padding:32px;box-shadow:0 24px 60px rgba(0,0,0,.45)}
+  .center{text-align:center}
+  .status-icon{font-size:48px;margin-bottom:16px;display:inline-block}
+  .status-ok{color:#30D98A}
+  .status-load{display:inline-block;width:42px;height:42px;border:3px solid var(--line);border-top-color:var(--pink);border-radius:50%;animation:spin 1s linear infinite;margin-bottom:16px}
+  .status-err{color:#ff5a5a}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .timeline{margin:26px 0 0;padding:0;list-style:none;display:flex;flex-direction:column;gap:14px}
+  .timeline li{display:flex;gap:14px;align-items:flex-start}
+  .timeline .dot{width:10px;height:10px;border-radius:50%;background:var(--pink);margin-top:7px;flex:none;box-shadow:0 0 0 3px rgba(233,30,140,.18)}
+  .timeline li.done .dot{background:#30D98A;box-shadow:0 0 0 3px rgba(48,217,138,.2)}
+  .timeline li.pending .dot{background:var(--line);box-shadow:none}
+  .timeline b{font-weight:600;display:block;margin-bottom:2px}
+  .timeline span{color:var(--mut);font-size:.92rem}
+  .btn{font-family:inherit;font-weight:600;font-size:1rem;padding:13px 26px;border-radius:999px;cursor:pointer;border:none;background:var(--grad);color:#fff;box-shadow:0 6px 24px rgba(233,30,140,.3);text-decoration:none;display:inline-block;margin-top:20px}
+  .btn:hover{filter:brightness(1.1)}
+  .btn.ghost{background:transparent;color:var(--mut);border:1px solid var(--line);box-shadow:none;padding:12px 24px}
+  .summary{background:var(--el2);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:22px 0;font-size:.94rem;text-align:left}
+  .summary .row{display:flex;justify-content:space-between;gap:12px;padding:4px 0}
+  .summary .row:not(:last-child){border-bottom:1px solid var(--line)}
+  .summary .k{color:var(--mut)}
+  .summary .v{color:var(--txt);text-align:right;max-width:60%;word-break:break-word}
+  .err-box{background:rgba(255,90,90,.08);border:1px solid rgba(255,90,90,.3);color:#ffb4b4;padding:14px 16px;border-radius:10px;margin:20px 0;font-size:.94rem}
+  .fallback-form{display:none;text-align:left;margin-top:20px}
+  .fallback-form .field{margin-bottom:14px}
+  .fallback-form label{display:block;font-size:.88rem;color:var(--mut);margin-bottom:5px;font-weight:500}
+  .fallback-form input,.fallback-form textarea,.fallback-form select{width:100%;background:var(--el2);border:1px solid var(--line);color:var(--txt);padding:11px 13px;border-radius:10px;font-family:inherit;font-size:.96rem}
+  .fallback-form input:focus,.fallback-form textarea:focus,.fallback-form select:focus{outline:none;border-color:var(--pink)}
+  .fallback-form textarea{min-height:80px;resize:vertical}
 </style>
 </head>
 <body>
 <header><div class="hdr">
   <a class="brand" href="/"><span class="dot"></span> Songzy</a>
-  <span style="color:var(--mut);font-size:.85rem">Step 2 of 2 · Your story</span>
+  <span style="color:var(--mut);font-size:.85rem">Pagamento ricevuto</span>
 </div></header>
 
 <main>
-  <h1>Your song is in the works. <em>Tell us the story.</em></h1>
-  <p class="sub">Two minutes here shapes every line we write. Be specific — the smaller the detail, the bigger the song lands.</p>
 
-  <div class="card" id="formCard">
-    <form id="briefForm" autocomplete="off" onsubmit="return false">
-      <div class="row2">
-        <div class="field">
-          <label for="occasion">Occasion</label>
-          <select id="occasion" name="occasion">
-            <option value="">— pick one —</option>
-            <option>Wedding</option><option>Birthday</option><option>Anniversary</option>
-            <option>Mother's Day</option><option>Father's Day</option><option>Valentine's Day</option>
-            <option>Proposal</option><option>Graduation</option><option>Memorial</option>
-            <option>Just because</option><option>Other</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="recipientName">Who the song is for</label>
-          <input id="recipientName" name="recipientName" placeholder="e.g. Elena, my grandmother">
-        </div>
-      </div>
+  <div class="card center" id="mainCard">
+    <div id="iconSlot"><span class="status-load"></span></div>
+    <h1 id="titleSlot">Pagamento ricevuto. <em>Scriviamo la tua canzone.</em></h1>
+    <p class="sub" id="subSlot" style="margin-left:auto;margin-right:auto">Stiamo confermando l'ordine e salvando il brief. Un attimo…</p>
 
-      <div class="row2">
-        <div class="field">
-          <label for="recipientFrom">Signed from</label>
-          <input id="recipientFrom" name="recipientFrom" placeholder="e.g. Marco and the kids">
-        </div>
-        <div class="field">
-          <label for="voiceSlug">Preferred voice</label>
-          <select id="voiceSlug" name="voiceSlug">
-            <option value="">— let us pick —</option>
-            <option value="ella-warm-soprano">Ella — warm soprano</option>
-            <option value="jude-soft-tenor">Jude — soft tenor</option>
-            <option value="nina-husky-alto">Nina — husky alto</option>
-            <option value="luca-baritone">Luca — baritone</option>
-            <option value="sofia-smoky-mezzo">Sofia — smoky mezzo</option>
-            <option value="kai-intimate-tenor">Kai — intimate tenor</option>
-          </select>
-        </div>
-      </div>
+    <div class="summary" id="summary" style="display:none"></div>
 
-      <div class="field">
-        <label for="story1">Three adjectives that describe them</label>
-        <input id="story1" name="story1" placeholder="e.g. kind, stubborn, unfailingly funny">
-      </div>
+    <ul class="timeline" id="timeline" style="display:none;text-align:left">
+      <li class="done"><span class="dot"></span><div><b>Pagamento confermato</b><span>Stripe ha ricevuto l'importo.</span></div></li>
+      <li class="done"><span class="dot"></span><div><b>Brief salvato</b><span>Ora sappiamo esattamente cosa scrivere.</span></div></li>
+      <li><span class="dot"></span><div><b>Scriviamo la canzone</b><span>Entro la finestra del tuo pacchetto ti arriva la prima bozza via email.</span></div></li>
+      <li class="pending"><span class="dot"></span><div><b>Ascolti e ci dici cosa rifinire</b><span>Una revisione gratuita inclusa.</span></div></li>
+    </ul>
 
-      <div class="field">
-        <label for="story2">One memory or moment — the one you'd keep</label>
-        <textarea id="story2" name="story2" placeholder="The small thing. The Tuesday morning, the inside joke, the phrase only you two use."></textarea>
-      </div>
+    <div id="errBox" class="err-box" style="display:none"></div>
 
-      <div class="field">
-        <label for="story3">The feeling we should land in the last chorus</label>
-        <input id="story3" name="story3" placeholder="e.g. grateful, mischievous, heart-full">
-      </div>
+    <a class="btn" href="/" id="homeBtn" style="display:none">Torna alla home</a>
 
-      <div class="row2">
-        <div class="field">
-          <label for="genre">Genre</label>
-          <select id="genre" name="genre">
-            <option value="">— let us pick —</option>
-            <option>Pop</option><option>Acoustic</option><option>Ballad</option>
-            <option>Folk</option><option>Country</option><option>Soul</option>
-            <option>Jazz</option><option>Indie</option><option>R&B</option><option>Cinematic</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="tempo">Tempo</label>
-          <select id="tempo" name="tempo">
-            <option value="">— let us pick —</option>
-            <option>Slow &amp; intimate</option>
-            <option>Mid-tempo</option>
-            <option>Upbeat &amp; joyful</option>
-          </select>
-        </div>
-      </div>
-
-      <div class="field">
-        <label>Mood (pick any)</label>
-        <div class="chips" id="moodChips">
-          <button type="button" class="chip">Tender</button>
-          <button type="button" class="chip">Playful</button>
-          <button type="button" class="chip">Romantic</button>
-          <button type="button" class="chip">Hopeful</button>
-          <button type="button" class="chip">Reflective</button>
-          <button type="button" class="chip">Celebratory</button>
-          <button type="button" class="chip">Bittersweet</button>
-          <button type="button" class="chip">Cinematic</button>
-        </div>
-      </div>
-
-      <div class="field">
-        <label for="giftMessage">Gift message (optional — shown on the share page)</label>
-        <textarea id="giftMessage" name="giftMessage" placeholder="The one line you'd write on a card."></textarea>
-      </div>
-
-      <label class="toggle">
-        <input type="checkbox" id="isSurprise" checked>
-        <span>This is a surprise — don't send any branded email to the recipient</span>
-      </label>
-
-      <div class="nav">
-        <button id="submitBtn" type="button">Send the story &rarr;</button>
-      </div>
-      <div id="msg"></div>
+    <!-- Fallback form: shown only if auto-submit fails or prefill is missing -->
+    <form class="fallback-form" id="fallbackForm" onsubmit="return false">
+      <p class="sub" style="margin:10px 0 20px">Completa qualche dettaglio mancante per aiutarci a scrivere la canzone migliore.</p>
+      <div class="field"><label>Occasione</label><select id="f_occasion"><option value="">—</option><option>Birthday</option><option>Wedding</option><option>Anniversary</option><option>Mother's Day</option><option>Father's Day</option><option>Valentine's</option><option>Memorial</option><option>Just because</option><option>Other</option></select></div>
+      <div class="field"><label>Per chi è (nome)</label><input id="f_recipientName" placeholder="es. Elena"></div>
+      <div class="field"><label>Il tuo rapporto</label><input id="f_relationship" placeholder="es. mia sorella"></div>
+      <div class="field"><label>5 aggettivi che la/lo descrivono</label><input id="f_story1" placeholder="es. forte, ironica, testarda, dolce, curiosa"></div>
+      <div class="field"><label>Un ricordo specifico</label><textarea id="f_story2" placeholder="La canzone che canta in cucina, il modo in cui ti chiama…"></textarea></div>
+      <div class="field"><label>Cosa ama fare (passioni, hobby)</label><textarea id="f_passions"></textarea></div>
+      <div class="field"><label>Un dettaglio iconico (tic, frase, soprannome)</label><input id="f_insideDetail"></div>
+      <div class="field"><label>2–3 artisti o canzoni che ama</label><input id="f_musicTaste"></div>
+      <div class="field"><label>Cosa vuoi che provi ascoltandola</label><textarea id="f_story3" placeholder="es. vista, capita, amata"></textarea></div>
+      <div class="field"><label>Cose da evitare (opzionale)</label><input id="f_avoid"></div>
+      <div class="field"><label>Voce preferita</label><select id="f_voice"><option value="">— scegliete voi —</option><option value="sofia">Sofia — warm soprano</option><option value="matteo">Matteo — intimate tenor</option><option value="giada">Giada — husky alto</option><option value="leonardo">Leonardo — baritone</option><option value="aurora">Aurora — smoky mezzo</option><option value="dario">Dario — pop male</option><option value="bianca">Bianca — folk female</option><option value="nico">Nico — soul male</option></select></div>
+      <div class="field"><label>Genere</label><select id="f_genre"><option value="">—</option><option>Pop</option><option>Acoustic</option><option>Ballad</option><option>Folk</option><option>Country</option><option>Soul</option><option>Jazz</option><option>Indie</option><option>R&amp;B</option><option>Cinematic</option></select></div>
+      <div class="field"><label>Messaggio regalo (opzionale)</label><textarea id="f_giftMessage"></textarea></div>
+      <button type="button" class="btn" id="fallbackSubmit">Invia il brief →</button>
     </form>
   </div>
 
-  <div class="card done" id="doneCard" style="display:none">
-    <h2>Your story is in.</h2>
-    <p style="color:var(--mut);max-width:440px;margin:0 auto 18px">
-      We'll email the finished song within the window for your tier. Keep an eye on your inbox — and your spam folder, just in case.
-    </p>
-    <a href="/"><button>Back to home</button></a>
-  </div>
 </main>
 
 <script>
@@ -185,64 +124,156 @@
   'use strict';
   var qs = new URLSearchParams(location.search);
   var sessionId = qs.get('session_id') || '';
-  var msg = document.getElementById('msg');
 
-  if (!sessionId) {
-    msg.className = 'err';
-    msg.textContent = 'Missing payment session. If you just paid, please use the link in the confirmation email.';
-    document.getElementById('submitBtn').disabled = true;
+  var icon = document.getElementById('iconSlot');
+  var title = document.getElementById('titleSlot');
+  var sub = document.getElementById('subSlot');
+  var errBox = document.getElementById('errBox');
+  var summary = document.getElementById('summary');
+  var timeline = document.getElementById('timeline');
+  var homeBtn = document.getElementById('homeBtn');
+  var fallbackForm = document.getElementById('fallbackForm');
+
+  function showOk(prefill) {
+    icon.innerHTML = '<span class="status-icon status-ok">✓</span>';
+    title.innerHTML = 'Pagamento ricevuto. <em>Scriviamo la tua canzone.</em>';
+    sub.textContent = 'Abbiamo ricevuto tutto. Controlla l\'email per la conferma — la prima bozza arriva nella finestra del tuo pacchetto.';
+    timeline.style.display = 'flex';
+    homeBtn.style.display = 'inline-block';
+    if (prefill) {
+      renderSummary(prefill);
+    }
   }
 
-  // Mood chip multi-select
-  var moods = new Set();
-  document.querySelectorAll('#moodChips .chip').forEach(function(c){
-    c.addEventListener('click', function(){
-      if (moods.has(c.textContent)) { moods.delete(c.textContent); c.classList.remove('on'); }
-      else { moods.add(c.textContent); c.classList.add('on'); }
+  function showError(txt) {
+    icon.innerHTML = '<span class="status-icon status-err">⚠</span>';
+    title.innerHTML = 'Pagamento ok, <em>ma serve il brief.</em>';
+    sub.textContent = 'Il pagamento è andato a buon fine. Completa qui i dettagli, poi possiamo scrivere la canzone.';
+    errBox.style.display = 'block';
+    errBox.textContent = txt || 'Non siamo riusciti a salvare il brief automaticamente. Compila i campi qui sotto.';
+    fallbackForm.style.display = 'block';
+  }
+
+  function renderSummary(p) {
+    var rows = [
+      ['Pacchetto', (p.tier || '').charAt(0).toUpperCase() + (p.tier || '').slice(1)],
+      ['Occasione', p.occasion],
+      ['Per', p.recipient + (p.relationship ? ' (' + p.relationship + ')' : '')],
+      ['Voce', p.voice || '—'],
+      ['Genere', p.genre || '—']
+    ].filter(function (r) { return r[1]; });
+    summary.innerHTML = rows.map(function (r) {
+      return '<div class="row"><span class="k">' + r[0] + '</span><span class="v">' + esc(r[1]) + '</span></div>';
+    }).join('');
+    summary.style.display = 'block';
+  }
+
+  function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+
+  if (!sessionId) {
+    showError('Sessione di pagamento mancante. Se hai appena pagato, usa il link nell\'email di conferma.');
+    return;
+  }
+
+  // Try to auto-submit the brief using locally saved data from checkout.html
+  var prefill = null;
+  try {
+    var raw = localStorage.getItem('songzy_prefill_brief');
+    if (raw) prefill = JSON.parse(raw);
+  } catch (e) {}
+
+  if (prefill && prefill.adjectives) {
+    // We have enough data — auto-submit to backend
+    var payload = {
+      session_id:    sessionId,
+      occasion:      prefill.occasion || '',
+      recipientName: prefill.recipient || '',
+      recipientFrom: prefill.yourname || '',
+      story1:        prefill.adjectives || '',
+      story2:        [prefill.memory, prefill.passions && ('Passions: ' + prefill.passions), prefill.insideDetail && ('Iconic detail: ' + prefill.insideDetail)].filter(Boolean).join('\n\n'),
+      story3:        [prefill.feeling, prefill.avoid && ('Avoid: ' + prefill.avoid), prefill.musicTaste && ('Music taste: ' + prefill.musicTaste)].filter(Boolean).join('\n\n'),
+      voiceSlug:     prefill.voice || '',
+      genre:         prefill.genre || '',
+      mood:          [],
+      tempo:         '',
+      isSurprise:    true,
+      giftMessage:   ''
+    };
+
+    fetch('/api/brief', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (res) {
+      if (!res.ok) {
+        showError((res.d && res.d.error) || 'Backend ha risposto con errore. Ricompila i dettagli qui sotto.');
+        return;
+      }
+      try { window.songzyTrack && window.songzyTrack('BriefSubmitted', { orderId: res.d.orderId }); } catch (e) {}
+      try { localStorage.removeItem('songzy_prefill_brief'); } catch (e) {}
+      showOk(prefill);
+    })
+    .catch(function (e) {
+      showError('Errore di rete: ' + e.message);
+    });
+  } else {
+    // No prefill — user may have cleared localStorage between pages
+    showError('Compila qui i dettagli per ricevere la canzone.');
+  }
+
+  // Fallback form submit (if auto-submit fails)
+  document.getElementById('fallbackSubmit').addEventListener('click', function () {
+    var btn = this;
+    btn.disabled = true; btn.textContent = 'Invio…';
+    var payload = {
+      session_id:    sessionId,
+      occasion:      document.getElementById('f_occasion').value,
+      recipientName: document.getElementById('f_recipientName').value,
+      recipientFrom: '',
+      story1:        document.getElementById('f_story1').value,
+      story2:        [
+        document.getElementById('f_story2').value,
+        document.getElementById('f_passions').value && ('Passions: ' + document.getElementById('f_passions').value),
+        document.getElementById('f_insideDetail').value && ('Iconic detail: ' + document.getElementById('f_insideDetail').value)
+      ].filter(Boolean).join('\n\n'),
+      story3:        [
+        document.getElementById('f_story3').value,
+        document.getElementById('f_avoid').value && ('Avoid: ' + document.getElementById('f_avoid').value),
+        document.getElementById('f_musicTaste').value && ('Music taste: ' + document.getElementById('f_musicTaste').value)
+      ].filter(Boolean).join('\n\n'),
+      voiceSlug:     document.getElementById('f_voice').value,
+      genre:         document.getElementById('f_genre').value,
+      mood:          [],
+      tempo:         '',
+      isSurprise:    true,
+      giftMessage:   document.getElementById('f_giftMessage').value
+    };
+
+    fetch('/api/brief', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    })
+    .then(function (r) { return r.json().then(function (d) { return { ok: r.ok, d: d }; }); })
+    .then(function (res) {
+      btn.disabled = false; btn.textContent = 'Invia il brief →';
+      if (!res.ok) {
+        errBox.style.display = 'block';
+        errBox.textContent = (res.d && res.d.error) || 'Errore, riprova.';
+        return;
+      }
+      try { localStorage.removeItem('songzy_prefill_brief'); } catch (e) {}
+      fallbackForm.style.display = 'none';
+      errBox.style.display = 'none';
+      showOk(null);
+    })
+    .catch(function (e) {
+      btn.disabled = false; btn.textContent = 'Invia il brief →';
+      errBox.style.display = 'block';
+      errBox.textContent = 'Errore di rete: ' + e.message;
     });
   });
 
-  document.getElementById('submitBtn').addEventListener('click', function(){
-    var btn = this;
-    msg.className = ''; msg.textContent = '';
-    if (!sessionId) return;
-
-    var payload = {
-      session_id:    sessionId,
-      occasion:      document.getElementById('occasion').value,
-      recipientName: document.getElementById('recipientName').value,
-      recipientFrom: document.getElementById('recipientFrom').value,
-      story1:        document.getElementById('story1').value,
-      story2:        document.getElementById('story2').value,
-      story3:        document.getElementById('story3').value,
-      voiceSlug:     document.getElementById('voiceSlug').value,
-      genre:         document.getElementById('genre').value,
-      mood:          Array.from(moods),
-      tempo:         document.getElementById('tempo').value,
-      isSurprise:    document.getElementById('isSurprise').checked,
-      giftMessage:   document.getElementById('giftMessage').value
-    };
-
-    btn.disabled = true; btn.textContent = 'Sending…';
-    fetch('/api/brief', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) })
-      .then(function(r){ return r.json().then(function(d){ return { ok: r.ok, status: r.status, d: d }; }); })
-      .then(function(r){
-        if (!r.ok) {
-          msg.className = 'err';
-          msg.textContent = (r.d && r.d.error) ? r.d.error : ('Something went wrong (' + r.status + '). Please try again.');
-          btn.disabled = false; btn.textContent = 'Send the story →';
-          return;
-        }
-        try { window.songzyTrack && window.songzyTrack('BriefSubmitted', { orderId: r.d.orderId }); } catch(e){}
-        document.getElementById('formCard').style.display = 'none';
-        document.getElementById('doneCard').style.display = 'block';
-      })
-      .catch(function(e){
-        msg.className = 'err';
-        msg.textContent = 'Network error: ' + e.message;
-        btn.disabled = false; btn.textContent = 'Send the story →';
-      });
-  });
 })();
 </script>
 </body>

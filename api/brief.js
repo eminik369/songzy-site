@@ -123,7 +123,7 @@ export default async function handler(req, res) {
                <strong>Recipient:</strong> ${input.recipientName || '(none)'}<br>
                <strong>Voice:</strong> ${input.voiceSlug || '(any)'}<br>
                <strong>Genre:</strong> ${input.genre || '(any)'}</p>
-               <p><a href="${process.env.SITE_URL || 'https://songzy.com'}/admin.html">Open admin</a></p>`,
+               <p><a href="${process.env.SITE_URL || 'https://songzy.eu'}/admin.html">Open admin</a></p>`,
       }),
     });
   }

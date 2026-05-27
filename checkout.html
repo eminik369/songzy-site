@@ -15,6 +15,18 @@
   <script src="/api/env.js"></script>
   <script defer src="/scripts/analytics.js"></script>
 
+  <!-- TikTok Pixel Code (inline for TikTok crawler verification) -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+  var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+  ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('D8BE4JJC77U5H2VHI250');
+    ttq.page();
+  }(window, document, 'ttq');
+  </script>
+  <!-- TikTok Pixel Code End -->
+
   <style>
     :root {
       --color-orange: #FF6B35;
@@ -356,6 +368,54 @@
       font-size: 0.75rem; letter-spacing: 0.02em;
     }
 
+    /* ——— Voice picker cards (step 4) ——— */
+    .voice-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px 14px;
+      margin-top: 6px;
+    }
+    @media (max-width: 620px) { .voice-grid { grid-template-columns: repeat(2, 1fr); gap: 16px 10px; } }
+    .voice-card {
+      position: relative; text-align: center; cursor: pointer;
+      padding: 10px 6px 12px; border-radius: 14px;
+      border: 1px solid transparent; transition: all .2s ease;
+      background: transparent;
+    }
+    .voice-card:hover { border-color: var(--line); background: var(--bg-elev2); }
+    .voice-card.selected { border-color: var(--color-pink); background: rgba(233, 30, 140, 0.06); }
+    .voice-card__photo {
+      position: relative; width: 96px; height: 96px; margin: 0 auto 10px;
+      border-radius: 50%; overflow: hidden;
+      background: var(--bg-elev2); border: 2px solid var(--line);
+      transition: border-color .2s ease, transform .2s ease;
+    }
+    .voice-card.selected .voice-card__photo {
+      border-color: var(--color-pink);
+      box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.25);
+    }
+    .voice-card:hover .voice-card__photo { transform: scale(1.02); }
+    .voice-card__photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .voice-card__play {
+      position: absolute; bottom: 2px; right: 2px;
+      width: 30px; height: 30px; border-radius: 50%;
+      background: #fff; color: #0f0f1a;
+      display: flex; align-items: center; justify-content: center;
+      border: none; cursor: pointer; padding: 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,.5);
+      font-size: 12px; font-weight: 700;
+      transition: background .2s ease, transform .1s ease;
+    }
+    .voice-card__play:hover { transform: scale(1.08); }
+    .voice-card.playing .voice-card__play { background: var(--color-pink); color: #fff; }
+    .voice-card__name { font-weight: 600; font-size: 0.95rem; margin: 0 0 2px; }
+    .voice-card__meta { font-size: 0.78rem; color: var(--txt-muted); line-height: 1.3; }
+    .voice-card--surprise .voice-card__photo {
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, rgba(255,107,53,.2), rgba(233,30,140,.2), rgba(123,47,247,.2));
+      font-size: 36px;
+    }
+    .voice-card--surprise .voice-card__play { display: none; }
+    .voice-hint { font-size: 0.82rem; color: var(--txt-muted); margin-top: 10px; text-align: center; }
+
     .step { display: none; }
     .step.active { display: block; animation: fadeIn 0.3s ease; }
     @keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
@@ -388,29 +448,23 @@
 
 <main>
   <div class="checkout-hero">
-    <p>Five quick steps. No account needed. We write the song, then send you the payment link &mdash; usually within 10 minutes.</p>
+    <p>Four quick steps. No account needed. We write the song and send you the draft within your tier's delivery window.</p>
   </div>
 
   <!-- Ambient social proof, rotates every ~6s; no fake counters, no urgency. -->
-  <div class="proof-strip" id="proofStrip" role="status" aria-live="polite">
-    <span class="proof-strip__dot" aria-hidden="true"></span>
-    <span class="proof-strip__text" id="proofStripText">Just now &mdash; Elena from Milan ordered a Personal song for her grandfather.</span>
-  </div>
-
-  <div class="stepper" aria-hidden="true">
+<div class="stepper" aria-hidden="true">
     <div class="stepper__dot active" data-step-dot="1"></div>
     <div class="stepper__dot" data-step-dot="2"></div>
     <div class="stepper__dot" data-step-dot="3"></div>
     <div class="stepper__dot" data-step-dot="4"></div>
-    <div class="stepper__dot" data-step-dot="5"></div>
   </div>
 
   <form class="card" id="orderForm" autocomplete="off" onsubmit="return false;">
 
-    <!-- STEP 1 : Package (first — sets the genre/addon scope of later steps) -->
+    <!-- STEP 1 : Package + occasion (both pure tap-selection — sets the genre/addon scope of later steps) -->
     <section class="step active" data-step="1">
-      <div class="step-label">Step 1 of 5</div>
-      <h2 class="step-title">Which package fits?</h2>
+      <div class="step-label">Step 1 of 4</div>
+      <h2 class="step-title">Which package, and what's the occasion?</h2>
       <p class="step-desc">Pick the one that matches the moment. You can change it before paying.</p>
 
       <!-- Notice shown when an old bundle URL is reached — we now sell single songs only. -->
@@ -443,7 +497,7 @@
           <div class="tier-card__body">
             <div class="tier-card__name">Personal</div>
             <div class="tier-card__price">&euro;39</div>
-            <div class="tier-card__meta">Delivered in 2 hours</div>
+            <div class="tier-card__meta">Delivered same day</div>
             <ul class="tier-card__feats">
               <li>Up to 3:30 min &middot; MP3 + WAV</li>
               <li>10+ genres &middot; 1 revision</li>
@@ -468,27 +522,6 @@
         </div>
       </div>
 
-      <div class="nav-row">
-        <span></span>
-        <button type="button" class="btn btn--primary" data-next>Onward &rarr;</button>
-      </div>
-    </section>
-
-    <!-- STEP 2 : Occasion + Recipient (combined — both are about WHO & WHY) -->
-    <section class="step" data-step="2">
-      <div class="step-label">Step 2 of 5</div>
-      <h2 class="step-title">Who is this for, and why now?</h2>
-      <p class="step-desc">Pick the occasion and tell us their first name. That's enough to start.</p>
-
-      <div class="ambient" aria-hidden="true">
-        <img class="ambient__img"
-             src="https://images.unsplash.com/photo-1609220136736-443140cffec6?w=160&h=160&fit=crop&q=70"
-             alt="">
-        <p class="ambient__text">
-          <strong>60% of orders are surprises.</strong> Your email for delivery, not theirs. We never reach out to the recipient.
-        </p>
-      </div>
-
       <div class="field">
         <label>Occasion</label>
         <div class="chip-grid" data-field="occasion" role="listbox">
@@ -505,24 +538,15 @@
         </div>
       </div>
 
-      <div class="field">
-        <label for="recipient">Their first name</label>
-        <input type="text" id="recipient" name="recipient" placeholder="e.g. Sarah" maxlength="60" required>
-      </div>
-      <div class="field">
-        <label for="relationship">Your relationship to them</label>
-        <input type="text" id="relationship" name="relationship" placeholder="e.g. my sister, my dad, my wife" maxlength="80">
-      </div>
-
       <div class="nav-row">
-        <button type="button" class="btn btn--ghost" data-prev>&larr; Back</button>
+        <span></span>
         <button type="button" class="btn btn--primary" data-next disabled>Onward &rarr;</button>
       </div>
     </section>
 
-    <!-- STEP 3 : Story -->
-    <section class="step" data-step="3">
-      <div class="step-label">Step 3 of 5</div>
+    <!-- STEP 2 : Recipient + Story (everything about WHO the song is for) -->
+    <section class="step" data-step="2">
+      <div class="step-label">Step 2 of 4</div>
       <h2 class="step-title">Tell us about them.</h2>
       <p class="step-desc">The more specific, the better the song. Small details &mdash; a nickname, a habit &mdash; travel further than big words.</p>
 
@@ -537,16 +561,41 @@
       </div>
 
       <div class="field">
-        <label for="adjectives">Three words that describe them</label>
-        <input type="text" id="adjectives" name="adjectives" placeholder="e.g. fierce, generous, stubborn" maxlength="160" required>
+        <label for="recipient">Their first name</label>
+        <input type="text" id="recipient" name="recipient" placeholder="e.g. Sarah" maxlength="60" required>
       </div>
       <div class="field">
-        <label for="memory">A small, specific memory</label>
-        <textarea id="memory" name="memory" placeholder="Even tiny things work: the song she always sings in the kitchen, the way he calls you 'kid'..." maxlength="600"></textarea>
+        <label for="relationship">Your relationship to them</label>
+        <input type="text" id="relationship" name="relationship" placeholder="e.g. my sister, my dad, my wife" maxlength="80">
+      </div>
+
+      <div class="field">
+        <label for="adjectives">Five words that describe them</label>
+        <input type="text" id="adjectives" name="adjectives" placeholder="e.g. fierce, generous, stubborn, curious, unfailingly funny" maxlength="200" required>
+      </div>
+      <div class="field">
+        <label for="memory">A small, specific memory you share</label>
+        <textarea id="memory" name="memory" placeholder="Even tiny things work: the song she always sings in the kitchen, the way he calls you 'kid', the Sunday morning habit..." maxlength="700"></textarea>
+      </div>
+      <div class="field">
+        <label for="passions">What do they love doing? (hobbies, passions, daily rituals)</label>
+        <textarea id="passions" name="passions" placeholder="e.g. cooks Sunday lunches for 10, runs at sunrise, collects vinyl, calls her sister every evening..." maxlength="500"></textarea>
+      </div>
+      <div class="field">
+        <label for="insideDetail">One iconic detail — a nickname, a tic, a favourite phrase</label>
+        <input type="text" id="insideDetail" name="insideDetail" placeholder="e.g. always says 'we'll see', laughs before the punchline, calls me 'scout'" maxlength="200">
+      </div>
+      <div class="field">
+        <label for="musicTaste">2–3 artists or songs they love</label>
+        <input type="text" id="musicTaste" name="musicTaste" placeholder="e.g. Lucio Battisti, Adele, anything acoustic" maxlength="200">
       </div>
       <div class="field">
         <label for="feeling">What do you want them to feel when they hear it?</label>
-        <textarea id="feeling" name="feeling" placeholder="e.g. seen, proud, not alone, loved..." maxlength="300"></textarea>
+        <textarea id="feeling" name="feeling" placeholder="e.g. seen, proud, not alone, loved, understood..." maxlength="300"></textarea>
+      </div>
+      <div class="field">
+        <label for="avoid">Anything we should <em>avoid</em> mentioning? (optional)</label>
+        <input type="text" id="avoid" name="avoid" placeholder="e.g. their ex, a sensitive topic, a word they hate" maxlength="200">
       </div>
       <div class="nav-row">
         <button type="button" class="btn btn--ghost" data-prev>&larr; Back</button>
@@ -554,9 +603,9 @@
       </div>
     </section>
 
-    <!-- STEP 4 : Voice + genre (filtered by tier) -->
-    <section class="step" data-step="4">
-      <div class="step-label">Step 4 of 5</div>
+    <!-- STEP 3 : Voice + genre (filtered by tier) -->
+    <section class="step" data-step="3">
+      <div class="step-label">Step 3 of 4</div>
       <h2 class="step-title">How should it sound?</h2>
       <p class="step-desc" id="genreDesc">Pick a voice and a feel. You can fine-tune after we send a draft.</p>
 
@@ -570,14 +619,55 @@
       </div>
 
       <div class="field">
-        <label>Voice</label>
-        <div class="chip-grid" data-field="voice">
-          <button type="button" class="chip" data-value="Warm female">Warm female</button>
-          <button type="button" class="chip" data-value="Intimate male">Intimate male</button>
-          <button type="button" class="chip" data-value="Folk male">Folk male</button>
-          <button type="button" class="chip" data-value="Soul female">Soul female</button>
-          <button type="button" class="chip" data-value="No preference">Surprise me</button>
+        <label>Voice — tap a face to hear the demo</label>
+        <div class="voice-grid" data-field="voice" id="voiceGrid">
+          <div class="voice-card" data-value="sofia" data-audio="/assets/audio/golden-hour-rewrite.mp3">
+            <div class="voice-card__photo">
+              <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=240&h=240&fit=crop&q=75" alt="" loading="lazy">
+              <button type="button" class="voice-card__play" aria-label="Play demo" data-play>▶</button>
+            </div>
+            <div class="voice-card__name">Sofia</div>
+            <div class="voice-card__meta">Warm soprano · bright</div>
+          </div>
+          <div class="voice-card" data-value="matteo" data-audio="/assets/audio/muddy-paws.mp3">
+            <div class="voice-card__photo">
+              <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=240&h=240&fit=crop&q=75" alt="" loading="lazy">
+              <button type="button" class="voice-card__play" aria-label="Play demo" data-play>▶</button>
+            </div>
+            <div class="voice-card__name">Matteo</div>
+            <div class="voice-card__meta">Intimate tenor · tender</div>
+          </div>
+          <div class="voice-card" data-value="giada" data-audio="/assets/audio/unbreakable-rooms.mp3">
+            <div class="voice-card__photo">
+              <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=240&h=240&fit=crop&q=75" alt="" loading="lazy">
+              <button type="button" class="voice-card__play" aria-label="Play demo" data-play>▶</button>
+            </div>
+            <div class="voice-card__name">Giada</div>
+            <div class="voice-card__meta">Husky alto · raspy</div>
+          </div>
+          <div class="voice-card" data-value="leonardo" data-audio="/assets/audio/those-hands.mp3">
+            <div class="voice-card__photo">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=240&h=240&fit=crop&q=75" alt="" loading="lazy">
+              <button type="button" class="voice-card__play" aria-label="Play demo" data-play>▶</button>
+            </div>
+            <div class="voice-card__name">Leonardo</div>
+            <div class="voice-card__meta">Deep baritone · grounded</div>
+          </div>
+          <div class="voice-card" data-value="aurora" data-audio="/assets/audio/little-blue-steps.mp3">
+            <div class="voice-card__photo">
+              <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=240&h=240&fit=crop&q=75" alt="" loading="lazy">
+              <button type="button" class="voice-card__play" aria-label="Play demo" data-play>▶</button>
+            </div>
+            <div class="voice-card__name">Aurora</div>
+            <div class="voice-card__meta">Smoky mezzo · airy</div>
+          </div>
+          <div class="voice-card voice-card--surprise" data-value="No preference">
+            <div class="voice-card__photo">✨</div>
+            <div class="voice-card__name">Surprise me</div>
+            <div class="voice-card__meta">Let us pick the best fit</div>
+          </div>
         </div>
+        <audio id="voicePreview" preload="none"></audio>
       </div>
       <div class="field">
         <label>Genre / feel <span id="genreCount" style="color: var(--txt-muted); font-weight: 400; margin-left: 6px;"></span></label>
@@ -606,9 +696,9 @@
       </div>
     </section>
 
-    <!-- STEP 5 : Email + summary + trust block -->
-    <section class="step" data-step="5">
-      <div class="step-label">Step 5 of 5</div>
+    <!-- STEP 4 : Email + summary + trust block -->
+    <section class="step" data-step="4">
+      <div class="step-label">Step 4 of 4</div>
       <h2 class="step-title">Last thing &mdash; where do we send it?</h2>
       <p class="step-desc">We'll send the draft and the payment link to this address. Pay only when you're happy.</p>
 
@@ -652,7 +742,7 @@
           </li>
           <li class="trust-block__item">
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l2.5 2.5"/></svg>
-            Draft first &mdash; pay only if you love it
+            On-time delivery guaranteed &mdash; or full refund
           </li>
           <li class="trust-block__item">
             <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 10l3 3 5-6"/><circle cx="10" cy="10" r="7.5"/></svg>
@@ -661,22 +751,17 @@
         </ul>
       </div>
 
-      <div class="placeholder-note" id="paymentNote">
-        <strong>Stripe integration arriving.</strong> For now, leave your email above and we'll
-        send you a secure payment link within 10 minutes of receiving your brief.
-      </div>
-
       <div class="nav-row">
         <button type="button" class="btn btn--ghost" data-prev>&larr; Back</button>
-        <button type="button" class="btn btn--primary" id="submitBtn">Send my brief &rarr;</button>
+        <button type="button" class="btn btn--primary" id="submitBtn">Pay securely &rarr;</button>
       </div>
     </section>
 
-    <!-- STEP 6 (hidden) : thank you -->
-    <section class="step" data-step="6">
+    <!-- STEP 5 (hidden) : thank you -->
+    <section class="step" data-step="5">
       <h2 class="step-title">Story received. Thank you.</h2>
       <p class="step-desc">
-        We'll write a draft and send you both the song and the secure payment link within 10 minutes.
+        We'll write the draft and send you the song within your tier's delivery window.
         Check your inbox &mdash; and your spam folder, just in case.
       </p>
       <div class="nav-row">
@@ -750,7 +835,11 @@
     relationship: '',
     adjectives: '',
     memory: '',
+    passions: '',
+    insideDetail: '',
+    musicTaste: '',
     feeling: '',
+    avoid: '',
     voice: null,
     genre: null,
     tier: TIER_FROM_URL || 'personal',
@@ -794,9 +883,9 @@
       d.classList.toggle('done', n < state.step);
     });
     validateNext();
-    if (state.step === 4) renderGenreGrid();
-    if (state.step === 5) renderSummary();
-    if (state.step === 6) {
+    if (state.step === 3) renderGenreGrid();
+    if (state.step === 4) renderSummary();
+    if (state.step === 5) {
       try { localStorage.removeItem(DRAFT_KEY); } catch (e) {}
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -809,10 +898,9 @@
     if (!btn) return;
     var ok = true;
     switch (state.step) {
-      case 1: ok = !!state.tier; break;
-      case 2: ok = !!state.occasion && state.recipient.trim().length >= 1; break;
-      case 3: ok = state.adjectives.trim().length >= 1; break;
-      case 4: ok = !!state.voice && !!state.genre; break;
+      case 1: ok = !!state.tier && !!state.occasion; break;
+      case 2: ok = state.recipient.trim().length >= 1 && state.adjectives.trim().length >= 1; break;
+      case 3: ok = !!state.voice && !!state.genre; break;
     }
     btn.disabled = !ok;
   }
@@ -836,8 +924,74 @@
       });
     });
   }
+  // Voice picker — cards with photo + play demo (like Songfinch)
+  (function wireVoiceCards() {
+    var grid = document.getElementById('voiceGrid');
+    if (!grid) return;
+    var audio = document.getElementById('voicePreview');
+    var playing = null; // currently playing card
+
+    function stopAll() {
+      if (!audio) return;
+      audio.pause();
+      audio.currentTime = 0;
+      if (playing) playing.classList.remove('playing');
+      playing = null;
+    }
+
+    function selectCard(card) {
+      grid.querySelectorAll('.voice-card').forEach(function (c) { c.classList.remove('selected'); });
+      card.classList.add('selected');
+      state.voice = card.getAttribute('data-value');
+      saveDraft();
+      validateNext();
+    }
+
+    // Restore selection from draft
+    var initial = state.voice;
+    if (initial) {
+      var pre = grid.querySelector('.voice-card[data-value="' + initial + '"]');
+      if (pre) pre.classList.add('selected');
+    }
+
+    grid.querySelectorAll('.voice-card').forEach(function (card) {
+      var playBtn = card.querySelector('[data-play]');
+      card.addEventListener('click', function (e) {
+        e.preventDefault();
+        selectCard(card);
+        var src = card.getAttribute('data-audio');
+        if (!src) return; // "Surprise me" has no audio
+        if (playing === card) { stopAll(); return; }
+        stopAll();
+        audio.src = src;
+        audio.play().then(function () {
+          card.classList.add('playing');
+          playing = card;
+          if (playBtn) playBtn.textContent = '■';
+        }).catch(function () {
+          if (playBtn) {
+            playBtn.textContent = '…';
+            setTimeout(function () { playBtn.textContent = '▶'; }, 1200);
+          }
+        });
+      });
+    });
+
+    if (audio) {
+      audio.addEventListener('ended', function () {
+        if (playing) {
+          playing.classList.remove('playing');
+          var b = playing.querySelector('[data-play]');
+          if (b) b.textContent = '▶';
+        }
+        playing = null;
+      });
+    }
+  })();
+
   document.querySelectorAll('[data-field]').forEach(function (group) {
     var field = group.getAttribute('data-field');
+    if (field === 'voice') return; // handled above
     if (field === 'tier') {
       // Tier cards (step 1)
       group.querySelectorAll('.tier-card').forEach(function (card) {
@@ -930,7 +1084,7 @@
   });
 
   // Text inputs
-  ['recipient', 'relationship', 'adjectives', 'memory', 'feeling', 'email', 'yourname'].forEach(function (id) {
+  ['recipient', 'relationship', 'adjectives', 'memory', 'passions', 'insideDetail', 'musicTaste', 'feeling', 'avoid', 'email', 'yourname'].forEach(function (id) {
     var el = document.getElementById(id);
     if (!el) return;
     if (state[id]) el.value = state[id];
@@ -941,7 +1095,7 @@
   document.querySelectorAll('[data-next]').forEach(function (b) {
     b.addEventListener('click', function () {
       if (b.disabled) return;
-      state.step = Math.min(state.step + 1, 6);
+      state.step = Math.min(state.step + 1, 5);
       saveDraft(); updateView();
     });
   });
@@ -1000,9 +1154,12 @@
     try {
       localStorage.setItem('songzy_prefill_brief', JSON.stringify({
         occasion: state.occasion, recipient: state.recipient, relationship: state.relationship,
-        adjectives: state.adjectives, memory: state.memory, feeling: state.feeling,
+        adjectives: state.adjectives, memory: state.memory,
+        passions: state.passions, insideDetail: state.insideDetail, musicTaste: state.musicTaste,
+        feeling: state.feeling, avoid: state.avoid,
         voice: state.voice, genre: state.genre, tier: state.tier,
-        addons: Object.keys(state.addons)
+        addons: Object.keys(state.addons),
+        yourname: state.yourname, email: state.email
       }));
     } catch (e) {}
 
@@ -1048,33 +1205,6 @@
         alert('Network error: ' + e.message);
       });
   });
-
-  // -----------------------------------------------------------------------
-  // Rotating ambient social proof (authentic, no fake counters).
-  // -----------------------------------------------------------------------
-  var PROOFS = [
-    'Elena from Milan \u2014 Personal song for her grandfather.',
-    'James in London \u2014 Premium song for his wife\u2019s 40th.',
-    'Sofia from Madrid \u2014 Quick song for Mother\u2019s Day.',
-    'Marco from Rome \u2014 Personal brief for an anniversary.',
-    'Amy in Brighton \u2014 Premium wedding song for her sister.',
-    'Luca from Bologna \u2014 Personal song for his best friend.'
-  ];
-  (function rotateProof() {
-    var node = document.getElementById('proofStripText');
-    if (!node) return;
-    var i = Math.floor(Math.random() * PROOFS.length);
-    node.textContent = PROOFS[i];
-    setInterval(function () {
-      i = (i + 1) % PROOFS.length;
-      node.style.opacity = '0';
-      setTimeout(function () {
-        node.textContent = PROOFS[i];
-        node.style.opacity = '1';
-      }, 250);
-    }, 6500);
-    node.style.transition = 'opacity 0.25s ease';
-  })();
 
   // Initial render
   applyTierAddons();

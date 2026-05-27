@@ -20,7 +20,7 @@
   <meta property="og:title" content="Songzy — A song written from your words">
   <meta property="og:description" content="Personalized songs written from your words for the moments that matter. Ready in two hours. From €19.">
   <meta property="og:image" content="assets/og-image.jpg">
-  <meta property="og:url" content="https://songzy.com">
+  <meta property="og:url" content="https://songzy.eu">
   <meta name="twitter:card" content="summary_large_image">
 
   <!-- Preload + fonts -->
@@ -34,6 +34,18 @@
   <!-- Runtime config (Iubenda + analytics IDs) + analytics bootstrap -->
   <script src="/api/env.js"></script>
   <script defer src="/scripts/analytics.js"></script>
+
+  <!-- TikTok Pixel Code Start (inline for TikTok crawler verification) -->
+  <script>
+  !function (w, d, t) {
+    w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+  var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+  ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+    ttq.load('D8BE4JJC77U5H2VHI250');
+    ttq.page();
+  }(window, document, 'ttq');
+  </script>
+  <!-- TikTok Pixel Code End -->
 
   <!-- Global styles -->
   <link rel="stylesheet" href="sections/09-styles.css">
@@ -1823,7 +1835,7 @@
 
           <p class="hiw__micro">
             <span class="hiw__micro-dot" aria-hidden="true"></span>
-            <span class="hiw__micro-text">Usually delivered in 2 hours &middot; We email you the moment it's ready</span>
+            <span class="hiw__micro-text">Usually delivered same day &middot; We email you the moment it's ready</span>
           </p>
         </li>
 
@@ -2650,24 +2662,24 @@
 
     <!-- FILTER TABS -->
     <div class="aex__filters" role="group" aria-label="Filter songs by genre">
-      <button type="button" class="aex__filter" data-filter="all"      aria-pressed="true">All</button>
-      <button type="button" class="aex__filter" data-filter="pop"      aria-pressed="false">Pop</button>
-      <button type="button" class="aex__filter" data-filter="acoustic" aria-pressed="false">Acoustic</button>
-      <button type="button" class="aex__filter" data-filter="ballad"   aria-pressed="false">Ballad</button>
-      <button type="button" class="aex__filter" data-filter="folk"     aria-pressed="false">Folk</button>
-      <button type="button" class="aex__filter" data-filter="hip-hop"  aria-pressed="false">Hip-hop</button>
+      <button type="button" class="aex__filter" data-filter="all"       aria-pressed="true">All</button>
+      <button type="button" class="aex__filter" data-filter="pop"       aria-pressed="false">Pop</button>
+      <button type="button" class="aex__filter" data-filter="folk"      aria-pressed="false">Folk</button>
+      <button type="button" class="aex__filter" data-filter="cinematic" aria-pressed="false">Cinematic</button>
+      <button type="button" class="aex__filter" data-filter="soul"      aria-pressed="false">Soul</button>
+      <button type="button" class="aex__filter" data-filter="indie-pop" aria-pressed="false">Indie Pop</button>
     </div>
 
-    <!-- GRID — 6 cards -->
+    <!-- GRID — 5 cards -->
     <div class="aex__grid" role="list">
 
       <!-- CARD 1 -->
-      <article class="aex__card" role="listitem" data-genre="pop" data-title="For Sarah, on her 40th">
+      <article class="aex__card" role="listitem" data-genre="pop" data-title="Golden Hour Rewrite">
         <div class="aex__artwork">
           <div class="aex__artwork-bg aex__art--1" aria-hidden="true"></div>
           <img class="aex__cover"
-               src="https://images.unsplash.com/photo-1558636508-e0db3814bd1d?w=600&amp;h=600&amp;fit=crop&amp;q=80"
-               alt="Birthday cake with lit candles on a warm table — cover art for For Sarah, on her 40th"
+               src="assets/covers/golden-hour-rewrite.jpg"
+               alt="A convertible driving down a city street into a golden sunset — cover art for Golden Hour Rewrite"
                loading="lazy"
                width="600" height="600">
           <div class="aex__disc" aria-hidden="true"></div>
@@ -2675,33 +2687,33 @@
           <button type="button"
                   class="aex__play"
                   aria-pressed="false"
-                  aria-label="Play For Sarah, on her 40th"
-                  data-audio="assets/audio/songzy-01-dreamy-flashback.mp3">
+                  aria-label="Play Golden Hour Rewrite"
+                  data-audio="assets/audio/golden-hour-rewrite.mp3">
             <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
             <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
           </button>
         </div>
         <div class="aex__meta">
           <div class="aex__title-row">
-            <h3 class="aex__song-title">For Sarah, on her 40th</h3>
+            <h3 class="aex__song-title">Golden Hour Rewrite</h3>
             <span class="aex__genre">Pop</span>
           </div>
-          <p class="aex__context">by her sister Emma</p>
+          <p class="aex__context">by Elena, for the sister who started over</p>
         </div>
         <div class="aex__player">
           <div class="aex__wave" aria-hidden="true" data-wave></div>
-          <span class="aex__duration" data-duration>3:12</span>
+          <span class="aex__duration" data-duration>0:25</span>
           <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
         </div>
       </article>
 
       <!-- CARD 2 -->
-      <article class="aex__card" role="listitem" data-genre="acoustic" data-title="The day we met the dog">
+      <article class="aex__card" role="listitem" data-genre="folk" data-title="Muddy Paws">
         <div class="aex__artwork">
           <div class="aex__artwork-bg aex__art--2" aria-hidden="true"></div>
           <img class="aex__cover"
-               src="https://images.unsplash.com/photo-1450778869180-41d0601e046e?w=600&amp;h=600&amp;fit=crop&amp;q=80"
-               alt="Golden dog resting on a cozy sofa in warm home light — cover art for The day we met the dog"
+               src="assets/covers/muddy-paws.jpg"
+               alt="A man wrapping a rescued dog in a tartan blanket in a warm kitchen — cover art for Muddy Paws"
                loading="lazy"
                width="600" height="600">
           <div class="aex__disc" aria-hidden="true"></div>
@@ -2709,33 +2721,33 @@
           <button type="button"
                   class="aex__play"
                   aria-pressed="false"
-                  aria-label="Play The day we met the dog"
-                  data-audio="assets/audio/songzy-02-private-reflection.mp3">
+                  aria-label="Play Muddy Paws"
+                  data-audio="assets/audio/muddy-paws.mp3">
             <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
             <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
           </button>
         </div>
         <div class="aex__meta">
           <div class="aex__title-row">
-            <h3 class="aex__song-title">The day we met the dog</h3>
-            <span class="aex__genre">Acoustic</span>
+            <h3 class="aex__song-title">Muddy Paws</h3>
+            <span class="aex__genre">Folk</span>
           </div>
-          <p class="aex__context">by Marco, for his wife</p>
+          <p class="aex__context">by Marco, for the rescue dog who saved him too</p>
         </div>
         <div class="aex__player">
           <div class="aex__wave" aria-hidden="true" data-wave></div>
-          <span class="aex__duration" data-duration>2:48</span>
+          <span class="aex__duration" data-duration>0:30</span>
           <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
         </div>
       </article>
 
       <!-- CARD 3 -->
-      <article class="aex__card" role="listitem" data-genre="folk" data-title="Grandad's hands">
+      <article class="aex__card" role="listitem" data-genre="cinematic" data-title="Those Hands">
         <div class="aex__artwork">
           <div class="aex__artwork-bg aex__art--3" aria-hidden="true"></div>
           <img class="aex__cover"
-               src="https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=600&amp;h=600&amp;fit=crop&amp;q=80"
-               alt="Weathered hands playing an acoustic guitar — cover art for Grandad's hands"
+               src="assets/covers/those-hands.jpg"
+               alt="A warm wood hallway lined with old family photos, a figure cradling a small light — cover art for Those Hands"
                loading="lazy"
                width="600" height="600">
           <div class="aex__disc" aria-hidden="true"></div>
@@ -2743,33 +2755,33 @@
           <button type="button"
                   class="aex__play"
                   aria-pressed="false"
-                  aria-label="Play Grandad's hands"
-                  data-audio="assets/audio/songzy-03-despair-and-triumph.mp3">
+                  aria-label="Play Those Hands"
+                  data-audio="assets/audio/those-hands.mp3">
             <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
             <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
           </button>
         </div>
         <div class="aex__meta">
           <div class="aex__title-row">
-            <h3 class="aex__song-title">Grandad's hands</h3>
-            <span class="aex__genre">Folk</span>
+            <h3 class="aex__song-title">Those Hands</h3>
+            <span class="aex__genre">Cinematic</span>
           </div>
-          <p class="aex__context">by Lucia, for her grandfather's 80th</p>
+          <p class="aex__context">by Lucia, for her grandfather</p>
         </div>
         <div class="aex__player">
           <div class="aex__wave" aria-hidden="true" data-wave></div>
-          <span class="aex__duration" data-duration>3:41</span>
+          <span class="aex__duration" data-duration>0:50</span>
           <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
         </div>
       </article>
 
       <!-- CARD 4 -->
-      <article class="aex__card" role="listitem" data-genre="ballad" data-title="Still here">
+      <article class="aex__card" role="listitem" data-genre="soul" data-title="Unbreakable Rooms">
         <div class="aex__artwork">
           <div class="aex__artwork-bg aex__art--4" aria-hidden="true"></div>
           <img class="aex__cover"
-               src="https://images.unsplash.com/photo-1447069387593-a5de0862481e?w=600&amp;h=600&amp;fit=crop&amp;q=80"
-               alt="Elderly couple holding hands in warm backlight — cover art for Still here"
+               src="assets/covers/unbreakable-rooms.jpg"
+               alt="A dim hallway with a cracked plate on the floor and a coat over a chair — cover art for Unbreakable Rooms"
                loading="lazy"
                width="600" height="600">
           <div class="aex__disc" aria-hidden="true"></div>
@@ -2777,33 +2789,33 @@
           <button type="button"
                   class="aex__play"
                   aria-pressed="false"
-                  aria-label="Play Still here"
-                  data-audio="assets/audio/songzy-04-aftermath.mp3">
+                  aria-label="Play Unbreakable Rooms"
+                  data-audio="assets/audio/unbreakable-rooms.mp3">
             <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
             <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
           </button>
         </div>
         <div class="aex__meta">
           <div class="aex__title-row">
-            <h3 class="aex__song-title">Still here</h3>
-            <span class="aex__genre">Ballad</span>
+            <h3 class="aex__song-title">Unbreakable Rooms</h3>
+            <span class="aex__genre">Soul</span>
           </div>
-          <p class="aex__context">by Thomas, written for their anniversary</p>
+          <p class="aex__context">by Thomas, for the years they got through together</p>
         </div>
         <div class="aex__player">
           <div class="aex__wave" aria-hidden="true" data-wave></div>
-          <span class="aex__duration" data-duration>3:05</span>
+          <span class="aex__duration" data-duration>0:25</span>
           <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
         </div>
       </article>
 
       <!-- CARD 5 -->
-      <article class="aex__card" role="listitem" data-genre="acoustic" data-title="Leo's first steps">
+      <article class="aex__card" role="listitem" data-genre="indie-pop" data-title="Little Blue Steps">
         <div class="aex__artwork">
           <div class="aex__artwork-bg aex__art--5" aria-hidden="true"></div>
           <img class="aex__cover"
-               src="https://images.unsplash.com/photo-1503919545889-aef636e10ad4?w=600&amp;h=600&amp;fit=crop&amp;q=80"
-               alt="Toddler walking on bare feet toward family — cover art for Leo's first steps"
+               src="assets/covers/little-blue-steps.jpg"
+               alt="A toddler taking first steps on blue stairs in a sunlit living room — cover art for Little Blue Steps"
                loading="lazy"
                width="600" height="600">
           <div class="aex__disc" aria-hidden="true"></div>
@@ -2811,56 +2823,22 @@
           <button type="button"
                   class="aex__play"
                   aria-pressed="false"
-                  aria-label="Play Leo's first steps"
-                  data-audio="assets/audio/songzy-05-evening-melodrama.mp3">
+                  aria-label="Play Little Blue Steps"
+                  data-audio="assets/audio/little-blue-steps.mp3">
             <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
             <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
           </button>
         </div>
         <div class="aex__meta">
           <div class="aex__title-row">
-            <h3 class="aex__song-title">Leo's first steps</h3>
-            <span class="aex__genre">Acoustic</span>
+            <h3 class="aex__song-title">Little Blue Steps</h3>
+            <span class="aex__genre">Indie Pop</span>
           </div>
-          <p class="aex__context">by Sofia, a Mother's Day surprise</p>
+          <p class="aex__context">by Giulia, for her child's first steps</p>
         </div>
         <div class="aex__player">
           <div class="aex__wave" aria-hidden="true" data-wave></div>
-          <span class="aex__duration" data-duration>2:35</span>
-          <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
-        </div>
-      </article>
-
-      <!-- CARD 6 -->
-      <article class="aex__card" role="listitem" data-genre="hip-hop" data-title="Saturday morning radio">
-        <div class="aex__artwork">
-          <div class="aex__artwork-bg aex__art--6" aria-hidden="true"></div>
-          <img class="aex__cover"
-               src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&amp;h=600&amp;fit=crop&amp;q=80"
-               alt="Vinyl record spinning on a vintage turntable — cover art for Saturday morning radio"
-               loading="lazy"
-               width="600" height="600">
-          <div class="aex__disc" aria-hidden="true"></div>
-          <span class="aex__art-label" aria-hidden="true">Songzy · Original</span>
-          <button type="button"
-                  class="aex__play"
-                  aria-pressed="false"
-                  aria-label="Play Saturday morning radio"
-                  data-audio="assets/audio/songzy-06-thinking-music.mp3">
-            <svg class="aex__icon--play" width="16" height="16" aria-hidden="true"><use href="#aex-play"/></svg>
-            <svg class="aex__icon--pause" width="14" height="14" aria-hidden="true"><use href="#aex-pause"/></svg>
-          </button>
-        </div>
-        <div class="aex__meta">
-          <div class="aex__title-row">
-            <h3 class="aex__song-title">Saturday morning radio</h3>
-            <span class="aex__genre">Hip-hop</span>
-          </div>
-          <p class="aex__context">by Alex, for his dad who DJ'd in the 80s</p>
-        </div>
-        <div class="aex__player">
-          <div class="aex__wave" aria-hidden="true" data-wave></div>
-          <span class="aex__duration" data-duration>2:58</span>
+          <span class="aex__duration" data-duration>0:25</span>
           <div class="aex__progress" aria-hidden="true"><span class="aex__progress-fill" data-progress></span></div>
         </div>
       </article>
@@ -2874,7 +2852,7 @@
     <!-- BOTTOM CTA -->
     <div class="aex__footer">
       <p class="aex__footer-line">
-        These are six examples. <strong>Yours will be different</strong> — it's yours.
+        These are five examples. <strong>Yours will be different</strong> — it's yours.
       </p>
       <a href="#pricing" class="aex__cta">
         Turn their story into a song
@@ -4611,7 +4589,7 @@
           </li>
           <li>
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            <span>Delivered in <strong>2 hours</strong>, not tomorrow</span>
+            <span>Delivered <strong>same day</strong>, not next week</span>
           </li>
           <li>
             <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10.5l4 4 8-9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -6014,7 +5992,7 @@
     <!-- /list -->
 
     <p class="faq__more">
-      Still got a question we didn't answer? <a href="https://formsubmit.co/hello@songzy.com" target="_blank" rel="noopener">Email us</a> &mdash; a human reads every one.
+      Still got a question we didn't answer? <a href="https://formsubmit.co/emidio.dellapietra.b@gmail.com" target="_blank" rel="noopener">Email us</a> &mdash; a human reads every one.
     </p>
 
   </div>
@@ -6692,7 +6670,6 @@
           <li><a href="#how-it-works">How it works</a></li>
           <li><a href="#audio-examples">Examples</a></li>
           <li><a href="#pricing">Pricing</a></li>
-          <li><span class="footer__teaser">Gift cards coming soon</span></li>
         </ul>
       </nav>
 
@@ -6709,11 +6686,10 @@
         <h3 class="footer__col-title">Support &amp; Legal</h3>
         <ul class="footer__list">
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="https://formsubmit.co/hello@songzy.com" target="_blank" rel="noopener">Contact</a></li>
+          <li><a href="https://formsubmit.co/emidio.dellapietra.b@gmail.com" target="_blank" rel="noopener">Contact</a></li>
           <li><a href="refund.html">Refund policy</a></li>
           <li><a href="privacy.html">Privacy &amp; GDPR</a></li>
           <li><a href="terms.html">Terms of service</a></li>
-          <li><button type="button" class="footer__cookie-prefs-btn" data-cookie-prefs onclick="alert('Cookie settings coming soon \u2014 Iubenda integration pending')">Cookie preferences</button></li>
         </ul>
       </nav>
 
@@ -6981,7 +6957,7 @@
   <div class="sticky-cta__inner">
     <div class="sticky-cta__meta">
       <strong>Personal</strong>
-      <span>&euro;39 &middot; delivered in 2 hours</span>
+      <span>&euro;39 &middot; delivered same day</span>
     </div>
     <a href="checkout.html?tier=personal" class="sticky-cta__btn" data-tier="personal">Give them the song &rarr;</a>
     <button type="button" class="sticky-cta__close" aria-label="Dismiss" id="stickyCtaClose">&times;</button>
@@ -7070,7 +7046,6 @@
     <h3 id="exitModalTitle">Wait &mdash; hear <em>one first?</em></h3>
     <p>30-second sample. No email needed. We'd rather show you than sell you.</p>
     <a href="#audio-examples" class="exit-modal__primary" id="exitModalPlay">Play a sample</a>
-    <a href="https://formsubmit.co/hello@songzy.com" target="_blank" rel="noopener" class="exit-modal__secondary">Get 10% off my first song &rarr;</a>
   </div>
 </div>
 

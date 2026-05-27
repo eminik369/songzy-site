@@ -6,7 +6,10 @@ import { sql, hasDb } from '../../lib/db.js';
 import { json, requireAdmin, requireMethod, shortSlug } from '../../lib/http.js';
 import { send, wrap } from '../../lib/email.js';
 
-export const config = { api: { bodyParser: false } };
+export const config = {
+  api: { bodyParser: false, responseLimit: false },
+  maxDuration: 60,
+};
 
 function parseMultipart(req) {
   return new Promise((resolve, reject) => {
@@ -113,7 +116,7 @@ export default async function handler(req, res) {
     customerEmail = rows[0]?.customer_email; recipientName = rows[0]?.recipient_name;
   } catch (e) {}
 
-  const shareUrl = `${process.env.SITE_URL || 'https://songzy.com'}/m/${slug}`;
+  const shareUrl = `${process.env.SITE_URL || 'https://songzy.eu'}/m/${slug}`;
   if (customerEmail) {
     await send({
       to: customerEmail,

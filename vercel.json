@@ -7,7 +7,7 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/m/:slug", "destination": "/m/index.html" }
+    { "source": "/m/(.*)", "destination": "/m-song" }
   ],
   "headers": [
     {
@@ -31,6 +31,6 @@
     }
   ],
   "functions": {
-    "api/**/*.js": { "maxDuration": 30 }
+    "api/**/*.js": { "maxDuration": 60, "memory": 1024 }
   }
 }
