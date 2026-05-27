@@ -95,4 +95,92 @@
     try { if (window.fbq  && C.META_PIXEL_ID)  window.fbq('trackCustom', event, params || {}); } catch (e) {}
     try { if (window.ttq  && C.TIKTOK_PIXEL_ID) window.ttq.track(event, params || {}); } catch (e) {}
   };
+
+  // -- TikTok standard events helper -------------------------------------
+  // Pricing per tier (Songzy)
+  var TIER_VALUE = { quick: 19, personal: 39, premium: 69 };
+  function tierName(t) { return 'Songzy ' + (t || 'personal').replace(/^./, function(c){return c.toUpperCase();}) + ' Song'; }
+
+  /**
+   * songzyTikTokEvent — fires a standard TikTok event with the Songzy content schema.
+   * Standard events: ViewContent, AddToCart, InitiateCheckout, AddPaymentInfo,
+   *                  PlaceAnOrder, CompleteRegistration, Purchase
+   */
+  window.songzyTikTokEvent = function (eventName, opts) {
+    opts = opts || {};
+    if (!window.ttq || !C.TIKTOK_PIXEL_ID) return;
+    var tier = opts.tier || 'personal';
+    var value = opts.value != null ? Number(opts.value) : (TIER_VALUE[tier] || 39);
+    var currency = opts.currency || 'EUR';
+    var payload = {
+      contents: [{
+        content_id: opts.content_id || ('songzy_' + tier),
+        content_type: 'product',
+        content_name: opts.content_name || tierName(tier),
+      }],
+      value: value,
+      currency: currency,
+    };
+    if (opts.event_id) payload.event_id = opts.event_id;
+    try { window.ttq.track(eventName, payload); } catch (e) {}
+    // Also send to GA4 / Meta as the matching standard event when possible
+    try {
+      if (window.gtag && C.GA4_ID) {
+        var ga4Event = { Purchase: 'purchase', AddToCart: 'add_to_cart', InitiateCheckout: 'begin_checkout', ViewContent: 'view_item', CompleteRegistration: 'sign_up' }[eventName] || eventName.toLowerCase();
+        window.gtag('event', ga4Event, { value: value, currency: currency, items: payload.contents });
+      }
+    } catch (e) {}
+    try {
+      if (window.fbq && C.META_PIXEL_ID) {
+        var metaEvent = { Purchase: 'Purchase', AddToCart: 'AddToCart', InitiateCheckout: 'InitiateCheckout', ViewContent: 'ViewContent', CompleteRegistration: 'CompleteRegistration' }[eventName] || null;
+        if (metaEvent) window.fbq('track', metaEvent, { value: value, currency: currency, content_ids: [payload.contents[0].content_id] });
+      }
+    } catch (e) {}
+  };
+
+  // -- Auto-fire standard events based on page URL / clicks --------------
+  document.addEventListener('DOMContentLoaded', function () {
+    var pathname = location.pathname;
+
+    // ViewContent on landing pages and blog (any non-utility page)
+    var isContentPage = !/^\/(api|admin|checkout|order-brief|m-song|robots\.txt|sitemap\.xml)/.test(pathname);
+    if (isContentPage && C.TIKTOK_PIXEL_ID) {
+      var slug = pathname.replace(/^\//, '').replace(/\.html$/, '') || 'home';
+      window.songzyTikTokEvent('ViewContent', {
+        content_id: 'songzy_page_' + slug,
+        content_name: document.title || 'Songzy page',
+      });
+    }
+
+    // InitiateCheckout when /checkout loads
+    if (/^\/checkout/.test(pathname)) {
+      var tier = new URLSearchParams(location.search).get('tier') || 'personal';
+      window.songzyTikTokEvent('InitiateCheckout', { tier: tier });
+    }
+
+    // Purchase when /order-brief opens with a paid session_id
+    if (/^\/order-brief/.test(pathname)) {
+      var sid = new URLSearchParams(location.search).get('session_id');
+      if (sid) {
+        window.songzyTikTokEvent('Purchase', {
+          tier: new URLSearchParams(location.search).get('tier') || 'personal',
+          event_id: sid, // dedup with server-side event via Stripe webhook
+        });
+      }
+    }
+
+    // AddToCart on any CTA click with data-tier (set by landing pages + main pricing)
+    document.addEventListener('click', function (e) {
+      var el = e.target.closest && e.target.closest('[data-cta][data-tier], a[href*="checkout.html"]');
+      if (!el) return;
+      var tier = el.getAttribute('data-tier');
+      if (!tier) {
+        // try to extract from href like /checkout.html?tier=personal
+        var href = el.getAttribute('href') || '';
+        var m = href.match(/tier=([a-z]+)/);
+        if (m) tier = m[1];
+      }
+      window.songzyTikTokEvent('AddToCart', { tier: tier || 'personal' });
+    });
+  });
 })();
